@@ -2,44 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/search/index.html</loc>
-    
-    <lastmod>2018-09-09T14:53:21.140Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/project/index.html</loc>
-    
-    <lastmod>2018-09-09T14:53:11.230Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2018-09-09T14:52:50.532Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/category/index.html</loc>
     
-    <lastmod>2018-09-09T14:37:44.184Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/link/index.html</loc>
-    
-    <lastmod>2018-09-09T14:37:14.016Z</lastmod>
+    <lastmod>2018-09-09T15:01:39.022Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/tag/index.html</loc>
     
-    <lastmod>2018-09-09T14:36:52.942Z</lastmod>
+    <lastmod>2018-09-09T15:01:26.895Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/link/index.html</loc>
+    
+    <lastmod>2018-09-09T15:01:12.528Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2018-09-09T15:00:56.079Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/project/index.html</loc>
+    
+    <lastmod>2018-09-09T15:00:37.096Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/search/index.html</loc>
+    
+    <lastmod>2018-09-09T14:59:22.181Z</lastmod>
     
   </url>
   
