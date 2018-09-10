@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="从Event Loop谈JS的运行机制 javaScript引擎是单线程  我们都知道javaScript引擎是单线程，为什么不是多线程的呢？想下javaScript的主要作用是用户的互动和DOM的操作，假定javaScript有多个线程，一个线程在DOM节点上添加，同时另一个线程在这时删除这一个节点，这时浏览器应该以哪个线程为主呢？这就会导致很复杂的同步问题。  还有一个就是HTML5提出的We">
 <meta property="og:locale" content="chinese">
-<meta property="og:image" content="https://github.com/shine-HFRao/shine-HFRao.github.io/tree/master/images/blog_images/js_event_loop.png">
-<meta property="og:image" content="https://github.com/shine-HFRao/shine-HFRao.github.io/tree/master/images/blog_images/js_event_loop2.png">
-<meta property="og:updated_time" content="2018-09-10T08:20:07.534Z">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_event_loop.png">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_event_loop2.png">
+<meta property="og:updated_time" content="2018-09-10T08:24:25.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Event_Loop">
 <meta name="twitter:description" content="从Event Loop谈JS的运行机制 javaScript引擎是单线程  我们都知道javaScript引擎是单线程，为什么不是多线程的呢？想下javaScript的主要作用是用户的互动和DOM的操作，假定javaScript有多个线程，一个线程在DOM节点上添加，同时另一个线程在这时删除这一个节点，这时浏览器应该以哪个线程为主呢？这就会导致很复杂的同步问题。  还有一个就是HTML5提出的We">
-<meta name="twitter:image" content="https://github.com/shine-HFRao/shine-HFRao.github.io/tree/master/images/blog_images/js_event_loop.png">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/js_event_loop.png">
 
   
 
@@ -251,11 +251,11 @@
 <li>js执行任务分为<strong>同步任务</strong>和<strong>异步任务</strong>，同步任务都在主线程中执行，形成一个执行栈，主线程之外还有一个任务队列（task queue），任务队列是<strong>事件触发线程</strong>管理的，只要异步任务有运行结果时，就会在任务队列中放置一个事件</li>
 <li>一旦执行栈中所有的同步任务执行完毕后，系统就才会去读取任务队列，将任务放入到执行栈中执行（<strong>任务队列是一个先进先出的数据结构</strong>）</li>
 </ul>
-<p>下图是主线程和任务队列的示意图（图片来自参考资料2中）<br><img src="https://github.com/shine-HFRao/shine-HFRao.github.io/tree/master/images/blog_images/js_event_loop.png" alt="image"></p>
+<p>下图是主线程和任务队列的示意图（图片来自参考资料2中）<br><img src="/images/blog_images/js_event_loop.png" alt="image"></p>
 <p>只要主线程空了，就会去读取”任务队列”，这就是JavaScript的运行机制。这个过程会不断重复</p>
 <blockquote>
 <h3 id="事件循环机制"><a href="#事件循环机制" class="headerlink" title="事件循环机制"></a><strong>事件循环机制</strong></h3></blockquote>
-<p>这里就直接引用一张图片来协助理解：（参考自Philip Roberts的演讲《<a href="https://vimeo.com/96425312" target="_blank" rel="noopener">Help, I’m stuck in an event-loop</a>》，图片来自参考资料2中）<br><img src="https://github.com/shine-HFRao/shine-HFRao.github.io/tree/master/images/blog_images/js_event_loop2.png" alt="image"></p>
+<p>这里就直接引用一张图片来协助理解：（参考自Philip Roberts的演讲《<a href="https://vimeo.com/96425312" target="_blank" rel="noopener">Help, I’m stuck in an event-loop</a>》，图片来自参考资料2中）<br><img src="/images/blog_images/js_event_loop2.png" alt="image"></p>
 <ul>
 <li><p>上述循环机制的核心是：<strong>js引擎线程</strong>和<strong>事件触发线程</strong></p>
 </li>
