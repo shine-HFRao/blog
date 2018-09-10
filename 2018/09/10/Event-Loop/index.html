@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Event_Loop | HFRao</title>
+  <title>从Event Loop谈JS的运行机制 | HFRao</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -18,23 +18,21 @@
   <meta name="description" content="从Event Loop谈JS的运行机制 javaScript引擎是单线程  我们都知道javaScript引擎是单线程，为什么不是多线程的呢？想下javaScript的主要作用是用户的互动和DOM的操作，假定javaScript有多个线程，一个线程在DOM节点上添加，同时另一个线程在这时删除这一个节点，这时浏览器应该以哪个线程为主呢？这就会导致很复杂的同步问题。  还有一个就是HTML5提出的We">
 <meta name="keywords" content="jsִ执行机制 时间循环机制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Event_Loop">
+<meta property="og:title" content="从Event Loop谈JS的运行机制">
 <meta property="og:url" content="http://yoursite.com/2018/09/10/Event-Loop/index.html">
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="从Event Loop谈JS的运行机制 javaScript引擎是单线程  我们都知道javaScript引擎是单线程，为什么不是多线程的呢？想下javaScript的主要作用是用户的互动和DOM的操作，假定javaScript有多个线程，一个线程在DOM节点上添加，同时另一个线程在这时删除这一个节点，这时浏览器应该以哪个线程为主呢？这就会导致很复杂的同步问题。  还有一个就是HTML5提出的We">
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/js_event_loop.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/js_event_loop2.png">
-<meta property="og:updated_time" content="2018-09-10T08:24:25.136Z">
+<meta property="og:updated_time" content="2018-09-10T08:25:21.553Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Event_Loop">
+<meta name="twitter:title" content="从Event Loop谈JS的运行机制">
 <meta name="twitter:description" content="从Event Loop谈JS的运行机制 javaScript引擎是单线程  我们都知道javaScript引擎是单线程，为什么不是多线程的呢？想下javaScript的主要作用是用户的互动和DOM的操作，假定javaScript有多个线程，一个线程在DOM节点上添加，同时另一个线程在这时删除这一个节点，这时浏览器应该以哪个线程为主呢？这就会导致很复杂的同步问题。  还有一个就是HTML5提出的We">
 <meta name="twitter:image" content="http://yoursite.com/images/blog_images/js_event_loop.png">
 
   
 
-  
-    <link rel="icon" href="/favicon.ico">
   
 
   <link href="/css/styles.css?v=c114cben" rel="stylesheet">
@@ -194,7 +192,7 @@
 <div class="content content-post CENTER">
    <article id="post-Event-Loop" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">Event_Loop</h1>
+    <h1 class="post-title">从Event Loop谈JS的运行机制</h1>
 
     <div class="article-meta">
       <span>
