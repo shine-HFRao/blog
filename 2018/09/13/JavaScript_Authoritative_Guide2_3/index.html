@@ -26,10 +26,11 @@
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Escape_Character1.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Escape_Character2.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/String_Methods.png">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/String_Methods2.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Math_Methods.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Date_Methods.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/RegExp.png">
-<meta property="og:updated_time" content="2018-09-12T17:17:00.276Z">
+<meta property="og:updated_time" content="2018-09-12T17:35:35.960Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读JavaScript权威指南（词法结构、类型、值、变量）">
 <meta name="twitter:description" content="JavaScript 权威指南（第二章词法结构）JavaScript结尾分号的问题 JavaScript 并不会在所有的换行处填补分号，只有在缺少分号就无法正确解析的时候，JavaScript 才会填补分号。换句话讲如果 当前语句 和 随后的的非空格字符 不能当一个整体来解析的话，JavaScript 就会在当前语句行的结束处填补分号。  有两个例外  第一个例外是在涉及 return、break">
@@ -260,14 +261,20 @@
 <ul>
 <li>原始类型/不可变类型：数字，字符串，布尔值，null，undefined</li>
 <li>对象类型/可变类型：对象</li>
-<li><h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a><strong>字符串类型</strong></h3></li>
 </ul>
 </li>
+</ol>
+<h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a><strong>字符串类型</strong></h3><ol>
 <li><p>在 <strong>es5</strong> 中字符串的直接量可以拆分成数行，每行必须以反斜线（\）结束</p>
 </li>
-<li><p><strong>JavaScript转义字符表</strong>：<br><img src="/images/blog_images/Escape_Character1.png" alt="image"><br><img src="/images/blog_images/Escape_Character2.png" alt="image"></p>
+<li><p><strong>JavaScript转义字符表</strong>：</p>
+<p> <img src="/images/blog_images/Escape_Character1.png" alt="image"><br> <img src="/images/blog_images/Escape_Character2.png" alt="image"></p>
 </li>
-<li><p><strong>字符串方法</strong>：<br><img src="/images/blog_images/String_Methods.png" alt="image"></p>
+<li><p><strong>字符串方法</strong>：</p>
+<p> <img src="/images/blog_images/String_Methods.png" alt="image"><br> <img src="/images/blog_images/String_Methods2.png" alt="image"></p>
+<ul>
+<li>在JavaScript中字符串是固定不变的，类似replace()和toUpperCase()的方法都返回新字符串，原字符串本身并没有变化</li>
+</ul>
 </li>
 </ol>
 <h3 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a><strong>数字类型</strong></h3><ol>
@@ -287,7 +294,11 @@
 </ol>
 <h3 id="Math对象的属性"><a href="#Math对象的属性" class="headerlink" title="Math对象的属性"></a><strong>Math对象的属性</strong></h3><p><img src="/images/blog_images/Math_Methods.png" alt="image"></p>
 <h3 id="日期与时间函数Date-简单的教程"><a href="#日期与时间函数Date-简单的教程" class="headerlink" title="日期与时间函数Date()简单的教程"></a><strong>日期与时间函数Date()简单的教程</strong></h3><p><img src="/images/blog_images/Date_Methods.png" alt="image"></p>
-<h3 id="RegExp"><a href="#RegExp" class="headerlink" title="RegExp"></a><strong>RegExp</strong></h3><p>RegExp对象定义了很多很有用的方法，字符串同样可以具有接收RegExp参数的方法，<strong>例如</strong>：<br><img src="/images/blog_images/RegExp.png" alt="image"></p>
+<h3 id="RegExp"><a href="#RegExp" class="headerlink" title="RegExp"></a><strong>RegExp</strong></h3><ol>
+<li><p>RegExp对象定义了很多很有用的方法，字符串同样可以具有接收RegExp参数的方法，<strong>例如</strong>：</p>
+<p> <img src="/images/blog_images/RegExp.png" alt="image"></p>
+</li>
+</ol>
 <h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a><strong>Boolean</strong></h3><ol>
 <li><p>下面这些值会被转化成 <strong>false</strong>:                       <strong>undefined</strong>、<strong>null</strong>、<strong>0</strong>、<strong>-0</strong>、<strong>NaN</strong>、<strong>“”</strong></p>
 </li>
@@ -297,11 +308,16 @@
 </li>
 </ol>
 <h3 id="null-和-undefined"><a href="#null-和-undefined" class="headerlink" title="null 和 undefined"></a><strong>null 和 undefined</strong></h3><ol>
-<li>null是JavaScript的 <strong>关键字</strong>，他表示一个特殊值，常用来描述 <strong>空值</strong>, <strong>typeof null 等于 “object”</strong>, 但他实际上不是一个对象， 通常认为 <strong>null</strong> 是它自有类型的唯一一个成员</li>
-<li>undefined是预定义的 <strong>全局变量</strong>（他和null不一样，他不是关键字），它的值就是 <strong>“未定义”</strong>，在es3中undefined是 <strong>可读/写</strong> 的变量，可以给他赋任意值，但在es5中undefinde <strong>只读</strong>，使用typeof运算符得到的是 “undefined” ，是undefined类型 undefined使这个类型的唯一成员</li>
-<li>null 和 undefined 相等于（====），但不严格等于（=====）</li>
-<li>null 和 undefined 都不包括任何的 <strong>属性</strong> 和 <strong>方法</strong>，使用 “.” 和 [] 来存取这两个值的成员和方法都会产生一个类型错误</li>
-<li>如果你想将他们赋值给 <strong>变量</strong> 或者 <strong>属性</strong>，或将他们作为 <strong>参数</strong> 传入函数，最佳的选择是使用 <strong>null</strong></li>
+<li><p>null是JavaScript的 <strong>关键字</strong>，他表示一个特殊值，常用来描述 <strong>空值</strong>, <strong>typeof null 等于 “object”</strong>, 但他实际上不是一个对象， 通常认为 <strong>null</strong> 是它自有类型的唯一一个成员</p>
+</li>
+<li><p>undefined是预定义的 <strong>全局变量</strong>（他和null不一样，他不是关键字），它的值就是 <strong>“未定义”</strong>，在es3中undefined是 <strong>可读/写</strong> 的变量，可以给他赋任意值，但在es5中undefinde <strong>只读</strong>，使用typeof运算符得到的是 “undefined” ，是undefined类型 undefined使这个类型的唯一成员</p>
+</li>
+<li><p>null 和 undefined 相等于（====），但不严格等于（=====）</p>
+</li>
+<li><p>null 和 undefined 都不包括任何的 <strong>属性</strong> 和 <strong>方法</strong>，使用 “.” 和 [] 来存取这两个值的成员和方法都会产生一个类型错误</p>
+</li>
+<li><p>如果你想将他们赋值给 <strong>变量</strong> 或者 <strong>属性</strong>，或将他们作为 <strong>参数</strong> 传入函数，最佳的选择是使用 <strong>null</strong></p>
+</li>
 </ol>
 
     
