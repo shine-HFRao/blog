@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>数据结构（树） | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="数据结构," />
+  
+
+  <meta name="description" content="数据结构（树）树（二叉树） 树 是一种经常用到的数据结构，用来模拟具有树状结构性质的数据集合  树里的每一个节点有一个根植和一个包含所有子节点的列表。从图的观点来看，树也可视为一个拥有 N 个节点和 N-1 条边的一个有向无环图  二叉树 是一种更为典型的树树状结构。如它名字所描述的那样，二叉树是每个节点最多有两个子树的树结构，通常子树被称作“ 左子树 ”和“ 右子树 ”。  本章目标：  理解和">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构（树）">
+<meta property="og:url" content="http://yoursite.com/2018/09/12/Data_Structure/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="数据结构（树）树（二叉树） 树 是一种经常用到的数据结构，用来模拟具有树状结构性质的数据集合  树里的每一个节点有一个根植和一个包含所有子节点的列表。从图的观点来看，树也可视为一个拥有 N 个节点和 N-1 条边的一个有向无环图  二叉树 是一种更为典型的树树状结构。如它名字所描述的那样，二叉树是每个节点最多有两个子树的树结构，通常子树被称作“ 左子树 ”和“ 右子树 ”。  本章目标：  理解和">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/Two_forked_tree.png">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/mathematical_expression.png">
+<meta property="og:updated_time" content="2018-09-12T15:29:01.913Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构（树）">
+<meta name="twitter:description" content="数据结构（树）树（二叉树） 树 是一种经常用到的数据结构，用来模拟具有树状结构性质的数据集合  树里的每一个节点有一个根植和一个包含所有子节点的列表。从图的观点来看，树也可视为一个拥有 N 个节点和 N-1 条边的一个有向无环图  二叉树 是一种更为典型的树树状结构。如它名字所描述的那样，二叉树是每个节点最多有两个子树的树结构，通常子树被称作“ 左子树 ”和“ 右子树 ”。  本章目标：  理解和">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/Two_forked_tree.png">
+
+  
+
+  
+    <link rel="icon" href="/images/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构（树）"><span class="toc-text">数据结构（树）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#树（二叉树）"><span class="toc-text">树（二叉树）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#树的遍历-介绍"><span class="toc-text">树的遍历 - 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#层序遍历-介绍"><span class="toc-text">层序遍历 - 介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料："><span class="toc-text">参考资料：</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Data_Structure" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">数据结构（树）</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/数据结构/">数据结构</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/09/12/Data_Structure/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="数据结构（树）"><a href="#数据结构（树）" class="headerlink" title="数据结构（树）"></a>数据结构（树）</h2><h3 id="树（二叉树）"><a href="#树（二叉树）" class="headerlink" title="树（二叉树）"></a><strong>树（二叉树）</strong></h3><ol>
+<li><p><strong>树</strong> 是一种经常用到的数据结构，用来模拟具有树状结构性质的数据集合</p>
+</li>
+<li><p>树里的每一个节点有一个根植和一个包含所有子节点的列表。从图的观点来看，树也可视为一个拥有 <strong>N</strong> 个节点和 <strong>N-1</strong> 条边的一个有向无环图</p>
+</li>
+<li><p><strong>二叉树</strong> 是一种更为典型的树树状结构。如它名字所描述的那样，二叉树是每个节点最多有两个子树的树结构，通常子树被称作“ <strong>左子树</strong> ”和“ <strong>右子树</strong> ”。</p>
+</li>
+<li><p>本章目标：</p>
+<ul>
+<li>理解和区分树的遍历方法</li>
+<li>能够运用 <strong>递归</strong> 方法解决树的为前序遍历、中序遍历和后序遍历问题</li>
+<li>能用运用 <strong>迭代</strong> 方法解决树的为前序遍历、中序遍历和后序遍历问题</li>
+<li>能用运用 <strong>广度优先</strong> 搜索解决树的层序遍历问题 </li>
+</ul>
+</li>
+<li><p>二叉树的结构图</p>
+<p> <img src="/images/blog_images/Two_forked_tree.png" alt="image"></p>
+<ul>
+<li>这幅图中有如下概念：<ul>
+<li>根节点：一棵树最顶部的节点</li>
+<li>内部节点：在它上面还有其它内部节点或者叶节点的节点</li>
+<li>叶节点：处于一棵树根部的节点</li>
+<li>子树：由树中的内部节点和叶节点组成</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="树的遍历-介绍"><a href="#树的遍历-介绍" class="headerlink" title="树的遍历 - 介绍"></a><strong>树的遍历 - 介绍</strong></h3><ol>
+<li><p>前序遍历： 前序遍历首先访问根节点，然后遍历左子树，最后遍历右子树。</p>
+<p> <strong>递归：</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * function TreeNode(val) &#123;</span><br><span class="line"> *     this.val = val;</span><br><span class="line"> *     this.left = this.right = null;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> * @param &#123;TreeNode&#125; root</span><br><span class="line"> * @return &#123;number[]&#125;</span><br><span class="line"> */</span><br><span class="line">var preorderTraversal = function(root, stack = []) &#123;</span><br><span class="line">    if (root) &#123;</span><br><span class="line">        stack.push(root.val);</span><br><span class="line">        preorderTraversal(root.left, stack);</span><br><span class="line">        preorderTraversal(root.right, stack);</span><br><span class="line">    &#125;</span><br><span class="line">    return stack;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>中序遍历： 中序遍历是先遍历左子树，然后访问根节点，然后遍历右子树。（通常来说，对于<strong>二叉搜索树</strong>，我们可以通过中序遍历得到一个递增的有序序列）</p>
+<p> <strong>递归：</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * function TreeNode(val) &#123;</span><br><span class="line"> *     this.val = val;</span><br><span class="line"> *     this.left = this.right = null;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> * @param &#123;TreeNode&#125; root</span><br><span class="line"> * @return &#123;number[]&#125;</span><br><span class="line"> */</span><br><span class="line">var inorderTraversal = function(root, stack = []) &#123;</span><br><span class="line">    if(root) &#123;</span><br><span class="line">        inorderTraversal(root.left, stack);</span><br><span class="line">        stack.push(root.val);</span><br><span class="line">        inorderTraversal(root.right, stack);</span><br><span class="line">    &#125;</span><br><span class="line">    return stack;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后序遍历： 后序遍历是先遍历左子树，然后遍历右子树，最后访问树的根节点。（值得注意的是，当你<strong>删除树中的节点</strong>时，删除过程将按照后序遍历的顺序进行。 也就是说，当你删除一个节点时，你将首先删除它的左节点和它的右边的节点，然后再删除节点本身。）</p>
+<p> <strong>递归：</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * function TreeNode(val) &#123;</span><br><span class="line"> *     this.val = val;</span><br><span class="line"> *     this.left = this.right = null;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> * @param &#123;TreeNode&#125; root</span><br><span class="line"> * @return &#123;number[]&#125;</span><br><span class="line"> */</span><br><span class="line">var postorderTraversal = function(root, stack = []) &#123;</span><br><span class="line">    if(root) &#123;</span><br><span class="line">        postorderTraversal(root.left, stack);</span><br><span class="line">        postorderTraversal(root.right, stack);</span><br><span class="line">        stack.push(root.val);</span><br><span class="line">    &#125;</span><br><span class="line">    return stack;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>另外，后序在数学表达中被广泛使用。 编写程序来 <strong>解析后缀表示法</strong> 更为容易。 这里是一个例子：</p>
+<p> <img src="/images/blog_images/mathematical_expression.png" alt="image"></p>
+<p> 您可以使用中序遍历轻松找出原始表达式。 但是程序处理这个表达式时并不容易，因为你必须检查操作的优先级。</p>
+<p> 如果你想对这棵树进行后序遍历，使用 <strong>栈</strong> 来处理表达式会变得更加容易。 每遇到一个操作符，就可以从栈中弹出栈顶的两个元素，计算并将结果返回到栈中。</p>
+</li>
+</ol>
+<h3 id="层序遍历-介绍"><a href="#层序遍历-介绍" class="headerlink" title="层序遍历 - 介绍"></a><strong>层序遍历 - 介绍</strong></h3><ol>
+<li><p>层序遍历就是逐层遍历树结构。</p>
+</li>
+<li><p><strong>广度优先搜索</strong> 是一种广泛运用在 <strong>树</strong> 或 <strong>图</strong> 这类数据结构中， <strong>遍历</strong> 或 <strong>搜索</strong> 的算法。 该算法从一个根节点开始，首先访问节点本身。 然后遍历它的相邻节点，其次遍历它的二级邻节点、三级邻节点，以此类推。</p>
+</li>
+<li><p>当我们在树中进行广度优先搜索时，我们访问的节点的顺序是按照层序遍历顺序的。</p>
+</li>
+<li><p>通常，我们使用一个叫做 <strong>队列</strong> 的数据结构来帮助我们做广度优先搜索</p>
+</li>
+<li><p><strong>二叉树的层次遍历（递归）</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">/ \</span><br><span class="line">9  20</span><br><span class="line">  /  \</span><br><span class="line"> 15   7</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * function TreeNode(val) &#123;</span><br><span class="line"> *     this.val = val;</span><br><span class="line"> *     this.left = this.right = null;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> * @param &#123;TreeNode&#125; root</span><br><span class="line"> * @return &#123;number[][]&#125;</span><br><span class="line"> */</span><br><span class="line">var levelOrder = function(root, index = 0, stack = []) &#123;</span><br><span class="line">    if(root)&#123;</span><br><span class="line">        if(!stack[index])&#123;</span><br><span class="line">           stack[index] = []; </span><br><span class="line">        &#125; </span><br><span class="line">        stack[index].push(root.val);</span><br><span class="line">        levelOrder(root.left, index + 1, stack);</span><br><span class="line">        levelOrder(root.right, index + 1, stack);</span><br><span class="line">    &#125;</span><br><span class="line">    return stack;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a><strong>参考资料：</strong></h2><p><a href="https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/" target="_blank" rel="noopener">https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/11/JavaScript_Authoritative_Guide/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/09/12/Data_Structure/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

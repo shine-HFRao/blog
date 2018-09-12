@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="JavaScript 权威指南（第八章函数）顶级语句：函数声明 美元符号和下划线是除了字母和数字以外的两个合法的javaScript标识符  函数声明语句并非真正的语句，ECMAScript规范只是允许它们作为顶级域名。它们可以出现在全局代码里，或者内嵌在其他的函数中，但是他们不能够出现在循环、条件判断、或者try/cache/finnally/以及width语句中。注意，此限制仅用于语句声明的形">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-11T06:37:09.749Z">
+<meta property="og:updated_time" content="2018-09-11T15:57:42.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读JavaScript 权威指南">
 <meta name="twitter:description" content="JavaScript 权威指南（第八章函数）顶级语句：函数声明 美元符号和下划线是除了字母和数字以外的两个合法的javaScript标识符  函数声明语句并非真正的语句，ECMAScript规范只是允许它们作为顶级域名。它们可以出现在全局代码里，或者内嵌在其他的函数中，但是他们不能够出现在循环、条件判断、或者try/cache/finnally/以及width语句中。注意，此限制仅用于语句声明的形">
@@ -181,7 +181,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第八章函数）"><span class="toc-text">JavaScript 权威指南（第八章函数）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#顶级语句：函数声明"><span class="toc-text">顶级语句：函数声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数表达式本身就是一个属性访问表达式"><span class="toc-text">函数表达式本身就是一个属性访问表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#arguments"><span class="toc-text">arguments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-7-函数属性、方法、构造函数"><span class="toc-text">8.7 函数属性、方法、构造函数</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第八章函数）"><span class="toc-text">JavaScript 权威指南（第八章函数）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#顶级语句：函数声明"><span class="toc-text">顶级语句：函数声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数表达式本身就是一个属性访问表达式"><span class="toc-text">函数表达式本身就是一个属性访问表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#arguments"><span class="toc-text">arguments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-7-函数属性、方法、构造函数"><span class="toc-text">8.7 函数属性、方法、构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-8-函数式编程"><span class="toc-text">8.8 函数式编程</span></a></li></ol></li></ol>
   </div>
 
 
@@ -286,6 +286,16 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var f = new Function(&quot;x&quot;, &quot;y&quot;, &quot;return x*y;&quot;);</span><br><span class="line"></span><br><span class="line">//这行代码创建一个新的函数，这个函数和通过下面代码定义的函数几乎等价</span><br><span class="line"></span><br><span class="line">var f = function (x,y)&#123; return x*y; &#125;</span><br></pre></td></tr></table></figure>
 <p>注意：Function()构造函数并不需要通过传入实参以指定函数名。就想函数直接量一样，Function()构造函数创建一个匿名函数。还有用Function()构造函数创建的函数并不是使用<strong>词法作用域</strong>，相反，函数体代码的编译总是会到顶部函数执行。</p>
 <p>我们可以将Function()构造函数认为是在全局作用域中执行的eval(),eval()可以在自己的私有作用域内定义新变量和函数，Function()构造函数在实际编程中很少会用到。</p>
+<h3 id="8-8-函数式编程"><a href="#8-8-函数式编程" class="headerlink" title="8.8 函数式编程"></a><strong>8.8 函数式编程</strong></h3><ol>
+<li><p>使用函数处理数组</p>
+</li>
+<li><p>高阶函数：所谓的高阶函数就是操作函数的函数，它接受一个或多个函数作为参数，并返回一个新函数</p>
+</li>
+<li><p>不完全函数：那一次完整的函数调用拆成对此函数调用，每次传入的参数都是完整参数的一部分，每一个拆分出的函数叫做不完全函数，每次函数调用叫做不完全调用，被称为柯里化</p>
+</li>
+<li><p>记忆：记忆只是一种编程技巧，本质上是牺牲算法的空间复杂度换取更优的时间复杂度</p>
+</li>
+</ol>
 
     
   </div>
@@ -300,7 +310,7 @@
     <a class="show pull-left" href="/2018/09/10/Event-Loop/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2018/09/12/Data_Structure/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
