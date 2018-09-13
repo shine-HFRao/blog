@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/09/14/Functional_Programming/</loc>
+    
+    <lastmod>2018-09-13T17:05:06.965Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/09/11/JavaScript_Authoritative_Guide8/</loc>
+    
+    <lastmod>2018-09-13T16:11:31.639Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/09/13/JavaScript_Authoritative_Guide2_3/</loc>
     
     <lastmod>2018-09-13T15:41:52.044Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>http://yoursite.com/2018/08/15/hello-world/</loc>
     
     <lastmod>2018-09-13T03:37:53.622Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/09/11/JavaScript_Authoritative_Guide8/</loc>
-    
-    <lastmod>2018-09-13T02:28:58.588Z</lastmod>
     
   </url>
   
