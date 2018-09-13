@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Math_Methods.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Date_Methods.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/RegExp.png">
-<meta property="og:updated_time" content="2018-09-13T02:29:12.052Z">
+<meta property="og:updated_time" content="2018-09-13T15:41:52.044Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再读JavaScript权威指南（词法结构、类型、值、变量）">
 <meta name="twitter:description" content="JavaScript 权威指南（第二章词法结构）JavaScript结尾分号的问题 JavaScript 并不会在所有的换行处填补分号，只有在缺少分号就无法正确解析的时候，JavaScript 才会填补分号。换句话讲如果 当前语句 和 随后的的非空格字符 不能当一个整体来解析的话，JavaScript 就会在当前语句行的结束处填补分号。  有两个例外  第一个例外是在涉及 return、break">
@@ -189,7 +189,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第二章词法结构）"><span class="toc-text">JavaScript 权威指南（第二章词法结构）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript结尾分号的问题"><span class="toc-text">JavaScript结尾分号的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第三章类型，值，变量）"><span class="toc-text">JavaScript 权威指南（第三章类型，值，变量）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串类型"><span class="toc-text">字符串类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字类型"><span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math对象的属性"><span class="toc-text">Math对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日期与时间函数Date-简单的教程"><span class="toc-text">日期与时间函数Date()简单的教程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegExp"><span class="toc-text">RegExp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boolean"><span class="toc-text">Boolean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null-和-undefined"><span class="toc-text">null 和 undefined</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料："><span class="toc-text">参考资料：</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第二章词法结构）"><span class="toc-text">JavaScript 权威指南（第二章词法结构）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript结尾分号的问题"><span class="toc-text">JavaScript结尾分号的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第三章类型，值，变量）"><span class="toc-text">JavaScript 权威指南（第三章类型，值，变量）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串类型"><span class="toc-text">字符串类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字类型"><span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math对象的属性"><span class="toc-text">Math对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日期与时间函数Date-简单的教程"><span class="toc-text">日期与时间函数Date()简单的教程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegExp"><span class="toc-text">RegExp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boolean"><span class="toc-text">Boolean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null-和-undefined"><span class="toc-text">null 和 undefined</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局对象-、包装对象、值的比较"><span class="toc-text">全局对象 、包装对象、值的比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料："><span class="toc-text">参考资料：</span></a></li></ol>
   </div>
 
 
@@ -317,6 +317,21 @@
 <li><p>null 和 undefined 都不包括任何的 <strong>属性</strong> 和 <strong>方法</strong>，使用 “.” 和 [] 来存取这两个值的成员和方法都会产生一个类型错误</p>
 </li>
 <li><p>如果你想将他们赋值给 <strong>变量</strong> 或者 <strong>属性</strong>，或将他们作为 <strong>参数</strong> 传入函数，最佳的选择是使用 <strong>null</strong></p>
+</li>
+</ol>
+<h3 id="全局对象-、包装对象、值的比较"><a href="#全局对象-、包装对象、值的比较" class="headerlink" title="全局对象 、包装对象、值的比较"></a><strong>全局对象 、包装对象、值的比较</strong></h3><ol>
+<li><p>当JavaScript解析器启动时（或者任何一个Web浏览器家在新页面的时候），它将创建一个新的全局对象，并给他一组定义的初始属性：全局属性、全局对象、全局函数、构造函数</p>
+</li>
+<li><p>包装对象注意的两点：</p>
+<ul>
+<li><p>当一个字符串引用是一属性时，会被JavaScript将字符串通过new String()的方式转换成 <strong>临时对象</strong>，一旦引用结束，这个临时对象就会销毁</p>
+</li>
+<li><p>JavaScript会在必要时将包装对象转换成原始值（但不总是）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var str = &apos;xixi&apos;;</span><br><span class="line">var str1 = new String(str);</span><br><span class="line">console.log(str == str1)    //true</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>原始值的比较是 <strong>值</strong> 的比较，对象的比较是 <strong>引用</strong> 的比较</p>
 </li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a><strong>参考资料：</strong></h2><p>《JavaScript权威指南》第六版  David Flanagan 著</p>
