@@ -15,18 +15,18 @@
     <meta name="keywords" content="html/css," />
   
 
-  <meta name="description" content="本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程 BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的margin会失效，padding-top会失效   BFC BFC（">
+  <meta name="description" content="BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的 margin 会失效，padding-top 会失效   BFC BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则  如何 触发 一个盒子bfc：  Position">
 <meta name="keywords" content="html&#x2F;css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BFC、margin塌陷问题">
 <meta property="og:url" content="http://yoursite.com/2018/09/15/HTML_Important/index.html">
 <meta property="og:site_name" content="HFRao">
-<meta property="og:description" content="本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程 BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的margin会失效，padding-top会失效   BFC BFC（">
+<meta property="og:description" content="BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的 margin 会失效，padding-top 会失效   BFC BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则  如何 触发 一个盒子bfc：  Position">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-15T07:18:21.672Z">
+<meta property="og:updated_time" content="2018-09-15T07:21:52.847Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BFC、margin塌陷问题">
-<meta name="twitter:description" content="本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程 BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的margin会失效，padding-top会失效   BFC BFC（">
+<meta name="twitter:description" content="BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的 margin 会失效，padding-top 会失效   BFC BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则  如何 触发 一个盒子bfc：  Position">
 
   
 
@@ -232,11 +232,10 @@
 
   <div class="article-content">
     
-      <p>本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程</p>
-<h2 id="BFC、margin塌陷问题"><a href="#BFC、margin塌陷问题" class="headerlink" title="BFC、margin塌陷问题"></a><strong>BFC、margin塌陷问题</strong></h2><h3 id="块级元素、行级元素"><a href="#块级元素、行级元素" class="headerlink" title="块级元素、行级元素"></a>块级元素、行级元素</h3><ol>
+      <h2 id="BFC、margin塌陷问题"><a href="#BFC、margin塌陷问题" class="headerlink" title="BFC、margin塌陷问题"></a><strong>BFC、margin塌陷问题</strong></h2><h3 id="块级元素、行级元素"><a href="#块级元素、行级元素" class="headerlink" title="块级元素、行级元素"></a><strong>块级元素、行级元素</strong></h3><ol>
 <li><p>块级元素：独占一行，可以设置widh，可以设置height</p>
 </li>
-<li><p>行级元素：不可以设置widh，可以设置height，并且在垂直方向的margin会失效，padding-top会失效</p>
+<li><p>行级元素：不可以设置widh，可以设置height，并且在垂直方向的 <strong>margin</strong> 会失效，<strong>padding-top</strong> 会失效</p>
 </li>
 </ol>
 <h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a><strong>BFC</strong></h2><ol>
@@ -246,9 +245,11 @@
 <ul>
 <li>Position : absolute/fixed;  display : inline-block;  float : left/right         （ <strong>用于父子级，也可以用于兄弟结构之间</strong> ）</li>
 <li>overflow : hidden;（ <strong>用于父子级的父级</strong> ）</li>
-<li>可以解决margin塌陷问题，但是应该针对着使用，所以叫弥补不叫解决margin塌陷  <h2 id="margin塌陷问题"><a href="#margin塌陷问题" class="headerlink" title="margin塌陷问题"></a><strong>margin塌陷问题</strong></h2></li>
+<li>可以解决margin塌陷问题，但是应该针对着使用，所以叫弥补不叫解决margin塌陷 </li>
 </ul>
 </li>
+</ol>
+<h2 id="margin塌陷问题"><a href="#margin塌陷问题" class="headerlink" title="margin塌陷问题"></a><strong>margin塌陷问题</strong></h2><ol>
 <li><p>垂直方向的 margin 父子结构（或 兄弟结构 ）是结合到一起的，他俩会取 <strong>最大</strong> 的那个值</p>
 </li>
 <li><p>折叠的结果为：</p>
