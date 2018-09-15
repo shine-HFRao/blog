@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-15T07:21:52.847Z</updated>
+  <updated>2018-09-15T08:42:43.803Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2018/09/15/HTML_Important/"/>
     <id>http://yoursite.com/2018/09/15/HTML_Important/</id>
     <published>2018-09-15T06:23:44.094Z</published>
-    <updated>2018-09-15T07:21:52.847Z</updated>
+    <updated>2018-09-15T08:42:43.803Z</updated>
     
     <content type="html"><![CDATA[<h2 id="BFC、margin塌陷问题"><a href="#BFC、margin塌陷问题" class="headerlink" title="BFC、margin塌陷问题"></a><strong>BFC、margin塌陷问题</strong></h2><h3 id="块级元素、行级元素"><a href="#块级元素、行级元素" class="headerlink" title="块级元素、行级元素"></a><strong>块级元素、行级元素</strong></h3><ol><li><p>块级元素：独占一行，可以设置widh，可以设置height</p></li><li><p>行级元素：不可以设置widh，可以设置height，并且在垂直方向的 <strong>margin</strong> 会失效，<strong>padding-top</strong> 会失效</p></li></ol><h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a><strong>BFC</strong></h2><ol><li><p>BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则</p></li><li><p>如何 <strong>触发</strong> 一个盒子bfc：</p><ul><li>Position : absolute/fixed;  display : inline-block;  float : left/right         （ <strong>用于父子级，也可以用于兄弟结构之间</strong> ）</li><li>overflow : hidden;（ <strong>用于父子级的父级</strong> ）</li><li>可以解决margin塌陷问题，但是应该针对着使用，所以叫弥补不叫解决margin塌陷 </li></ul></li></ol><h2 id="margin塌陷问题"><a href="#margin塌陷问题" class="headerlink" title="margin塌陷问题"></a><strong>margin塌陷问题</strong></h2><ol><li><p>垂直方向的 margin 父子结构（或 兄弟结构 ）是结合到一起的，他俩会取 <strong>最大</strong> 的那个值</p></li><li><p>折叠的结果为：</p><ul><li>两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值。</li><li>两个相邻的外边距都是负数时，折叠结果是两者绝对值的较大值。</li><li>两个外边距一正一负时，折叠结果是两者的 <strong>相加</strong> 的和。</li></ul></li><li><p>解决的方法有：<br>给他们加 <strong>border</strong>（不专业），还有一种叫 <strong>BFC</strong>（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则</p></li></ol>]]></content>
     
