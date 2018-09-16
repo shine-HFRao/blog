@@ -30,7 +30,8 @@
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Math_Methods.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Date_Methods.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/RegExp.png">
-<meta property="og:updated_time" content="2018-09-13T15:41:52.044Z">
+<meta property="og:image" content="http://note.youdao.com/Different_ToString.png">
+<meta property="og:updated_time" content="2018-09-16T16:46:35.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再读JavaScript权威指南（词法结构、类型、值、变量）">
 <meta name="twitter:description" content="JavaScript 权威指南（第二章词法结构）JavaScript结尾分号的问题 JavaScript 并不会在所有的换行处填补分号，只有在缺少分号就无法正确解析的时候，JavaScript 才会填补分号。换句话讲如果 当前语句 和 随后的的非空格字符 不能当一个整体来解析的话，JavaScript 就会在当前语句行的结束处填补分号。  有两个例外  第一个例外是在涉及 return、break">
@@ -189,7 +190,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第二章词法结构）"><span class="toc-text">JavaScript 权威指南（第二章词法结构）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript结尾分号的问题"><span class="toc-text">JavaScript结尾分号的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第三章类型，值，变量）"><span class="toc-text">JavaScript 权威指南（第三章类型，值，变量）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串类型"><span class="toc-text">字符串类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字类型"><span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math对象的属性"><span class="toc-text">Math对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日期与时间函数Date-简单的教程"><span class="toc-text">日期与时间函数Date()简单的教程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegExp"><span class="toc-text">RegExp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boolean"><span class="toc-text">Boolean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null-和-undefined"><span class="toc-text">null 和 undefined</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局对象-、包装对象、值的比较"><span class="toc-text">全局对象 、包装对象、值的比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料："><span class="toc-text">参考资料：</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第二章词法结构）"><span class="toc-text">JavaScript 权威指南（第二章词法结构）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript结尾分号的问题"><span class="toc-text">JavaScript结尾分号的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-权威指南（第三章类型，值，变量）"><span class="toc-text">JavaScript 权威指南（第三章类型，值，变量）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串类型"><span class="toc-text">字符串类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字类型"><span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math对象的属性"><span class="toc-text">Math对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日期与时间函数Date-简单的教程"><span class="toc-text">日期与时间函数Date()简单的教程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegExp"><span class="toc-text">RegExp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boolean"><span class="toc-text">Boolean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null-和-undefined"><span class="toc-text">null 和 undefined</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局对象-、包装对象、值的比较"><span class="toc-text">全局对象 、包装对象、值的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串到对象的转换：toSting-valueOf"><span class="toc-text">字符串到对象的转换：toSting(), valueOf()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料："><span class="toc-text">参考资料：</span></a></li></ol>
   </div>
 
 
@@ -334,7 +335,23 @@
 <li><p>原始值的比较是 <strong>值</strong> 的比较，对象的比较是 <strong>引用</strong> 的比较</p>
 </li>
 </ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a><strong>参考资料：</strong></h2><p>《JavaScript权威指南》第六版  David Flanagan 著</p>
+<h3 id="字符串到对象的转换：toSting-valueOf"><a href="#字符串到对象的转换：toSting-valueOf" class="headerlink" title="字符串到对象的转换：toSting(), valueOf()"></a><strong>字符串到对象的转换：toSting(), valueOf()</strong></h3><ol>
+<li><p>以下数组类、函数类、日期类、RegExp类的 <strong>toString()</strong> 方法</p>
+<p> <img src="http://note.youdao.com/Different_ToString.png" alt="image"></p>
+</li>
+<li><p><strong>valueof()</strong>:</p>
+<p> 调用valueOf()函数时，如果对象存在任意的原始值（比如包装类对象），他就默认将对象转化为表示他的原始值，大对数的对象无法真正表示一个原始值，因此默认的valueOf()方法返回对象本身（如： 数组、函数、正则表达式），日期类定义的返回它的一个内部表示：1970年1月1日依赖的毫秒数</p>
+</li>
+<li><p>JavaScript从 <strong>对象到字符串的转换</strong> 经过以下步骤：</p>
+<ul>
+<li>如果对象具有toString()方法的话，则调用这个方法，如果返回的一个原始值，JavaScript会将它转化为字符串（如果本身不是字符串的话），并返回这个字符串结果</li>
+<li>如果没有toString()方法，或者这个方法返回一个原始值，JavaScript就会调用valueOf()方法（前提是存在）如果返回的一个原始值，JavaScript会将它转化为字符串（如果本身不是字符串的话）</li>
+<li>对象转换成数字的过程，JavaScript做了同样的事情，只是他首先会尝试valueOf()方法<br><strong>总结</strong></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a><strong>参考资料：</strong></h2><p>《JavaScript权威指南》第六版  David Flanagan 著</p>
 
     
   </div>
