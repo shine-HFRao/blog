@@ -7,26 +7,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>BFC、margin塌陷问题 | HFRao</title>
+  <title>再读JavaScript权威指南 | HFRao</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="html/css," />
+    <meta name="keywords" content="JavaScript权威指南," />
   
 
-  <meta name="description" content="BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的 margin 会失效，padding-top 会失效   BFC BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则  如何 触发 一个盒子bfc：  Position">
-<meta name="keywords" content="html&#x2F;css">
+  <meta name="keywords" content="JavaScript权威指南">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BFC、margin塌陷问题">
-<meta property="og:url" content="http://yoursite.com/2018/09/15/HTML_Important/index.html">
+<meta property="og:title" content="再读JavaScript权威指南">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/JavaScript_Authoritative_Guide4/index.html">
 <meta property="og:site_name" content="HFRao">
-<meta property="og:description" content="BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的 margin 会失效，padding-top 会失效   BFC BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则  如何 触发 一个盒子bfc：  Position">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-16T05:42:13.574Z">
+<meta property="og:updated_time" content="2018-09-16T15:41:52.427Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BFC、margin塌陷问题">
-<meta name="twitter:description" content="BFC、margin塌陷问题块级元素、行级元素 块级元素：独占一行，可以设置widh，可以设置height  行级元素：不可以设置widh，可以设置height，并且在垂直方向的 margin 会失效，padding-top 会失效   BFC BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则  如何 触发 一个盒子bfc：  Position">
+<meta name="twitter:title" content="再读JavaScript权威指南">
 
   
 
@@ -179,22 +176,17 @@
 </div>
 
 
-  <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC、margin塌陷问题"><span class="toc-text">BFC、margin塌陷问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#块级元素、行级元素"><span class="toc-text">块级元素、行级元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC"><span class="toc-text">BFC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#margin塌陷问题"><span class="toc-text">margin塌陷问题</span></a></li></ol></li></ol>
-  </div>
-
 
 
 <div class="content content-post CENTER">
-   <article id="post-HTML_Important" class="article article-type-post" itemprop="blogPost">
+   <article id="post-JavaScript_Authoritative_Guide4" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">BFC、margin塌陷问题</h1>
+    <h1 class="post-title">再读JavaScript权威指南</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2018.09.15</span>
+        <span>2018.09.16</span>
       </span>
 
       
@@ -207,7 +199,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/html-css/">html/css</a>
+    <a class="article-category-link" href="/categories/JavaScript权威指南/">JavaScript权威指南</a>
   </span>
 
 
@@ -215,7 +207,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="http://www.forsigner.com/2018/09/15/HTML_Important/#disqus_thread"></a>
+          <a href="http://www.forsigner.com/2018/09/16/JavaScript_Authoritative_Guide4/#disqus_thread"></a>
         </span>
       
 
@@ -232,37 +224,7 @@
 
   <div class="article-content">
     
-      <h2 id="BFC、margin塌陷问题"><a href="#BFC、margin塌陷问题" class="headerlink" title="BFC、margin塌陷问题"></a><strong>BFC、margin塌陷问题</strong></h2><h3 id="块级元素、行级元素"><a href="#块级元素、行级元素" class="headerlink" title="块级元素、行级元素"></a><strong>块级元素、行级元素</strong></h3><ol>
-<li><p>块级元素：独占一行，可以设置widh，可以设置height</p>
-</li>
-<li><p>行级元素：不可以设置widh，可以设置height，并且在垂直方向的 <strong>margin</strong> 会失效，<strong>padding-top</strong> 会失效</p>
-</li>
-</ol>
-<h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a><strong>BFC</strong></h2><ol>
-<li><p>BFC（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则</p>
-</li>
-<li><p>如何 <strong>触发</strong> 一个盒子bfc：</p>
-<ul>
-<li>Position : absolute/fixed;  display : inline-block;  float : left/right         （ <strong>用于父子级，也可以用于兄弟结构之间</strong> ）</li>
-<li>overflow : hidden;（ <strong>用于父子级的父级</strong> ）</li>
-<li>可以解决margin塌陷问题，但是应该针对着使用，所以叫弥补不叫解决margin塌陷 </li>
-</ul>
-</li>
-</ol>
-<h3 id="margin塌陷问题"><a href="#margin塌陷问题" class="headerlink" title="margin塌陷问题"></a><strong>margin塌陷问题</strong></h3><ol>
-<li><p>垂直方向的 margin 父子结构（或 兄弟结构 ）是结合到一起的，他俩会取 <strong>最大</strong> 的那个值</p>
-</li>
-<li><p>折叠的结果为：</p>
-<ul>
-<li>两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值。</li>
-<li>两个相邻的外边距都是负数时，折叠结果是两者绝对值的较大值。</li>
-<li>两个外边距一正一负时，折叠结果是两者的 <strong>相加</strong> 的和。</li>
-</ul>
-</li>
-<li><p>解决的方法有：<br>给他们加 <strong>border</strong>（不专业），还有一种叫 <strong>BFC</strong>（block ，format，context）叫做块级格式化上下文，可以简单理解为改变语法规则</p>
-</li>
-</ol>
-
+      
     
   </div>
 
@@ -273,10 +235,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/09/14/Functional_Programming/">
+    <a class="show pull-left" href="/2018/09/15/HTML_Important/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/09/16/JavaScript_Authoritative_Guide4/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -405,7 +367,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/09/15/HTML_Important/';
+    var disqus_url = 'http://yoursite.com/2018/09/16/JavaScript_Authoritative_Guide4/';
     
     (function(){
       var dsq = document.createElement('script');
