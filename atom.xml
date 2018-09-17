@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-16T15:41:52.427Z</updated>
+  <updated>2018-09-17T03:54:58.521Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>sessionStorage, localStorage, cookie</title>
+    <link href="http://yoursite.com/2018/09/17/Browser_Cache/"/>
+    <id>http://yoursite.com/2018/09/17/Browser_Cache/</id>
+    <published>2018-09-17T03:50:07.146Z</published>
+    <updated>2018-09-17T03:54:58.521Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="sessionStorage-localStorage-cookie"><a href="#sessionStorage-localStorage-cookie" class="headerlink" title="sessionStorage, localStorage, cookie"></a>sessionStorage, localStorage, cookie</h2><p>三个存储的共同点：都存储在浏览器端，都需符合同源策略</p><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a><strong>cookie</strong></h3><ol><li><p>主要用于用户的身份信息存储，cookie的内容会在请求的时候传递给服务器</p></li><li><p>cookie数据还有path路径的概念，可以限制cookie只属于某个路径下</p></li><li><p>cookie可以设置过期时间，当超过时间期限后cookie就会自动消失</p></li><li><p>cookie没有增删改查对应的api，但是我们可以自己封装一个</p></li><li><p>cookie的存储大小在 4KB 左右，很多浏览器都限制一个站点最多保存20个cookie</p></li></ol><h3 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a><strong>sessionStorage</strong></h3><ol><li><p>它的生命周期同标签页的生命周期，当当前标签页被关闭，他存储的数据将被销毁</p></li><li><p>sessionStorage的存储大小 5MB 左右</p></li></ol><h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a><strong>localStorage</strong></h3><ol><li><p>localStorage存储的数据是永久性的，不主动删除数据，数据永远存在</p></li><li><p>localStorage的存储大小 5MB 左右</p></li><li><p>sessionStorage和localStorage有增删改查的api, 例如setItem、getItem和removeItem等</p><ul><li>setItem存储value, getItem获取value, removeItem删除key, clear清除所有的key/value</li><li>web Storage不但可以用自身的setItem,getItem等方便存取，也可以像普通对象一样用点(.)操作符，及[]的方式进行数据存储及读取</li><li>sessionStorage和localStorage提供的key()和length可以方便的实现存储的数据遍历</li><li>storage只能存储字符串的数据，对于数组和对象可以用JSON来转换成字符串</li></ul></li></ol><h3 id="本地大容量存储WebSql，IndexDB"><a href="#本地大容量存储WebSql，IndexDB" class="headerlink" title="本地大容量存储WebSql，IndexDB"></a><strong>本地大容量存储WebSql，IndexDB</strong></h3><ol><li>WebSql: 关系型数据库，被W3C标准废弃</li><li>IndexDB: 非关系型数据库，大小 50MB 左右</li></ol><h3 id="浏览器缓存还有-应用缓存，PWA和往返缓存，-在这里就不描述了"><a href="#浏览器缓存还有-应用缓存，PWA和往返缓存，-在这里就不描述了" class="headerlink" title="浏览器缓存还有 应用缓存，PWA和往返缓存， 在这里就不描述了"></a><strong>浏览器缓存还有 应用缓存，PWA和往返缓存， 在这里就不描述了</strong></h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a><strong>参考资料：</strong></h2><p><a href="https://segmentfault.com/a/1190000015809379#articleHeader6" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015809379#articleHeader6</a><br><a href="http://hjingren.cn/2017/04/26/%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8sessionStorage%E4%B8%8ElocalStorage/" target="_blank" rel="noopener">http://hjingren.cn/2017/04/26/%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8sessionStorage%E4%B8%8ElocalStorage/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;sessionStorage-localStorage-cookie&quot;&gt;&lt;a href=&quot;#sessionStorage-localStorage-cookie&quot; class=&quot;headerlink&quot; title=&quot;sessionStorage, localSto
+      
+    
+    </summary>
+    
+      <category term="网络" scheme="http://yoursite.com/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="网络" scheme="http://yoursite.com/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>再读JavaScript权威指南</title>
