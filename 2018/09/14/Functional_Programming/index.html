@@ -23,10 +23,12 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="函数式编程纯函数 纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数是健壮的，改变执行次序不会对系统造成影响，因此纯函数的操作可以并行执行   函数记忆函数 针对的是需要用到之前运算结果的，比如：  1234567891011121314var cache = &amp;#123;&amp;#1">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-14T09:44:25.658Z">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/Ajax_Curry.png">
+<meta property="og:updated_time" content="2018-09-17T09:43:34.130Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="函数式编程">
 <meta name="twitter:description" content="函数式编程纯函数 纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数是健壮的，改变执行次序不会对系统造成影响，因此纯函数的操作可以并行执行   函数记忆函数 针对的是需要用到之前运算结果的，比如：  1234567891011121314var cache = &amp;#123;&amp;#1">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/Ajax_Curry.png">
 
   
 
@@ -266,14 +268,13 @@
 <li><p>实现柯里化-期待固定数量参数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Curry(fn, length)&#123;</span><br><span class="line">    var length = length || fn.length;</span><br><span class="line">    return function ()&#123;</span><br><span class="line">        if(arguments.length &lt; length)&#123;</span><br><span class="line">            var combined = [fn].concat(Array.prototype.slice.call(arguments, 0));</span><br><span class="line">            return Curry(FixedParamCurry.apply(this, combined), length - arguments.length);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return fn.apply(this, arguments)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>应用柯里化：比如在ajax中对于同一个地址参数不同的post的请求，就可以使用柯里化，<strong>流程剖析</strong>：</p>
+<p><img src="/images/blog_images/Ajax_Curry.png" alt="image"></p>
+</li>
 </ul>
 </li>
 </ol>
-<pre><code>- 应用柯里化：比如在ajax中对于同一个地址参数不同的post的请求，就可以使用柯里化
-，**流程剖析**：
-
-![image](/images/blog_images/Ajax_Curry.png)
-</code></pre><h3 id="惰性函数"><a href="#惰性函数" class="headerlink" title="惰性函数"></a><strong>惰性函数</strong></h3><ol>
+<h3 id="惰性函数"><a href="#惰性函数" class="headerlink" title="惰性函数"></a><strong>惰性函数</strong></h3><ol>
 <li><p>针对于优化频繁使用的函数</p>
 </li>
 <li><p>常用于，函数库的编写，单例模式之中</p>
