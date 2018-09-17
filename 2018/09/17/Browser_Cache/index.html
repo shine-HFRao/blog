@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="sessionStorage, localStorage, cookie三个存储的共同点：都存储在浏览器端，都需符合同源策略 cookie 主要用于用户的身份信息存储，cookie的内容会在请求的时候传递给服务器  cookie数据还有path路径的概念，可以限制cookie只属于某个路径下  cookie可以设置过期时间，当超过时间期限后cookie就会自动消失  cookie没有增删改查对应的">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-17T05:22:00.194Z">
+<meta property="og:updated_time" content="2018-09-17T07:19:07.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器缓存sessionStorage, localStorage, cookie">
 <meta name="twitter:description" content="sessionStorage, localStorage, cookie三个存储的共同点：都存储在浏览器端，都需符合同源策略 cookie 主要用于用户的身份信息存储，cookie的内容会在请求的时候传递给服务器  cookie数据还有path路径的概念，可以限制cookie只属于某个路径下  cookie可以设置过期时间，当超过时间期限后cookie就会自动消失  cookie没有增删改查对应的">
@@ -243,6 +243,9 @@
 <li><p>cookie没有增删改查对应的api，但是我们可以自己封装一个</p>
 </li>
 <li><p>cookie的存储大小在 4KB 左右，很多浏览器都限制一个站点最多保存20个cookie</p>
+</li>
+<li><p>封装的 manageCookie 的方法</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">var manageCookie = &#123;</span><br><span class="line">    setCookie: function (name, age, time) &#123;</span><br><span class="line">        document.cookie = name + &apos;=&apos; + value + &apos;; max-age=&apos; + time;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeCookie: function (name) &#123;</span><br><span class="line">        return this.setCookie(name, &apos;&apos;, -1);</span><br><span class="line">    &#125;,</span><br><span class="line">    getCookie: function (name, callback) &#123;</span><br><span class="line">        var cookieStrArr = document.cookie.split(&apos;; &apos;);</span><br><span class="line">        var len = cookieStrArr.length;</span><br><span class="line">        for (var i = 0; i &lt; len; i++) &#123;</span><br><span class="line">            var cookieName = cookieStrArr[i].split(&apos;=&apos;)[0];</span><br><span class="line">            if (cookieName == name) &#123;</span><br><span class="line">                callback(cookieStrArr[i].split(&apos;=&apos;)[1]);</span><br><span class="line">                return this;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        callback(null);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a><strong>sessionStorage</strong></h3><ol>
