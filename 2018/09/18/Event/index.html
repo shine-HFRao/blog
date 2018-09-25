@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>事件 | HFRao</title>
+  <title>事件, 事件处理模型, 事件流, 事件委托 | HFRao</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -18,16 +18,16 @@
   <meta name="description" content="事件如何绑定事件(事件是天生自然有的)1.ele.onxxx = function (event) {}  兼容性很好，但是一个元素只能绑定一个处理程序 基本等同于写在HTML行间上（两种都称为句柄的绑定方式） 程序this指向是dom元素本身  2.ele.addEventListener(type, fn, false);  IE9 以下不兼容，可以为一个事件绑定多个处理程序，并且按绑定的顺序">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="事件">
+<meta property="og:title" content="事件, 事件处理模型, 事件流, 事件委托">
 <meta property="og:url" content="http://yoursite.com/2018/09/18/Event/index.html">
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="事件如何绑定事件(事件是天生自然有的)1.ele.onxxx = function (event) {}  兼容性很好，但是一个元素只能绑定一个处理程序 基本等同于写在HTML行间上（两种都称为句柄的绑定方式） 程序this指向是dom元素本身  2.ele.addEventListener(type, fn, false);  IE9 以下不兼容，可以为一个事件绑定多个处理程序，并且按绑定的顺序">
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Event1.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Event2.png">
-<meta property="og:updated_time" content="2018-09-18T06:36:58.842Z">
+<meta property="og:updated_time" content="2018-09-19T02:36:18.367Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="事件">
+<meta name="twitter:title" content="事件, 事件处理模型, 事件流, 事件委托">
 <meta name="twitter:description" content="事件如何绑定事件(事件是天生自然有的)1.ele.onxxx = function (event) {}  兼容性很好，但是一个元素只能绑定一个处理程序 基本等同于写在HTML行间上（两种都称为句柄的绑定方式） 程序this指向是dom元素本身  2.ele.addEventListener(type, fn, false);  IE9 以下不兼容，可以为一个事件绑定多个处理程序，并且按绑定的顺序">
 <meta name="twitter:image" content="http://yoursite.com/images/blog_images/Event1.png">
 
@@ -192,7 +192,7 @@
 <div class="content content-post CENTER">
    <article id="post-Event" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">事件</h1>
+    <h1 class="post-title">事件, 事件处理模型, 事件流, 事件委托</h1>
 
     <div class="article-meta">
       <span>
@@ -279,7 +279,7 @@
 <li><p>触发顺序，先捕获，后冒泡，focus blur change submit reset select load unload等事件不冒泡</p>
 </li>
 <li><p>当一个对象的一个事件类型绑定两个函数是，一个是冒泡，一个是捕获，执行的顺序是先捕获后冒泡：（执行结果中box在boxBubble下面是因为一个对象的一个事件类型绑定不同的函数，谁先绑定谁先执行）注意：冒泡的开始不属于冒泡是执行，捕获的最终不属于捕获是执行，如下：</p>
-<p> <img src="/images/blog_images/Event1.png" alt="image"><img src="/images/blog_images/Event2.png" alt="image"></p>
+<p> <img src="/images/blog_images/Event1.png" alt="image">    <img src="/images/blog_images/Event2.png" alt="image"></p>
 </li>
 </ol>
 <h3 id="取消冒泡和阻止默认事件"><a href="#取消冒泡和阻止默认事件" class="headerlink" title="取消冒泡和阻止默认事件"></a><strong>取消冒泡和阻止默认事件</strong></h3><ol>
@@ -321,7 +321,7 @@
 </li>
 </ol>
 <h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a><strong>事件委托</strong></h3><ol>
-<li><p>利用事件冒泡，和事件源对象进行处理<br>优点：</p>
+<li><p>利用事件冒泡，和事件源对象进行处理</p>
 </li>
 <li><p>优点：</p>
 <ul>
@@ -346,7 +346,7 @@
     <a class="show pull-left" href="/2018/09/18/precompile/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2018/09/21/Design_Pattern/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

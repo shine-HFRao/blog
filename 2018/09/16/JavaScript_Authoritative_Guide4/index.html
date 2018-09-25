@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>再读JavaScript权威指南 | HFRao</title>
+  <title>再读JavaScript权威指南(运算符) | HFRao</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,15 +15,18 @@
     <meta name="keywords" content="JavaScript权威指南," />
   
 
-  <meta name="keywords" content="JavaScript权威指南">
+  <meta name="description" content="再读JavaScript权威指南(第四章运算符)eval() eval()是一个函数，但是该语言的设计者和解析器的作则对其实施了更多的限制，使其看起来更像字符串 eval()只有一个参数，如果传入的不是字符串，他就会返回这个参数，如果是字符串，它会把字符串当作JavaScript代码进行编译 eval()最重要的是，它使用了调用它的变量的作用域，如果在最顶层的代码中调用eval()，他会作用于全局">
+<meta name="keywords" content="JavaScript权威指南">
 <meta property="og:type" content="article">
-<meta property="og:title" content="再读JavaScript权威指南">
+<meta property="og:title" content="再读JavaScript权威指南(运算符)">
 <meta property="og:url" content="http://yoursite.com/2018/09/16/JavaScript_Authoritative_Guide4/index.html">
 <meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="再读JavaScript权威指南(第四章运算符)eval() eval()是一个函数，但是该语言的设计者和解析器的作则对其实施了更多的限制，使其看起来更像字符串 eval()只有一个参数，如果传入的不是字符串，他就会返回这个参数，如果是字符串，它会把字符串当作JavaScript代码进行编译 eval()最重要的是，它使用了调用它的变量的作用域，如果在最顶层的代码中调用eval()，他会作用于全局">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-16T15:41:52.427Z">
+<meta property="og:updated_time" content="2018-09-23T04:45:50.613Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="再读JavaScript权威指南">
+<meta name="twitter:title" content="再读JavaScript权威指南(运算符)">
+<meta name="twitter:description" content="再读JavaScript权威指南(第四章运算符)eval() eval()是一个函数，但是该语言的设计者和解析器的作则对其实施了更多的限制，使其看起来更像字符串 eval()只有一个参数，如果传入的不是字符串，他就会返回这个参数，如果是字符串，它会把字符串当作JavaScript代码进行编译 eval()最重要的是，它使用了调用它的变量的作用域，如果在最顶层的代码中调用eval()，他会作用于全局">
 
   
 
@@ -176,12 +179,17 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#再读JavaScript权威指南-第四章运算符"><span class="toc-text">再读JavaScript权威指南(第四章运算符)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eval"><span class="toc-text">eval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#条件运算符-typeof运算符-delete运算符-void运算符-逗号运算符"><span class="toc-text">条件运算符(?:) typeof运算符 delete运算符 void运算符 逗号运算符(,)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再读JavaScript权威指南-第五章语句"><span class="toc-text">再读JavaScript权威指南(第五章语句)</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
    <article id="post-JavaScript_Authoritative_Guide4" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">再读JavaScript权威指南</h1>
+    <h1 class="post-title">再读JavaScript权威指南(运算符)</h1>
 
     <div class="article-meta">
       <span>
@@ -224,7 +232,37 @@
 
   <div class="article-content">
     
-      
+      <h2 id="再读JavaScript权威指南-第四章运算符"><a href="#再读JavaScript权威指南-第四章运算符" class="headerlink" title="再读JavaScript权威指南(第四章运算符)"></a>再读JavaScript权威指南(第四章运算符)</h2><h3 id="eval"><a href="#eval" class="headerlink" title="eval()"></a><strong>eval()</strong></h3><ol>
+<li>eval()是一个函数，但是该语言的设计者和解析器的作则对其实施了更多的限制，使其看起来更像字符串</li>
+<li>eval()只有一个参数，如果传入的不是字符串，他就会返回这个参数，如果是字符串，它会把字符串当作JavaScript代码进行编译</li>
+<li>eval()最重要的是，它使用了调用它的变量的作用域，如果在最顶层的代码中调用eval()，他会作用于全局变量和全局函数</li>
+<li>在严格模式下，eval执行的代码可以查询或更改局部变量，但不能够在局部作用域中定义新的变量或函数，严格模式中将”eval”作为保留字，这让eval更像是一个运算符</li>
+</ol>
+<h3 id="条件运算符-typeof运算符-delete运算符-void运算符-逗号运算符"><a href="#条件运算符-typeof运算符-delete运算符-void运算符-逗号运算符" class="headerlink" title="条件运算符(?:) typeof运算符 delete运算符 void运算符 逗号运算符(,)"></a><strong>条件运算符(?:) typeof运算符 delete运算符 void运算符 逗号运算符(,)</strong></h3><ol>
+<li>条件运算符(?:)：JavaScript中唯一的一个三元运算符</li>
+<li>typeof运算符：一元运算符</li>
+<li>delete：一元操作符<ul>
+<li>delete是删除不了通过var语句声明的变量，还有通过function语句定义的函数和函数参数也不能够删除</li>
+<li>delete希望他的操作数是一个左值，如果不是左值，那么delete将不进行任何操作同时返回true</li>
+<li>在es5严格模式中，如果delete操作数是非法的，比如变量、函数和函数参数，delete操作将抛出一个语法（SyntaxError）错误，只有操作一个属性访问表达式的时候它才会正常工作，还有删除不可配置的属性时或抛出一个类型错误，但在费严格模式下，这些delete都不会报错，只是简单地返回false   </li>
+</ul>
+</li>
+<li>void运算符：一元运算符</li>
+<li>逗号运算符(,)：二元运算符<ul>
+<li>逗号运算符它的操作数可以使任意的类型，他首先计算左操作数，然后再计算右操作数，最后返回右操作数的值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i = 0, j = 1, k = 2;</span><br><span class="line"></span><br><span class="line">//计算结果是2，他和下面的代码基本上是等价的：</span><br><span class="line"></span><br><span class="line">i = 0; j = 1; k = 2;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="再读JavaScript权威指南-第五章语句"><a href="#再读JavaScript权威指南-第五章语句" class="headerlink" title="再读JavaScript权威指南(第五章语句)"></a>再读JavaScript权威指南(第五章语句)</h2><p>一个JavaScript语句无非是一个以分号分隔的语句集合，所以一旦掌握JavaScript语句，就可以编写JavaScript程序了</p>
+<ol>
+<li>表达式语句</li>
+<li>复合语句和空语句</li>
+<li>声明语句：var 和 function</li>
+<li>条件语句document.documentElement.scrollTop </li>
+</ol>
+<p>119197</p>
+
     
   </div>
 

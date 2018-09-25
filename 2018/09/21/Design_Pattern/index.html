@@ -7,26 +7,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>磨刀不误砍柴工 | HFRao</title>
+  <title>设计模式 | HFRao</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="html," />
+    <meta name="keywords" content="JavaScript," />
   
 
-  <meta name="description" content="本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程 Collection资源库收藏阿里矢量图库icomoon详细列出了哪些CSS属性在不同的渲染引擎中是否会触发重排或重绘 关于网络性能   网络传输性能优化 1.1.浏览器缓存 1.2.资源打包压缩: JS压缩, HTML压缩, 提取公共资源, 提取">
-<meta name="keywords" content="html">
+  <meta name="description" content="设计模式设计模式（Design Pattern）是一套被反复使用、多数人知晓的、经过分类的、代码设计经验的总结（就是想出套路做事情） 模式-模式是指从生产经验和生活经验中经过抽象和升华提炼出来的核心知识体系。模式(Pattern)其实就是解决某一类问题的方法论。 使用设计模式的目的：为了代码可重用性、让代码更容易被他人理解、保证代码可靠性。 设计模式使代码编写真正工程化；设计模式是软件工程的基石脉">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="磨刀不误砍柴工">
-<meta property="og:url" content="http://yoursite.com/2018/08/15/hello-world/index.html">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://yoursite.com/2018/09/21/Design_Pattern/index.html">
 <meta property="og:site_name" content="HFRao">
-<meta property="og:description" content="本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程 Collection资源库收藏阿里矢量图库icomoon详细列出了哪些CSS属性在不同的渲染引擎中是否会触发重排或重绘 关于网络性能   网络传输性能优化 1.1.浏览器缓存 1.2.资源打包压缩: JS压缩, HTML压缩, 提取公共资源, 提取">
+<meta property="og:description" content="设计模式设计模式（Design Pattern）是一套被反复使用、多数人知晓的、经过分类的、代码设计经验的总结（就是想出套路做事情） 模式-模式是指从生产经验和生活经验中经过抽象和升华提炼出来的核心知识体系。模式(Pattern)其实就是解决某一类问题的方法论。 使用设计模式的目的：为了代码可重用性、让代码更容易被他人理解、保证代码可靠性。 设计模式使代码编写真正工程化；设计模式是软件工程的基石脉">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-24T07:28:18.844Z">
+<meta property="og:updated_time" content="2018-09-21T06:57:37.013Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="磨刀不误砍柴工">
-<meta name="twitter:description" content="本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程 Collection资源库收藏阿里矢量图库icomoon详细列出了哪些CSS属性在不同的渲染引擎中是否会触发重排或重绘 关于网络性能   网络传输性能优化 1.1.浏览器缓存 1.2.资源打包压缩: JS压缩, HTML压缩, 提取公共资源, 提取">
+<meta name="twitter:title" content="设计模式">
+<meta name="twitter:description" content="设计模式设计模式（Design Pattern）是一套被反复使用、多数人知晓的、经过分类的、代码设计经验的总结（就是想出套路做事情） 模式-模式是指从生产经验和生活经验中经过抽象和升华提炼出来的核心知识体系。模式(Pattern)其实就是解决某一类问题的方法论。 使用设计模式的目的：为了代码可重用性、让代码更容易被他人理解、保证代码可靠性。 设计模式使代码编写真正工程化；设计模式是软件工程的基石脉">
 
   
 
@@ -181,20 +181,20 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Collection"><span class="toc-text">Collection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#资源库收藏"><span class="toc-text">资源库收藏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐书籍"><span class="toc-text">推荐书籍</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式"><span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单例模式"><span class="toc-text">单例模式</span></a></li></ol></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-hello-world" class="article article-type-post" itemprop="blogPost">
+   <article id="post-Design_Pattern" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">磨刀不误砍柴工</h1>
+    <h1 class="post-title">设计模式</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2018.08.15</span>
+        <span>2018.09.21</span>
       </span>
 
       
@@ -207,7 +207,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
   </span>
 
 
@@ -215,7 +215,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="http://www.forsigner.com/2018/08/15/hello-world/#disqus_thread"></a>
+          <a href="http://www.forsigner.com/2018/09/21/Design_Pattern/#disqus_thread"></a>
         </span>
       
 
@@ -232,20 +232,27 @@
 
   <div class="article-content">
     
-      <p>本博客实际编写时间是2018-09-09，将以前记录在word中的笔记进行了整和，将其中重要的知识重新梳理写入博客，之后将在博客中记录的自己的成长过程</p>
-<h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><h3 id="资源库收藏"><a href="#资源库收藏" class="headerlink" title="资源库收藏"></a>资源库收藏</h3><p><a href="http://www.iconfont.cn/" target="_blank" rel="noopener">阿里矢量图库</a><br><a href="https://icomoon.io" target="_blank" rel="noopener">icomoon</a><br><a href="https://csstriggers.com/" target="_blank" rel="noopener">详细列出了哪些CSS属性在不同的渲染引擎中是否会触发重排或重绘</a></p>
-<p>关于网络性能 </p>
-<ol>
-<li>网络传输性能优化<br> 1.1.浏览器缓存<br> 1.2.资源打包压缩: JS压缩, HTML压缩, 提取公共资源, 提取css并压缩, 将webpack开发环境修改为生产环境, 在服务器上开启Gzip传输压缩(不要对图片文件进行Gzip压缩)<br> 1.3.图片资源优化<br> 1.3.1.不要在HTML里缩放图像<br> 1.3.2.使用雪碧图（CSS Sprite）<br> 1.3.3.使用字体图标（iconfont）<br> 1.3.4.使用WebP<br> 1.4.网络传输性能检测工具——Page Speed<br> 1.5.使用CDN<br>2.页面渲染性能优化<br> 2.1.浏览器渲染过程（Webkit）<br> 2.2.DOM渲染层与GPU硬件加速<br> 2.3.重排与重绘<br> 2.4.优化策略<br>3.JS阻塞性能</li>
-</ol>
+      <h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><p>设计模式（Design Pattern）是一套被反复使用、多数人知晓的、经过分类的、代码设计经验的总结（就是想出套路做事情）</p>
+<p>模式-模式是指从生产经验和生活经验中经过抽象和升华提炼出来的核心知识体系。模式(Pattern)其实就是解决某一类问题的方法论。</p>
+<p>使用设计模式的目的：为了代码可重用性、让代码更容易被他人理解、保证代码可靠性。 设计模式使代码编写真正工程化；设计模式是软件工程的基石脉络，如同大厦的结构一样，减少耦合，增强复用性，降低代码的开发维护扩展成本</p>
+<p>设计模式原则：</p>
 <ul>
-<li><a href="http://www.dailichun.com/2018/01/21/js_singlethread_eventloop.html" target="_blank" rel="noopener">从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理</a></li>
-<li><a href="http://imweb.io/topic/5b6fd3c13cb5a02f33c013bd" target="_blank" rel="noopener">网站性能优化实战——从12.67s到1.06s的故事</a></li>
-<li><a href="http://www.dailichun.com/2017/03/22/ajaxCrossDomainSolution.html" target="_blank" rel="noopener">ajax跨域，这应该是最全的解决方案了</a></li>
+<li><p><strong>单一职责原则</strong> single Responsibility principle<br>  （一个方法只做一件事情，请求数据的函数你就不要渲染数据了）<br>  （吃饭上厕所都用一个地方，不好吧）</p>
+</li>
+<li><p><strong>里氏代换原则</strong> L  Subsituation Principle。<br>里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。<br>一个宴会邀请父亲去，父亲去不了儿子去。<br>一个父类可以访问的接口，父类忙着其他事情，子类可以去访问。</p>
+</li>
+<li><p><strong>依赖倒置原则</strong> DIP<br>最常用的原则，依赖接口，不依赖方法，底层的东西不用了解，我们只需知道表现就可以。降低耦合度<br>主要实现功能其实是方法，不是实例，但是我们编程的时候要更关注，接口。所以依赖倒置<br>Js中没有接口的概念</p>
+</li>
+<li><p><strong>接口分离原则</strong> ISP<br>把大接口拆分小接口，不能一个接口全部实现增删改查<br>比如我写作业，要细分成，写数学，写英语，写语文等作业。同时降低耦合度了</p>
+</li>
+<li><p><strong>迪米特法则</strong> （最小知道原则）LD<br>一个接口和一个方法，传入的参数越少越好。一个动物你最好只吃饭不拉屎。<br>能让复杂程度降低。降低耦合度<br>谍战片中间谍，两个同一伙间谍互相不知道，为什么要这样呢，<br>为了最大程度较少伤害，死只死一条线上的人。<br>形成的关联越少越好</p>
+</li>
+<li><p><strong>开闭原则</strong> OCP<br>面向扩展开放，面向修改关闭 jquery extend，同时增强代码复用性。<br>银行账户，你可以给我加钱，但是不能花我钱<br>比如银行卡的演变就是这样，网银，支付宝等出来，是银行卡扩展了功能，可以扫码迅速付款了，不用取出来了，再付款呢。</p>
+</li>
 </ul>
-<p><a href="https://www.cnblogs.com/xianyulaodi/p/5755079.html" target="_blank" rel="noopener">雅虎军规</a></p>
-<p><a href="https://segmentfault.com/a/1190000015809379#articleHeader0" target="_blank" rel="noopener">web缓存</a><br><a href="http://hjingren.cn/2017/05/31/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/#%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">征服前端面试</a><br><a href="https://segmentfault.com/a/1190000015597029#articleHeader7" target="_blank" rel="noopener">跨域</a></p>
-<h3 id="推荐书籍"><a href="#推荐书籍" class="headerlink" title="推荐书籍"></a>推荐书籍</h3><p>《Webkit技术内幕》：有关浏览器内核的<br>《大型网站性能监测、分析与优化》</p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a><strong>单例模式</strong></h3><ol>
+<li>定义：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</li>
+</ol>
 
     
   </div>
@@ -257,10 +264,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="hide pull-left" href="/">
+    <a class="show pull-left" href="/2018/09/18/Event/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/09/10/Event-Loop/">
+    <a class="show pull-right" href="/2018/09/22/Algorithm/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -389,7 +396,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/08/15/hello-world/';
+    var disqus_url = 'http://yoursite.com/2018/09/21/Design_Pattern/';
     
     (function(){
       var dsq = document.createElement('script');
