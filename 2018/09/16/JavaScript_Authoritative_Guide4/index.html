@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="再读JavaScript权威指南(第四章运算符)eval() eval()是一个函数，但是该语言的设计者和解析器的作则对其实施了更多的限制，使其看起来更像字符串 eval()只有一个参数，如果传入的不是字符串，他就会返回这个参数，如果是字符串，它会把字符串当作JavaScript代码进行编译 eval()最重要的是，它使用了调用它的变量的作用域，如果在最顶层的代码中调用eval()，他会作用于全局">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-23T04:45:50.613Z">
+<meta property="og:updated_time" content="2018-09-25T16:33:01.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再读JavaScript权威指南(运算符)">
 <meta name="twitter:description" content="再读JavaScript权威指南(第四章运算符)eval() eval()是一个函数，但是该语言的设计者和解析器的作则对其实施了更多的限制，使其看起来更像字符串 eval()只有一个参数，如果传入的不是字符串，他就会返回这个参数，如果是字符串，它会把字符串当作JavaScript代码进行编译 eval()最重要的是，它使用了调用它的变量的作用域，如果在最顶层的代码中调用eval()，他会作用于全局">
@@ -259,9 +259,20 @@
 <li>表达式语句</li>
 <li>复合语句和空语句</li>
 <li>声明语句：var 和 function</li>
-<li>条件语句document.documentElement.scrollTop </li>
+<li><p>条件语句:Javascript规定，if关键字和带圆括号的表达式之后必须跟随一条语句，但可以使用 <strong>语句块</strong> 将多条语句合并</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(expression)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+<ul>
+<li>if 和 else的匹配规则是：else总是和最近的if语句匹配，为了让可读性更强应该使用 <strong>花括号</strong></li>
+</ul>
+</li>
+<li>switch：switch中判断case值的相同使用的绝对等于（===）</li>
+<li>循环语句：for、while、do/while、for/in<ul>
+<li>for/in 只遍历可枚举的属性，也会把原型链上可枚举的属性遍历出来</li>
+<li>如果for/in的循环体中删除了还未枚举的属性，那么这个属性不会再被枚举，如果再循环体中定义了对象的新属性，这些属性也不会被枚举到<br>document.documentElement.scrollTop</li>
+</ul>
+</li>
 </ol>
-<p>119197</p>
+<p>130197</p>
 
     
   </div>
