@@ -25,7 +25,7 @@
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Event1.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Event2.png">
-<meta property="og:updated_time" content="2018-09-19T02:36:18.367Z">
+<meta property="og:updated_time" content="2018-09-28T08:19:13.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="事件, 事件处理模型, 事件流, 事件委托">
 <meta name="twitter:description" content="事件如何绑定事件(事件是天生自然有的)1.ele.onxxx = function (event) {}  兼容性很好，但是一个元素只能绑定一个处理程序 基本等同于写在HTML行间上（两种都称为句柄的绑定方式） 程序this指向是dom元素本身  2.ele.addEventListener(type, fn, false);  IE9 以下不兼容，可以为一个事件绑定多个处理程序，并且按绑定的顺序">
@@ -184,7 +184,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何绑定事件-事件是天生自然有的"><span class="toc-text">如何绑定事件(事件是天生自然有的)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解除事件处理程序"><span class="toc-text">解除事件处理程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理模型-事件冒泡、事件捕获"><span class="toc-text">事件处理模型 - 事件冒泡、事件捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取消冒泡和阻止默认事件"><span class="toc-text">取消冒泡和阻止默认事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件流"><span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何绑定事件-事件是天生自然有的"><span class="toc-text">如何绑定事件(事件是天生自然有的)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解除事件处理程序"><span class="toc-text">解除事件处理程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理模型-事件冒泡、事件捕获"><span class="toc-text">事件处理模型 - 事件冒泡、事件捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取消冒泡和阻止默认事件"><span class="toc-text">取消冒泡和阻止默认事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件流"><span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件对象"><span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件分类"><span class="toc-text">事件分类</span></a></li></ol></li></ol>
   </div>
 
 
@@ -314,7 +314,7 @@
 <h3 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a><strong>事件流</strong></h3><ol>
 <li><p>事件流描述的是从页面中接收事件的顺序,DOM2级事件流包括下面几个阶段。</p>
 <ul>
-<li>事件捕获阶段</li>
+<li>事件捕获阶段（IE8及以下不支持）</li>
 <li>处于目标阶段</li>
 <li>事件冒泡阶段</li>
 </ul>
@@ -330,6 +330,20 @@
 </ul>
 </li>
 <li><p>适合用事件委托的事件：click, mousedown, mouseup, keydown, keyup, keypress</p>
+</li>
+</ol>
+<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a><strong>事件对象</strong></h3><ol>
+<li><p>window.event适合于IE8及以下 || event</p>
+</li>
+<li><p>事件源对象：event.target || event.srcElement(IE8及以下)</p>
+</li>
+</ol>
+<h3 id="事件分类"><a href="#事件分类" class="headerlink" title="事件分类"></a><strong>事件分类</strong></h3><ol>
+<li><p>鼠标事件：click、mousedown、mousemove、mouseup、contextmenu、mouseover、mouseout、 mouseenter mouseleave</p>
+</li>
+<li><p>表单事件：submit、reset、change、focus、blur、input、</p>
+</li>
+<li><p>window事件：load、DOMContentLoaded、unload、beforeLoad、scroll、resize</p>
 </li>
 </ol>
 
