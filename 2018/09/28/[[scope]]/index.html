@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>理清[[scope]]、运行期上下文和函数作用域链 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理清[[scope]]、运行期上下文和函数作用域链">
+<meta property="og:url" content="http://yoursite.com/2018/09/28/[[scope]]/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2018-09-28T06:59:53.904Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理清[[scope]]、运行期上下文和函数作用域链">
+<meta name="twitter:description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
+
+  
+
+  
+    <link rel="icon" href="/images/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用域链的解析"><span class="toc-text">作用域链的解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scope-是啥，它与作用域链之间的关系"><span class="toc-text">[[scope]]是啥，它与作用域链之间的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再来讲下运行期上下文"><span class="toc-text">再来讲下运行期上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改变作用域链"><span class="toc-text">改变作用域链</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-[[scope]]" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">理清[[scope]]、运行期上下文和函数作用域链</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/09/28/[[scope]]/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="作用域链的解析"><a href="#作用域链的解析" class="headerlink" title="作用域链的解析"></a>作用域链的解析</h2><h3 id="scope-是啥，它与作用域链之间的关系"><a href="#scope-是啥，它与作用域链之间的关系" class="headerlink" title="[[scope]]是啥，它与作用域链之间的关系"></a><strong>[[scope]]是啥，它与作用域链之间的关系</strong></h3><p>我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中能够访问的数据</p>
+<p>add函数的内置属性[[scope]]图：</p>
+<pre><code>![image](/images/blog_images/scope1.png)
+</code></pre><h3 id="再来讲下运行期上下文"><a href="#再来讲下运行期上下文" class="headerlink" title="再来讲下运行期上下文"></a><strong>再来讲下运行期上下文</strong></h3><p>函数被执行时，函数会创建一个内部对象，称作“运行期上下文”。这个运行期上下文定义了一个函数运行时的环境，而且运行期上下文有自己独立的作用域链，这个作用域链在此对象创建时就会被初始化，此时函数内部属性[[scope]]中的作用域链中的对象会按顺序被复制到运行期上下文的作用域链中，此时还会创建一新对象（即此函数的作用域）AO放到运行期上下文作用域链的前端，这个新对象被称为“激活对象”，它存放着此函数的局部变量和this接口等。</p>
+<p>运行期上下文在函数执行完就被销毁，所以函数每次执行的运行期上下文是独一无二的</p>
+<p>add函数执行时的作用域链</p>
+<pre><code>![image](/images/blog_images/scope2.png)
+</code></pre><p>函数在运行时所遇到的变量（即标识符）都会按照运行期上下文的作用域链前端进行查找，变量所处的越深，它的读写书读就越慢，从而影响性能，所以为了能够减少性能损耗，最好将所需的变量编程局部变量（局部变量访问的总是最快的），有些也可以通过优化JS引擎来解决</p>
+<p>下面的代码就是将全局的变量document变成局部变量来提高性能，虽然一次不能够有较大性能的提升，但是访问多次的话性能改进将显的很出色<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    var doc = document,</span><br><span class="line">        bd = doc.body,</span><br><span class="line">        links = doc.getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">        i = 0,</span><br><span class="line">        len = links.length;</span><br><span class="line">    while (i &lt; len) &#123;</span><br><span class="line">        update(links[i++]);</span><br><span class="line">    &#125;</span><br><span class="line">    doc.getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">        start();</span><br><span class="line">    &#125;;</span><br><span class="line">    bd.className = &quot;active&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="改变作用域链"><a href="#改变作用域链" class="headerlink" title="改变作用域链"></a><strong>改变作用域链</strong></h3><p>一般来说，一个运行期上下文的作用域链不会被改变，但是有两种表达式可以改变其作用域链，第一个是width：width属性会为所有的对象属性添加一个操作变量，当代码在width运算符中执行，函数运行期上下文的作用域链就会被临时改变，一个新的对象（作用域）会被创建，这个对象包含with括号中执行对象的所有属性，他会被放到运行期上下文中的前端，意味着现在函数的作用域对象将被放置于作用域的第二位，是的访问局部变量的速度变慢了，正是这个原因，最好不要用width表达式，如下只要将document对象变成局部变量就可以获得性能提升</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    with (document) &#123; //avoid!</span><br><span class="line">        var bd = body,</span><br><span class="line">            links = getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">            i = 0,</span><br><span class="line">            len = links.length;</span><br><span class="line">        while (i &lt; len) &#123;</span><br><span class="line">            update(links[i++]);</span><br><span class="line">        &#125;</span><br><span class="line">        getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">            start();</span><br><span class="line">        &#125;;</span><br><span class="line">        bd.className = &quot;active&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><p>因为一个表达书就是try-catch表达式的catch语句，当进入catch块中，会将异常的对象放入到运行期上下文作用域链的最前端，将存有局部变量的对象放入到作用域链的第二个位置（但是只要catch执行完作用域链就会回到原来的样子），如果非要用catch可以将catch中的对象给外部的函数来处理，如下：<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    methodThatMightCauseAnError();</span><br><span class="line">&#125; catch (ex) &#123;</span><br><span class="line">    handleError(ex); //delegate to handler method</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/22/Algorithm/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/09/28/[[scope]]/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

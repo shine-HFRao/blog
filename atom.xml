@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-26T03:30:49.783Z</updated>
+  <updated>2018-09-28T06:59:53.904Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>理清[[scope]]、运行期上下文和函数作用域链</title>
+    <link href="http://yoursite.com/2018/09/28/%5B%5Bscope%5D%5D/"/>
+    <id>http://yoursite.com/2018/09/28/[[scope]]/</id>
+    <published>2018-09-28T07:00:32.277Z</published>
+    <updated>2018-09-28T06:59:53.904Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="作用域链的解析"><a href="#作用域链的解析" class="headerlink" title="作用域链的解析"></a>作用域链的解析</h2><h3 id="scope-是啥，它与作用域链之间的关系"><a href="#scope-是啥，它与作用域链之间的关系" class="headerlink" title="[[scope]]是啥，它与作用域链之间的关系"></a><strong>[[scope]]是啥，它与作用域链之间的关系</strong></h3><p>我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中能够访问的数据</p><p>add函数的内置属性[[scope]]图：</p><pre><code>![image](/images/blog_images/scope1.png)</code></pre><h3 id="再来讲下运行期上下文"><a href="#再来讲下运行期上下文" class="headerlink" title="再来讲下运行期上下文"></a><strong>再来讲下运行期上下文</strong></h3><p>函数被执行时，函数会创建一个内部对象，称作“运行期上下文”。这个运行期上下文定义了一个函数运行时的环境，而且运行期上下文有自己独立的作用域链，这个作用域链在此对象创建时就会被初始化，此时函数内部属性[[scope]]中的作用域链中的对象会按顺序被复制到运行期上下文的作用域链中，此时还会创建一新对象（即此函数的作用域）AO放到运行期上下文作用域链的前端，这个新对象被称为“激活对象”，它存放着此函数的局部变量和this接口等。</p><p>运行期上下文在函数执行完就被销毁，所以函数每次执行的运行期上下文是独一无二的</p><p>add函数执行时的作用域链</p><pre><code>![image](/images/blog_images/scope2.png)</code></pre><p>函数在运行时所遇到的变量（即标识符）都会按照运行期上下文的作用域链前端进行查找，变量所处的越深，它的读写书读就越慢，从而影响性能，所以为了能够减少性能损耗，最好将所需的变量编程局部变量（局部变量访问的总是最快的），有些也可以通过优化JS引擎来解决</p><p>下面的代码就是将全局的变量document变成局部变量来提高性能，虽然一次不能够有较大性能的提升，但是访问多次的话性能改进将显的很出色<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    var doc = document,</span><br><span class="line">        bd = doc.body,</span><br><span class="line">        links = doc.getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">        i = 0,</span><br><span class="line">        len = links.length;</span><br><span class="line">    while (i &lt; len) &#123;</span><br><span class="line">        update(links[i++]);</span><br><span class="line">    &#125;</span><br><span class="line">    doc.getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">        start();</span><br><span class="line">    &#125;;</span><br><span class="line">    bd.className = &quot;active&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h3 id="改变作用域链"><a href="#改变作用域链" class="headerlink" title="改变作用域链"></a><strong>改变作用域链</strong></h3><p>一般来说，一个运行期上下文的作用域链不会被改变，但是有两种表达式可以改变其作用域链，第一个是width：width属性会为所有的对象属性添加一个操作变量，当代码在width运算符中执行，函数运行期上下文的作用域链就会被临时改变，一个新的对象（作用域）会被创建，这个对象包含with括号中执行对象的所有属性，他会被放到运行期上下文中的前端，意味着现在函数的作用域对象将被放置于作用域的第二位，是的访问局部变量的速度变慢了，正是这个原因，最好不要用width表达式，如下只要将document对象变成局部变量就可以获得性能提升</p><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    with (document) &#123; //avoid!</span><br><span class="line">        var bd = body,</span><br><span class="line">            links = getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">            i = 0,</span><br><span class="line">            len = links.length;</span><br><span class="line">        while (i &lt; len) &#123;</span><br><span class="line">            update(links[i++]);</span><br><span class="line">        &#125;</span><br><span class="line">        getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">            start();</span><br><span class="line">        &#125;;</span><br><span class="line">        bd.className = &quot;active&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre><p>因为一个表达书就是try-catch表达式的catch语句，当进入catch块中，会将异常的对象放入到运行期上下文作用域链的最前端，将存有局部变量的对象放入到作用域链的第二个位置（但是只要catch执行完作用域链就会回到原来的样子），如果非要用catch可以将catch中的对象给外部的函数来处理，如下：<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    methodThatMightCauseAnError();</span><br><span class="line">&#125; catch (ex) &#123;</span><br><span class="line">    handleError(ex); //delegate to handler method</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;作用域链的解析&quot;&gt;&lt;a href=&quot;#作用域链的解析&quot; class=&quot;headerlink&quot; title=&quot;作用域链的解析&quot;&gt;&lt;/a&gt;作用域链的解析&lt;/h2&gt;&lt;h3 id=&quot;scope-是啥，它与作用域链之间的关系&quot;&gt;&lt;a href=&quot;#scope-是啥，它与作用
+      
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>刷算法题</title>
