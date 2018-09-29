@@ -23,10 +23,13 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-09-28T06:59:53.904Z">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/scope1.png">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/scope2.png">
+<meta property="og:updated_time" content="2018-09-29T09:36:51.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理清[[scope]]、运行期上下文和函数作用域链">
 <meta name="twitter:description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/scope1.png">
 
   
 
@@ -233,13 +236,12 @@
   <div class="article-content">
     
       <h2 id="作用域链的解析"><a href="#作用域链的解析" class="headerlink" title="作用域链的解析"></a>作用域链的解析</h2><h3 id="scope-是啥，它与作用域链之间的关系"><a href="#scope-是啥，它与作用域链之间的关系" class="headerlink" title="[[scope]]是啥，它与作用域链之间的关系"></a><strong>[[scope]]是啥，它与作用域链之间的关系</strong></h3><p>我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中能够访问的数据</p>
-<p>add函数的内置属性[[scope]]图：</p>
-<pre><code>![image](/images/blog_images/scope1.png)
-</code></pre><h3 id="再来讲下运行期上下文"><a href="#再来讲下运行期上下文" class="headerlink" title="再来讲下运行期上下文"></a><strong>再来讲下运行期上下文</strong></h3><p>函数被执行时，函数会创建一个内部对象，称作“运行期上下文”。这个运行期上下文定义了一个函数运行时的环境，而且运行期上下文有自己独立的作用域链，这个作用域链在此对象创建时就会被初始化，此时函数内部属性[[scope]]中的作用域链中的对象会按顺序被复制到运行期上下文的作用域链中，此时还会创建一新对象（即此函数的作用域）AO放到运行期上下文作用域链的前端，这个新对象被称为“激活对象”，它存放着此函数的局部变量和this接口等。</p>
+<p>add函数的内置属性[[scope]]图：<br>    <img src="/images/blog_images/scope1.png" alt="image"></p>
+<h3 id="再来讲下运行期上下文"><a href="#再来讲下运行期上下文" class="headerlink" title="再来讲下运行期上下文"></a><strong>再来讲下运行期上下文</strong></h3><p>函数被执行时，函数会创建一个内部对象，称作“运行期上下文”。这个运行期上下文定义了一个函数运行时的环境，而且运行期上下文有自己独立的作用域链，这个作用域链在此对象创建时就会被初始化，此时函数内部属性[[scope]]中的作用域链中的对象会按顺序被复制到运行期上下文的作用域链中，此时还会创建一新对象（即此函数的作用域）AO放到运行期上下文作用域链的前端，这个新对象被称为“激活对象”，它存放着此函数的局部变量和this接口等。</p>
 <p>运行期上下文在函数执行完就被销毁，所以函数每次执行的运行期上下文是独一无二的</p>
-<p>add函数执行时的作用域链</p>
-<pre><code>![image](/images/blog_images/scope2.png)
-</code></pre><p>函数在运行时所遇到的变量（即标识符）都会按照运行期上下文的作用域链前端进行查找，变量所处的越深，它的读写书读就越慢，从而影响性能，所以为了能够减少性能损耗，最好将所需的变量编程局部变量（局部变量访问的总是最快的），有些也可以通过优化JS引擎来解决</p>
+<p>add函数执行时的作用域链<br>    <img src="/images/blog_images/scope2.png" alt="image"></p>
+<p>函数在运行时所遇到的变量（即标识符）都会按照运行期上下文的作用域链前端进行查找，变量所处的越深，它的读写书读就越慢，从而影响性能，所以为了能够减少性能损耗，最好将所需的变量编程局部变量（<strong>局部变量访问的总是最快的</strong>），有些也可以通过优化JS引擎来解决</p>
+<p>说到在作用域链上访问变量，我们又可以联想到在对象中 <strong>原型链</strong> 上访问对象属性和方法，与访问变量一样，在对象中访问的属性和方法所在原型链越深搜索速度越慢，性能损耗越多，也可通过缓存属性或方法来提升性能（基于不会改变的值），但是 <strong>记住搜索实例成员的过程比访问直接量或局部变量负担更重</strong>。还有一个需要注意的就是 <strong>嵌套对象</strong>（如window.location.href.toString()，它的情况也与前两个很类似，在处理嵌套对象成员时要特别注意，否则它会对运行速度产生难以置信的影响</p>
 <p>下面的代码就是将全局的变量document变成局部变量来提高性能，虽然一次不能够有较大性能的提升，但是访问多次的话性能改进将显的很出色<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    var doc = document,</span><br><span class="line">        bd = doc.body,</span><br><span class="line">        links = doc.getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">        i = 0,</span><br><span class="line">        len = links.length;</span><br><span class="line">    while (i &lt; len) &#123;</span><br><span class="line">        update(links[i++]);</span><br><span class="line">    &#125;</span><br><span class="line">    doc.getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">        start();</span><br><span class="line">    &#125;;</span><br><span class="line">    bd.className = &quot;active&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="改变作用域链"><a href="#改变作用域链" class="headerlink" title="改变作用域链"></a><strong>改变作用域链</strong></h3><p>一般来说，一个运行期上下文的作用域链不会被改变，但是有两种表达式可以改变其作用域链，第一个是width：width属性会为所有的对象属性添加一个操作变量，当代码在width运算符中执行，函数运行期上下文的作用域链就会被临时改变，一个新的对象（作用域）会被创建，这个对象包含with括号中执行对象的所有属性，他会被放到运行期上下文中的前端，意味着现在函数的作用域对象将被放置于作用域的第二位，是的访问局部变量的速度变慢了，正是这个原因，最好不要用width表达式，如下只要将document对象变成局部变量就可以获得性能提升</p>
 <pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    with (document) &#123; //avoid!</span><br><span class="line">        var bd = body,</span><br><span class="line">            links = getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">            i = 0,</span><br><span class="line">            len = links.length;</span><br><span class="line">        while (i &lt; len) &#123;</span><br><span class="line">            update(links[i++]);</span><br><span class="line">        &#125;</span><br><span class="line">        getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">            start();</span><br><span class="line">        &#125;;</span><br><span class="line">        bd.className = &quot;active&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
