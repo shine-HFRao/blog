@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="谈JavaScript性能提升基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-10-03T12:39:33.779Z">
+<meta property="og:updated_time" content="2018-10-05T16:21:16.409Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈JavaScript性能提升">
 <meta name="twitter:description" content="谈JavaScript性能提升基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他">
@@ -181,7 +181,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#谈JavaScript性能提升"><span class="toc-text">谈JavaScript性能提升</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数据访问提升性能"><span class="toc-text">基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM创建、访问和操作提升性能"><span class="toc-text">基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM节点的访问的性能提升"><span class="toc-text">基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少DOM的重派重绘"><span class="toc-text">减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于动画性能优化"><span class="toc-text">基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#谈JavaScript性能提升"><span class="toc-text">谈JavaScript性能提升</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数据访问提升性能"><span class="toc-text">基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM创建、访问和操作提升性能"><span class="toc-text">基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM节点的访问的性能提升"><span class="toc-text">基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少DOM的重派重绘"><span class="toc-text">减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于动画性能优化"><span class="toc-text">基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hover"><span class="toc-text">:hover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于循环的性能优化"><span class="toc-text">基于循环的性能优化</span></a></li></ol></li></ol>
   </div>
 
 
@@ -314,6 +314,9 @@
 </ul>
 </li>
 </ol>
+<h3 id="hover"><a href="#hover" class="headerlink" title=":hover"></a><strong>:hover</strong></h3><ol>
+<li>避免过多的元素中（如500-1000行5列构成的表）使用：hover时 否则会降低反映速度，cpu使用率会提高到80%-90%</li>
+</ol>
 <h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a><strong>事件委托</strong></h3><ol>
 <li>利用了事件流的事件冒泡和事件源对象来实现事件委托</li>
 </ol>
@@ -321,7 +324,19 @@
 <pre><code>- 不需要对每个dom进行绑定事件，只需对父级进行绑定，减少内存消耗，提高性能
 
 - 动态绑定事件，对新添进来的子元素不需要绑定事件
-</code></pre>
+</code></pre><h3 id="基于循环的性能优化"><a href="#基于循环的性能优化" class="headerlink" title="基于循环的性能优化"></a><strong>基于循环的性能优化</strong></h3><ol>
+<li><p>JavaScript有四种循环： for循环，while，do-while，for-in</p>
+</li>
+<li><p>JavaScript提供的四中循环里，只有一种循环比其他的循环明显要慢：for-in循环，由于每次迭代时都要搜索对象中的属性和对象原型上的属性，同样的循环迭代的操作中，for-in循环要比其它的循环慢7倍之多，除非你对数目不详的对象属性进行操作，否则避免使用for-in循环，其它的三个循环性能都相当</p>
+</li>
+<li><p>对一个数组的循环遍历属性，一个优化就是将数组的长度存放到局部变量中，以防止每次循环都要访问数组的长度arr.length,以此提升性能</p>
+</li>
+<li><p>还有一个很重要的优化就是使用倒序循环，并在控制条件中使用了减法，每个控制条件只是简单的和0进行比较。控制条件与true值进行比较，任何非零数字转化为true，0转化为false，控制条件已从两次比较（迭代次数小于总数了吗？它等于false了吗）变成了一次比较（它等于true了吗？），以此可以大幅度提高循环速度，<strong>通过倒序循环和最小化属性查询，当循环迭代次数很多时可以大幅度提升执行速度</strong></p>
+</li>
+<li><p>事实证明大多数情况下switch表达式比if-else更快，担当只有条件数量很大时才明显更快，if-else适合判断两个离散的值或判断几个不同的值域。如果判断多余两个离散值，switch表达式更好</p>
+</li>
+</ol>
+
     
   </div>
 
