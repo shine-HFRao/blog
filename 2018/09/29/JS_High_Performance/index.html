@@ -15,18 +15,18 @@
     <meta name="keywords" content="JavaScript," />
   
 
-  <meta name="description" content="谈JavaScript性能提升基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他">
+  <meta name="description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈JavaScript性能提升">
 <meta property="og:url" content="http://yoursite.com/2018/09/29/JS_High_Performance/index.html">
 <meta property="og:site_name" content="HFRao">
-<meta property="og:description" content="谈JavaScript性能提升基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他">
+<meta property="og:description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-10-05T16:21:16.409Z">
+<meta property="og:updated_time" content="2018-10-07T16:37:24.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈JavaScript性能提升">
-<meta name="twitter:description" content="谈JavaScript性能提升基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他">
+<meta name="twitter:description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
 
   
 
@@ -181,7 +181,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#谈JavaScript性能提升"><span class="toc-text">谈JavaScript性能提升</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数据访问提升性能"><span class="toc-text">基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM创建、访问和操作提升性能"><span class="toc-text">基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM节点的访问的性能提升"><span class="toc-text">基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少DOM的重派重绘"><span class="toc-text">减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于动画性能优化"><span class="toc-text">基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hover"><span class="toc-text">:hover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于循环的性能优化"><span class="toc-text">基于循环的性能优化</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数据访问提升性能"><span class="toc-text">基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM创建、访问和操作提升性能"><span class="toc-text">基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM节点的访问的性能提升"><span class="toc-text">基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少DOM的重派重绘"><span class="toc-text">减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于动画性能优化"><span class="toc-text">基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hover"><span class="toc-text">:hover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于循环的性能优化"><span class="toc-text">基于循环的性能优化</span></a></li></ol></li></ol>
   </div>
 
 
@@ -232,7 +232,11 @@
 
   <div class="article-content">
     
-      <h2 id="谈JavaScript性能提升"><a href="#谈JavaScript性能提升" class="headerlink" title="谈JavaScript性能提升"></a>谈JavaScript性能提升</h2><h3 id="基于数据访问提升性能"><a href="#基于数据访问提升性能" class="headerlink" title="基于数据访问提升性能"></a><strong>基于数据访问提升性能</strong></h3><ol>
+      <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>查表法<br>递归<br>调用栈限制<br>递归模式</p>
+<pre><code>1. 直接递归模式
+2. 精巧模式
+</code></pre><p>迭代<br>制表</p>
+<h3 id="基于数据访问提升性能"><a href="#基于数据访问提升性能" class="headerlink" title="基于数据访问提升性能"></a><strong>基于数据访问提升性能</strong></h3><ol>
 <li><p>在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：</p>
 <ul>
 <li><p>直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间</p>
