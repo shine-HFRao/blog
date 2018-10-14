@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>理清[[scope]]、运行期上下文和函数作用域链 | HFRao</title>
+  <title>理清[[scope]]、运行期上下文和函数作用域链、闭包 | HFRao</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -18,16 +18,16 @@
   <meta name="description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="理清[[scope]]、运行期上下文和函数作用域链">
+<meta property="og:title" content="理清[[scope]]、运行期上下文和函数作用域链、闭包">
 <meta property="og:url" content="http://yoursite.com/2018/09/28/[[scope]]/index.html">
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/scope1.png">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/scope2.png">
-<meta property="og:updated_time" content="2018-10-03T03:43:43.712Z">
+<meta property="og:updated_time" content="2018-10-11T07:46:58.811Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="理清[[scope]]、运行期上下文和函数作用域链">
+<meta name="twitter:title" content="理清[[scope]]、运行期上下文和函数作用域链、闭包">
 <meta name="twitter:description" content="作用域链的解析[[scope]]是啥，它与作用域链之间的关系我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中">
 <meta name="twitter:image" content="http://yoursite.com/images/blog_images/scope1.png">
 
@@ -184,7 +184,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用域链的解析"><span class="toc-text">作用域链的解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scope-是啥，它与作用域链之间的关系"><span class="toc-text">[[scope]]是啥，它与作用域链之间的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再来讲下运行期上下文"><span class="toc-text">再来讲下运行期上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改变作用域链"><span class="toc-text">改变作用域链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包"><span class="toc-text">闭包</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用域链的解析"><span class="toc-text">作用域链的解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scope-是啥，它与作用域链之间的关系"><span class="toc-text">[[scope]]是啥，它与作用域链之间的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再来讲下运行期上下文"><span class="toc-text">再来讲下运行期上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改变作用域链"><span class="toc-text">改变作用域链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包"><span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#词法作用域和动态作用域"><span class="toc-text">词法作用域和动态作用域</span></a></li></ol></li></ol>
   </div>
 
 
@@ -192,7 +192,7 @@
 <div class="content content-post CENTER">
    <article id="post-[[scope]]" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">理清[[scope]]、运行期上下文和函数作用域链</h1>
+    <h1 class="post-title">理清[[scope]]、运行期上下文和函数作用域链、闭包</h1>
 
     <div class="article-meta">
       <span>
@@ -246,9 +246,41 @@
 <h3 id="改变作用域链"><a href="#改变作用域链" class="headerlink" title="改变作用域链"></a><strong>改变作用域链</strong></h3><p>一般来说，一个运行期上下文的作用域链不会被改变，但是有两种表达式可以改变其作用域链，第一个是width：width属性会为所有的对象属性添加一个操作变量，当代码在width运算符中执行，函数运行期上下文的作用域链就会被临时改变，一个新的对象（作用域）会被创建，这个对象包含with括号中执行对象的所有属性，他会被放到运行期上下文中的前端，意味着现在函数的作用域对象将被放置于作用域的第二位，是的访问局部变量的速度变慢了，正是这个原因，最好不要用width表达式，如下只要将document对象变成局部变量就可以获得性能提升<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    with (document) &#123; //avoid!</span><br><span class="line">        var bd = body,</span><br><span class="line">            links = getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">            i = 0,</span><br><span class="line">            len = links.length;</span><br><span class="line">        while (i &lt; len) &#123;</span><br><span class="line">            update(links[i++]);</span><br><span class="line">        &#125;</span><br><span class="line">        getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">            start();</span><br><span class="line">        &#125;;</span><br><span class="line">        bd.className = &quot;active&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>因为一个表达书就是try-catch表达式的catch语句，当进入catch块中，会将异常的对象放入到运行期上下文作用域链的最前端，将存有局部变量的对象放入到作用域链的第二个位置（ 但是只要catch执行完作用域链就会回到原来的样子 ），如果非要用catch可以将catch中的对象给外部的函数来处理，如下：<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    methodThatMightCauseAnError();</span><br><span class="line">&#125; catch (ex) &#123;</span><br><span class="line">    handleError(ex); //delegate to handler method</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a><strong>闭包</strong></h3><ol>
-<li><p>闭包可以理解成“定义在一个函数内部的函数“。在本质上，闭包是将函数内部和函数外部连接起来的桥梁，通过将函数内部定义的函数赋值给外部变量或用return返回出来。</p>
+<li><p>闭包可以理解成“定义在一个函数内部的函数“。即当函数可以记住并访问所在的词法作用域时，就产生了闭包。在本质上，闭包是将函数内部和函数外部连接起来的桥梁，通过将函数内部定义的函数赋值给外部变量或用return返回出来。</p>
 </li>
-<li></li>
+<li><p>闭包无处不在：</p>
+<ul>
+<li>在定时器、事件监听器、Ajax 请求、跨窗口通信、Web Workers 或者任何其他的异步（或者同步）任务中，只要使用了回调函数，实际上就是在使用闭包！<br>-还有个非常典型的例子就是立即执行函数（IIFE模式），看下面的代码，尽管 IIFE 本身并不是观察闭包的恰当例子，但它的确创建了闭包，并且也是最常用来创建可以被封闭起来的闭包的工具。因此 IIFE 的确同闭包息息相关，即使本身并不会真的使用闭包。  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a = 2;</span><br><span class="line">(function IIFE() &#123;</span><br><span class="line">    console.log( a );</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>利用了闭包的强大的威力：<strong>模块</strong></p>
+<ul>
+<li><p>考虑以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function CoolModule() &#123;</span><br><span class="line">    var something = &quot;cool&quot;;</span><br><span class="line">    var another = [1, 2, 3];</span><br><span class="line">    function doSomething() &#123;</span><br><span class="line">        console.log( something );</span><br><span class="line">    &#125;</span><br><span class="line">    function doAnother() &#123;</span><br><span class="line">        console.log( another.join( &quot; ! &quot; ) );</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;</span><br><span class="line">        doSomething: doSomething,</span><br><span class="line">        doAnother: doAnother</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">var foo = CoolModule();</span><br><span class="line">foo.doSomething(); // cool</span><br><span class="line">foo.doAnother(); // 1 ! 2 ! 3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上这个模式在 JavaScript 中被称为模块。最常见的实现模块模式的方法通常被称为模块暴露，这里展示的是其变体。</p>
+</li>
+<li><p>从模块中返回一个实际的对象并不是必须的，也可以直接返回一个内部函数。jQuery 就是一个很好的例子。jQuery 和 $ 标识符就是 jQuery 模块的公共 API，但它们本身都是函数（由于函数也是对象，它们本身也可以拥有属性）。</p>
+</li>
+<li><p>如果要更简单的描述，模块模式需要具备两个必要条件。</p>
+<ul>
+<li><p>必须有外部的封闭函数，该函数必须至少被调用一次（每次调用都会创建一个新的模块实例）。</p>
+</li>
+<li><p>封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。</p>
+<h3 id="词法作用域和动态作用域"><a href="#词法作用域和动态作用域" class="headerlink" title="词法作用域和动态作用域"></a><strong>词法作用域和动态作用域</strong></h3></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JavaScript 中的作用域就是词法作用域（事实上大部分语言都是基于词法作用域的）。词法作用域最重要的特征是它的定义过程发生在代码的书写阶段（假设你没有使用eval() 或 with）</p>
+</li>
+<li><p>而动态作用域并不关心函数和作用域是如何声明以及在何处声明的，只关心它们从何处调用。换句话说，作用域链是基于调用栈的，而不是代码中的作用域嵌套。</p>
+</li>
+<li><p>事实上 JavaScript 并不具有动态作用域。它只有词法作用域，简单明了。但是 this 机制某种程度上很像动态作用域</p>
+</li>
+<li><p>主要区别：词法作用域是在写代码或者说定义时确定的，而动态作用域是在运行时确定的。（this 也是！）词法作用域关注函数在何处声明，而动态作用域关注函数从何处调用。</p>
+</li>
 </ol>
 
     

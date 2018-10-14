@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-10-07T16:37:24.862Z">
+<meta property="og:updated_time" content="2018-10-09T16:26:29.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈JavaScript性能提升">
 <meta name="twitter:description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
@@ -181,7 +181,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数据访问提升性能"><span class="toc-text">基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM创建、访问和操作提升性能"><span class="toc-text">基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM节点的访问的性能提升"><span class="toc-text">基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少DOM的重派重绘"><span class="toc-text">减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于动画性能优化"><span class="toc-text">基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hover"><span class="toc-text">:hover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于循环的性能优化"><span class="toc-text">基于循环的性能优化</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数据访问提升性能"><span class="toc-text">基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM创建、访问和操作提升性能"><span class="toc-text">基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM节点的访问的性能提升"><span class="toc-text">基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少DOM的重派重绘"><span class="toc-text">减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于动画性能优化"><span class="toc-text">基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hover"><span class="toc-text">:hover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于循环的性能优化"><span class="toc-text">基于循环的性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归和迭代"><span class="toc-text">递归和迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制表"><span class="toc-text">制表</span></a></li></ol></li></ol>
   </div>
 
 
@@ -340,6 +340,28 @@
 <li><p>事实证明大多数情况下switch表达式比if-else更快，担当只有条件数量很大时才明显更快，if-else适合判断两个离散的值或判断几个不同的值域。如果判断多余两个离散值，switch表达式更好</p>
 </li>
 </ol>
+<h3 id="递归和迭代"><a href="#递归和迭代" class="headerlink" title="递归和迭代"></a><strong>递归和迭代</strong></h3><ol>
+<li><p>任何可以实现递归的算法都可以用迭代实现。迭代算法通常包括几个不同的循环，分别对应算法过程的不同方面，也会导致自己的性能问题。但是，使用优化的循环代替长时间的运行的递归函数可以提高性能，因为运行一个循环比反复调用一个函数的开销要低。</p>
+</li>
+<li><p>将递归算法切换为迭代只是避免栈溢出错误的方法之一</p>
+</li>
+</ol>
+<h3 id="制表"><a href="#制表" class="headerlink" title="制表"></a><strong>制表</strong></h3><ol>
+<li><p>制表，通过缓存先前计算结果为后续计算所重复使用，避免了重复的工作。这使得制表成为递归算法中有用的技术</p>
+</li>
+<li><p>为了是一个函数的制表过程更加容易，你可以定义一个memorize()函数封装基本功能。例如：</p>
+<pre><code>function memoize(fundamental, cache){
+    cache = cache || {};
+    var shell = function(arg){
+        if (!cache.hasOwnProperty(arg)){
+            cache[arg] = fundamental(arg);
+        }
+        return cache[arg];
+    };
+    return shell;
+}
+</code></pre></li>
+</ol>
 
     
   </div>
@@ -354,7 +376,7 @@
     <a class="show pull-left" href="/2018/09/28/[[scope]]/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2018/10/14/tools/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
