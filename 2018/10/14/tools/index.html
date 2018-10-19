@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>有关原生函数封装的库 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="浅度克隆12345678910111213var obj = &amp;#123;    name : &amp;apos;abc&amp;apos;,    age : 123,    sex : &amp;apos;male&amp;apos;&amp;#125;var obj1 = &amp;#123;&amp;#125; function clone(origin,target)&amp;#123;    var target = target || &amp;#12">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有关原生函数封装的库">
+<meta property="og:url" content="http://yoursite.com/2018/10/14/Tools/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="浅度克隆12345678910111213var obj = &amp;#123;    name : &amp;apos;abc&amp;apos;,    age : 123,    sex : &amp;apos;male&amp;apos;&amp;#125;var obj1 = &amp;#123;&amp;#125; function clone(origin,target)&amp;#123;    var target = target || &amp;#12">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2018-10-19T12:56:34.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有关原生函数封装的库">
+<meta name="twitter:description" content="浅度克隆12345678910111213var obj = &amp;#123;    name : &amp;apos;abc&amp;apos;,    age : 123,    sex : &amp;apos;male&amp;apos;&amp;#125;var obj1 = &amp;#123;&amp;#125; function clone(origin,target)&amp;#123;    var target = target || &amp;#12">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#浅度克隆"><span class="toc-text">浅度克隆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深度克隆"><span class="toc-text">深度克隆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义数组push-模拟Array原型链上的push方法"><span class="toc-text">自定义数组push,模拟Array原型链上的push方法 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自己设置的type返回值类型"><span class="toc-text">自己设置的type返回值类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个字符串-a-z-组成，请找出该字符串第一个只出现一次的字母"><span class="toc-text">一个字符串[a-z]组成，请找出该字符串第一个只出现一次的字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个字符串-a-z-组成，请找出该字符串第一个只出现一次的字母-别人编写"><span class="toc-text">一个字符串[a-z]组成，请找出该字符串第一个只出现一次的字母(别人编写)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#圣杯模式"><span class="toc-text">圣杯模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#雅虎（圣杯模式）"><span class="toc-text">雅虎（圣杯模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装兼容性方法，求滚动条滚动距离getScrollOffset"><span class="toc-text">封装兼容性方法，求滚动条滚动距离getScrollOffset()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装兼容性方法，返回浏览器视口尺寸getViewportOffset"><span class="toc-text">封装兼容性方法，返回浏览器视口尺寸getViewportOffset() </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装兼容方法getStyle-elem-prop"><span class="toc-text">封装兼容方法getStyle(elem,prop)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装兼容性的addEvent-elem-type-handle-方法"><span class="toc-text">封装兼容性的addEvent(elem,type,handle)方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装兼容性的removeEvent-elem-type-handle-方法"><span class="toc-text">封装兼容性的removeEvent(elem,type,handle)方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装取消冒泡的函数stopBubble-event"><span class="toc-text">封装取消冒泡的函数stopBubble(event)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装阻止默认事件的函数cancelHandle"><span class="toc-text">封装阻止默认事件的函数cancelHandle()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将目标节点内部的节点顺序逆序。"><span class="toc-text">将目标节点内部的节点顺序逆序。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装remove-函数，使得child-remove-可以销毁自身。"><span class="toc-text">封装remove()函数，使得child.remove()可以销毁自身。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装函数InsertAfter-功能类似insertBefore，直接在原型链上编程，可以忽略老版本的浏览器。"><span class="toc-text">封装函数InsertAfter();功能类似insertBefore，直接在原型链上编程，可以忽略老版本的浏览器。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓冲移动运动"><span class="toc-text">缓冲移动运动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#透明度缓存"><span class="toc-text">透明度缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#foreach源码"><span class="toc-text">foreach源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter源码"><span class="toc-text">filter源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map源码"><span class="toc-text">map源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reduce源码-跟原数组的reduce不太一样"><span class="toc-text">reduce源码(跟原数组的reduce不太一样)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下面这个跟原数组的reduce不太一样"><span class="toc-text">下面这个跟原数组的reduce不太一样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#some源码"><span class="toc-text">some源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#every源码"><span class="toc-text">every源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防抖"><span class="toc-text">防抖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#节流"><span class="toc-text">节流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bind-的源码"><span class="toc-text">bind 的源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call的原理实现"><span class="toc-text">call的原理实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apply的原理实现"><span class="toc-text">apply的原理实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装的manageCookie的方法"><span class="toc-text">封装的manageCookie的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装requestAnimationFrame的实现"><span class="toc-text">封装requestAnimationFrame的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传func-返回新的函数"><span class="toc-text">传func 返回新的函数</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Tools" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">有关原生函数封装的库</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/10/14/Tools/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="浅度克隆"><a href="#浅度克隆" class="headerlink" title="浅度克隆"></a><strong>浅度克隆</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">    name : &apos;abc&apos;,</span><br><span class="line">    age : 123,</span><br><span class="line">    sex : &apos;male&apos;</span><br><span class="line">&#125;</span><br><span class="line">var obj1 = &#123;&#125;</span><br><span class="line"> function clone(origin,target)&#123;</span><br><span class="line">    var target = target || &#123;&#125;;</span><br><span class="line">    for(var propo in obj)&#123;</span><br><span class="line">        target[propo] = origin[propo];</span><br><span class="line">    &#125;</span><br><span class="line">    return target;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="深度克隆"><a href="#深度克隆" class="headerlink" title="深度克隆"></a><strong>深度克隆</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function deepClone(target, origin) &#123;</span><br><span class="line">    var target = target || &#123;&#125;;</span><br><span class="line">    var arrStr = &apos;[object Array]&apos;;</span><br><span class="line">    var toStr = Object.prototype.toString;</span><br><span class="line">    if (origin != null) &#123;            //注意 undefined == null 返回的是true, 此处排除这两个的干扰 ，因为们俩都不是对象，也没有包装类</span><br><span class="line">        for (var prop in origin) &#123;</span><br><span class="line">            var ori = origin[prop];</span><br><span class="line">            var tar = target[prop];</span><br><span class="line">            if (ori !== &apos;null&apos; &amp;&amp; typeof(ori) == &apos;object&apos;) &#123;</span><br><span class="line"></span><br><span class="line">                console.log(toStr.call(ori) == arrStr);</span><br><span class="line">                tar = (toStr.call(ori) == arrStr) ? [] : &#123;&#125;;</span><br><span class="line">                target[prop] = deepClone(tar, ori)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                target[prop] = ori;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自定义数组push-模拟Array原型链上的push方法"><a href="#自定义数组push-模拟Array原型链上的push方法" class="headerlink" title="自定义数组push,模拟Array原型链上的push方法 "></a><strong>自定义数组push,模拟Array原型链上的push方法 </strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var arr = [];</span><br><span class="line">Array.prototype.push = function () &#123;</span><br><span class="line">    for(var i = 0; i &lt; arguments.length; i ++) &#123;</span><br><span class="line">        this[this.length] = arguments[i];</span><br><span class="line">    &#125;</span><br><span class="line">    return this.length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自己设置的type返回值类型"><a href="#自己设置的type返回值类型" class="headerlink" title="自己设置的type返回值类型"></a><strong>自己设置的type返回值类型</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function type(target) &#123;</span><br><span class="line">    var ret = typeof (target);</span><br><span class="line">    var template = &#123;</span><br><span class="line">        &apos;[object Array]&apos;: &apos;array&apos;,</span><br><span class="line">        &apos;[object Object]&apos;: &apos;object&apos;,</span><br><span class="line">        &apos;[object Number]&apos;: &apos;number-object&apos;,</span><br><span class="line">        &apos;[object Boolean]&apos;: &apos;boolean-object&apos;,</span><br><span class="line">        &apos;[object String]&apos;: &apos;string-object&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    if (target === null) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;else if(ret == &apos;object&apos;) &#123;</span><br><span class="line">        var str = Object.prototype.toString.call(target);</span><br><span class="line">        return template[str];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="一个字符串-a-z-组成，请找出该字符串第一个只出现一次的字母"><a href="#一个字符串-a-z-组成，请找出该字符串第一个只出现一次的字母" class="headerlink" title="一个字符串[a-z]组成，请找出该字符串第一个只出现一次的字母"></a><strong>一个字符串[a-z]组成，请找出该字符串第一个只出现一次的字母</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">var str = &apos;dsXazhdkasxhdlkasjzdlksajdlksajlkdaXs&apos;;</span><br><span class="line">function singleStr(str) &#123;</span><br><span class="line">    var temp = &#123;&#125;,</span><br><span class="line">        oldArr = str.split(&apos;&apos;),</span><br><span class="line">        newArr = [],</span><br><span class="line">        newStr = &apos;&apos;,</span><br><span class="line">        temp = oldArr.unique();</span><br><span class="line">    for (var prop in temp) &#123;</span><br><span class="line">        if (temp[prop] == 1) &#123;</span><br><span class="line">            newArr.push(prop);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    newStr = newArr[0];</span><br><span class="line">    return newStr;</span><br><span class="line">&#125;</span><br><span class="line">Array.prototype.unique = function () &#123;</span><br><span class="line">    var temp = &#123;&#125;,</span><br><span class="line">        len = this.length;</span><br><span class="line">    for (var i = 0; i &lt; len; i++) &#123;</span><br><span class="line">        if (!temp[this[i]]) &#123;</span><br><span class="line">            temp[this[i]] = 1;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            temp[this[i]] += 1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="一个字符串-a-z-组成，请找出该字符串第一个只出现一次的字母-别人编写"><a href="#一个字符串-a-z-组成，请找出该字符串第一个只出现一次的字母-别人编写" class="headerlink" title="一个字符串[a-z]组成，请找出该字符串第一个只出现一次的字母(别人编写)"></a><strong>一个字符串[a-z]组成，请找出该字符串第一个只出现一次的字母(别人编写)</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">var str = &apos;mdsaahjzsjkjkjkjkvlkllopoopopopop&apos; ;</span><br><span class="line">console.log(firstSingle(str));</span><br><span class="line">function firstSingle(str)&#123;</span><br><span class="line">    var obj = &#123;&#125;;</span><br><span class="line">    for(var i = 0; i &lt; str.length; i ++)&#123;</span><br><span class="line">        if(!obj[str[i]])&#123;</span><br><span class="line">            obj[str[i]] = true;               </span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            str = deleteLetter(str,str[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return str[0];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function deleteLetter(str,char) &#123;</span><br><span class="line">    var reg = new RegExp(char, &apos;g&apos;);</span><br><span class="line">    for(var i = 0; i &lt; str.length;)&#123;</span><br><span class="line">        if(str[i] === char)&#123;</span><br><span class="line">            str = str.replace(reg, &apos;&apos;);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            i ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="圣杯模式"><a href="#圣杯模式" class="headerlink" title="圣杯模式"></a><strong>圣杯模式</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function inherit(Target,Origin) &#123;</span><br><span class="line">    function F() &#123;&#125;;</span><br><span class="line">    F.prototype = Origin.prototype;</span><br><span class="line">    Target.prototype = new F();</span><br><span class="line">    Target.prototype.constuctor = Target;</span><br><span class="line">    Target.prototype.uber = Origin.prototype; //就是来知道真正继承的是谁</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">father.prototype.lastName = &apos;xiao&apos;;</span><br><span class="line">function Father() &#123;</span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line">function Son() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">inhert(Son,Father);</span><br><span class="line">var father = new Father();</span><br><span class="line">var son = new Son();</span><br></pre></td></tr></table></figure>
+<h3 id="雅虎（圣杯模式）"><a href="#雅虎（圣杯模式）" class="headerlink" title="雅虎（圣杯模式）"></a><strong>雅虎（圣杯模式）</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var inherit = (function()&#123;</span><br><span class="line">    var F = function () &#123;&#125;;//私有化变量</span><br><span class="line">    return function (Target,Origin) &#123;</span><br><span class="line">        F.prototype = Origin.prototype;</span><br><span class="line">        Target.prototype = new F();</span><br><span class="line">        Target.prototype.constuctor = Target;</span><br><span class="line">        Target.prototype.uber = Origin.prototype;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+<h3 id="封装兼容性方法，求滚动条滚动距离getScrollOffset"><a href="#封装兼容性方法，求滚动条滚动距离getScrollOffset" class="headerlink" title="封装兼容性方法，求滚动条滚动距离getScrollOffset()"></a><strong>封装兼容性方法，求滚动条滚动距离getScrollOffset()</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function getScrollOffset() &#123;</span><br><span class="line">    if(window.pageXOffset)&#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            x : window.pageXOffset,</span><br><span class="line">            y : window.pageYOffset</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            x : document.body.scrollLeft + document.documentElement.scrollLeft,</span><br><span class="line">            y : document.body.scrollTop + document.documentElement.scrollTop</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装兼容性方法，返回浏览器视口尺寸getViewportOffset"><a href="#封装兼容性方法，返回浏览器视口尺寸getViewportOffset" class="headerlink" title="封装兼容性方法，返回浏览器视口尺寸getViewportOffset() "></a><strong>封装兼容性方法，返回浏览器视口尺寸getViewportOffset() </strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function getViewportOffset() &#123;</span><br><span class="line">    if(window.innerWidth)&#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            w : window.innerWidth,</span><br><span class="line">            h : window.innerHeight</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        if(document.compatMode === &apos;BackCompat&apos;)&#123;</span><br><span class="line">            return &#123;</span><br><span class="line">                w: document.body.clientWidth,</span><br><span class="line">                h: document.body.clientHeight </span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return&#123;</span><br><span class="line">                w: document.documentElement.clientWidth,</span><br><span class="line">                h: document.documentElement.clientHeight</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装兼容方法getStyle-elem-prop"><a href="#封装兼容方法getStyle-elem-prop" class="headerlink" title="封装兼容方法getStyle(elem,prop)"></a><strong>封装兼容方法getStyle(elem,prop)</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function getStyle(elem,prop) &#123;</span><br><span class="line">    if(window.getComputedStyle)&#123;</span><br><span class="line">        return window.getComputedStyle(elem,null)[prop];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return elem.currentStyle[prop];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装兼容性的addEvent-elem-type-handle-方法"><a href="#封装兼容性的addEvent-elem-type-handle-方法" class="headerlink" title="封装兼容性的addEvent(elem,type,handle)方法"></a><strong>封装兼容性的addEvent(elem,type,handle)方法</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function addEvent(elem,type,handle)&#123;</span><br><span class="line">    if(elem.addEventListener)&#123;</span><br><span class="line">        elem.addEventListener(type,handle,false);</span><br><span class="line">    &#125;else if(elem.attachEvent)&#123;</span><br><span class="line">        elem.attachEvent(&apos;on&apos; + type,function()&#123;</span><br><span class="line">            handle.call(elem);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        elem[&apos;on&apos;+ type] = handle;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装兼容性的removeEvent-elem-type-handle-方法"><a href="#封装兼容性的removeEvent-elem-type-handle-方法" class="headerlink" title="封装兼容性的removeEvent(elem,type,handle)方法"></a><strong>封装兼容性的removeEvent(elem,type,handle)方法</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function removeEvent(elem, type, handle) &#123;</span><br><span class="line">    if (elem.removeEventListener) &#123;</span><br><span class="line">        elem.removeEventListener(type, handle, false);</span><br><span class="line">    &#125; else if (elem.detachEvent) &#123;</span><br><span class="line">        elem.detachEvent(&apos;on&apos; + type, function () &#123;</span><br><span class="line">            handle.call(elem);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        elem[&apos;on&apos; + type] = null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装取消冒泡的函数stopBubble-event"><a href="#封装取消冒泡的函数stopBubble-event" class="headerlink" title="封装取消冒泡的函数stopBubble(event)"></a><strong>封装取消冒泡的函数stopBubble(event)</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function stopBubble(event) &#123;</span><br><span class="line">    if(event.stopPropagation)&#123;</span><br><span class="line">        event.stopPropagation();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        event.cancelBubble = true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装阻止默认事件的函数cancelHandle"><a href="#封装阻止默认事件的函数cancelHandle" class="headerlink" title="封装阻止默认事件的函数cancelHandle()"></a><strong>封装阻止默认事件的函数cancelHandle()</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function cancelHandle(event) &#123;</span><br><span class="line">    if(event.preventDefault)&#123;</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        event.returnValue = false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="将目标节点内部的节点顺序逆序。"><a href="#将目标节点内部的节点顺序逆序。" class="headerlink" title="将目标节点内部的节点顺序逆序。"></a><strong>将目标节点内部的节点顺序逆序。</strong></h3><ul>
+<li>eg: <div><p></p><a></a></div>  —&gt;  <div><a></a><p></p></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Element.prototype.reverseElement = function () &#123;</span><br><span class="line">    var len = this.childNodes.length,</span><br><span class="line">        child,</span><br><span class="line">        first = this.firstChild;</span><br><span class="line">    for (var i = 0; i &lt; len - 1; i++) &#123;</span><br><span class="line">        child = this.lastChild;</span><br><span class="line">        this.insertBefore(child, first);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="封装remove-函数，使得child-remove-可以销毁自身。"><a href="#封装remove-函数，使得child-remove-可以销毁自身。" class="headerlink" title="封装remove()函数，使得child.remove()可以销毁自身。"></a><strong>封装remove()函数，使得child.remove()可以销毁自身。</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Element.prototype.remove = function () &#123;</span><br><span class="line">    var parent = this.parentNode;</span><br><span class="line">    parent.removeChild(this);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装函数InsertAfter-功能类似insertBefore，直接在原型链上编程，可以忽略老版本的浏览器。"><a href="#封装函数InsertAfter-功能类似insertBefore，直接在原型链上编程，可以忽略老版本的浏览器。" class="headerlink" title="封装函数InsertAfter();功能类似insertBefore，直接在原型链上编程，可以忽略老版本的浏览器。"></a><strong>封装函数InsertAfter();功能类似insertBefore，直接在原型链上编程，可以忽略老版本的浏览器。</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Element.protoType.insertAfter = function (targetNode, afterNode) &#123;</span><br><span class="line">    var nextSib = afterNode.nextElementSibling;</span><br><span class="line">    if (this.children.length &lt;= 1 || !nextSib) &#123;</span><br><span class="line">        this.appendChild(targetNode);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        this.insertBefore(targetNode, nextSibling);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="缓冲移动运动"><a href="#缓冲移动运动" class="headerlink" title="缓冲移动运动"></a><strong>缓冲移动运动</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function move(obj, target) &#123;</span><br><span class="line">    clearInterval(timer);</span><br><span class="line">    var speed;</span><br><span class="line">    timer = setInterval(function () &#123;</span><br><span class="line">        speed = (target - obj.offsetLeft) / 7;</span><br><span class="line">        speed = speed &gt; 0 ? Math.ceil(speed) : Math.floor(speed);</span><br><span class="line">        if (obj.offsetLeft === target) &#123;</span><br><span class="line">            clearInterval(timer);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            obj.style.left = obj.offsetLeft + speed + &apos;px&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, 30)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="透明度缓存"><a href="#透明度缓存" class="headerlink" title="透明度缓存"></a><strong>透明度缓存</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function move(obj, target) &#123;</span><br><span class="line">    clearInterval(timer);</span><br><span class="line">    var speed,opa;</span><br><span class="line">    timer = setInterval(function () &#123;</span><br><span class="line">        opa = parseFloat(getstyle(obj, false)[prop]) * 100;</span><br><span class="line">        speed = (target - opa) / 7;</span><br><span class="line">        speed = speed &gt; 0 ? Math.ceil(speed) : Math.floor(speed);</span><br><span class="line">        if (target === opa) &#123;</span><br><span class="line">            clearInterval(timer);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            obj.style.opacity = (speed + opa) / 100;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;, 30)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="foreach源码"><a href="#foreach源码" class="headerlink" title="foreach源码"></a><strong>foreach源码</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.myForEach = function (func, context) &#123;</span><br><span class="line">     var len = this.length;</span><br><span class="line">    for (var i = 0; i &lt; len; i++) &#123;</span><br><span class="line">        func.call(context, this[i], i, this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="filter源码"><a href="#filter源码" class="headerlink" title="filter源码"></a><strong>filter源码</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.myFilter = function (func, context) &#123;</span><br><span class="line">     var newArr = [],</span><br><span class="line">         len = his.length;</span><br><span class="line">     for (var i = 0; i &lt; len; i++) &#123;</span><br><span class="line">         func.call(context, this[i], i, this) ? newArr.push(this[i]) : &apos;&apos;;</span><br><span class="line">     &#125;</span><br><span class="line">     return newArr;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="map源码"><a href="#map源码" class="headerlink" title="map源码"></a><strong>map源码</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.myMap = function (func, context) &#123;</span><br><span class="line">    var newArr = [],</span><br><span class="line">        len = this.length;</span><br><span class="line">    for (var i = 0; i &lt; len; i++) &#123;</span><br><span class="line">        newArr.push(func.call(context, this[i], i, this));</span><br><span class="line">    &#125;</span><br><span class="line">    return newArr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="reduce源码-跟原数组的reduce不太一样"><a href="#reduce源码-跟原数组的reduce不太一样" class="headerlink" title="reduce源码(跟原数组的reduce不太一样)"></a><strong>reduce源码(跟原数组的reduce不太一样)</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.myReduce = function (func, orgin) &#123;</span><br><span class="line">    var previous = orgin,</span><br><span class="line">        i = 0,</span><br><span class="line">        len = this.length;</span><br><span class="line">    if (orgin === undefined) &#123;</span><br><span class="line">        orgin = this[0];</span><br><span class="line">        i = 1;</span><br><span class="line">    &#125;</span><br><span class="line">    for (i; i &lt; len; i++) &#123;</span><br><span class="line">        previous = func(previous, this[i], i);</span><br><span class="line">    &#125;</span><br><span class="line">    return previous;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="下面这个跟原数组的reduce不太一样"><a href="#下面这个跟原数组的reduce不太一样" class="headerlink" title="下面这个跟原数组的reduce不太一样"></a><strong>下面这个跟原数组的reduce不太一样</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.myReduce = function (func, initialValue, context) &#123;</span><br><span class="line">    for (var i = 0; i &lt; this.length; i++) &#123;</span><br><span class="line">        initialValue = func.call(context, initialValue, this[i], i, this);</span><br><span class="line">    &#125;</span><br><span class="line">    return initialValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="some源码"><a href="#some源码" class="headerlink" title="some源码"></a><strong>some源码</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.mySome = function (func, context) &#123;</span><br><span class="line">    for (var i = 0; i &lt; this.length; i++) &#123;</span><br><span class="line">        if (func.call(context, this[i], i, this)) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="every源码"><a href="#every源码" class="headerlink" title="every源码"></a><strong>every源码</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.myEvery = function (func, context) &#123;</span><br><span class="line">    for (var i = 0; i &lt; this.length; i++) &#123;</span><br><span class="line">        if (!func.call(context, this[i], i, this)) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a><strong>防抖</strong></h3><p>运动场景：比如 oInp.oninout = debounce(ajax, 2000);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function debounce(handle, delay)&#123;</span><br><span class="line">    var timer = null;</span><br><span class="line">    return function ()&#123;</span><br><span class="line">        var _self = this,</span><br><span class="line">            _arg = arguments;</span><br><span class="line">        clearTimeout(timer);</span><br><span class="line">        timer = setTimeout(function ()&#123;</span><br><span class="line">            handle.apply(_self, _arg)</span><br><span class="line">        &#125;,delay);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a><strong>节流</strong></h3><p>运用场景： 窗口调整，页面滚动，抢购疯狂点击</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function throttle(handle, wait)&#123;</span><br><span class="line">    var lastTime = 0;</span><br><span class="line">    var nowTime;</span><br><span class="line">    return function (e)&#123;</span><br><span class="line">        nowTime = new Date().getTime();</span><br><span class="line">        if(nowTime - lastTime &gt; wait)&#123;</span><br><span class="line">            handle.apply(this,arguments);</span><br><span class="line">            lastTime = nowTime;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="bind-的源码"><a href="#bind-的源码" class="headerlink" title="bind 的源码"></a><strong>bind 的源码</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.newBind = function (target) &#123;</span><br><span class="line">    target = target || window;</span><br><span class="line">    var self = this;</span><br><span class="line">    var arg = [].slice.call(arguments, 1);</span><br><span class="line">    var Temp = function () &#123; &#125;;</span><br><span class="line">    var F = function () &#123;</span><br><span class="line">        var _arg = [].slice.call(arguments, 0);</span><br><span class="line">        return self.apply(this instanceof Temp ? this : target, arg.concat(_arg));</span><br><span class="line">    &#125;</span><br><span class="line">    Temp.prototype = this.prototype;</span><br><span class="line">    F.prototype = new Temp(); //将F函数的的原型跟调用newBind 函数的原型一样（就是将函数F变得跟调用newBind 的函数一样）</span><br><span class="line"></span><br><span class="line">    return F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="call的原理实现"><a href="#call的原理实现" class="headerlink" title="call的原理实现"></a><strong>call的原理实现</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.newCall = function () &#123;</span><br><span class="line">    var ctx = arguments[0] || window;</span><br><span class="line">    ctx.fn = this;</span><br><span class="line">    var args = [];</span><br><span class="line">    for (var i = 1; i &lt;= arguments.length; i++) &#123;</span><br><span class="line">        args.push(&apos;arguments[&apos; + i + &apos;]&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">    var result = eval(&apos;ctx.fn(&apos; + args.join() + &apos;)&apos;);</span><br><span class="line">    delete ctx.fn;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="apply的原理实现"><a href="#apply的原理实现" class="headerlink" title="apply的原理实现"></a><strong>apply的原理实现</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.newApply = function (ctx, arr) &#123;</span><br><span class="line">    var ctx = ctx || window;</span><br><span class="line">    ctx.fn = this;</span><br><span class="line">    var args = [];</span><br><span class="line">    if (arr) &#123;</span><br><span class="line">        console.log(&apos;haha&apos;)</span><br><span class="line">        for (var i = 0; i &lt;= arr.length; i++) &#123;</span><br><span class="line">            args.push(&apos;arr[&apos; + i + &apos;]&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">        var result = eval(&apos;ctx.fn(&apos; + args.join() + &apos;)&apos;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        var result = ctx.fn();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    delete ctx.fn;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装的manageCookie的方法"><a href="#封装的manageCookie的方法" class="headerlink" title="封装的manageCookie的方法"></a><strong>封装的manageCookie的方法</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">var manageCookie = &#123;</span><br><span class="line">    setCookie: function (name, age, time) &#123;</span><br><span class="line">        document.cookie = name + &apos;=&apos; + value + &apos;; max-age=&apos; + time;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeCookie: function (name) &#123;</span><br><span class="line">        return this.setCookie(name, &apos;&apos;, -1);</span><br><span class="line">    &#125;,</span><br><span class="line">    getCookie: function (name, callback) &#123;</span><br><span class="line">        var cookieStrArr = document.cookie.split(&apos;; &apos;);</span><br><span class="line">        var len = cookieStrArr.length;</span><br><span class="line">        for (var i = 0; i &lt; len; i++) &#123;</span><br><span class="line">            var cookieName = cookieStrArr[i].split(&apos;=&apos;)[0];</span><br><span class="line">            if (cookieName == name) &#123;</span><br><span class="line">                callback(cookieStrArr[i].split(&apos;=&apos;)[1]);</span><br><span class="line">                return this;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        callback(null);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="封装requestAnimationFrame的实现"><a href="#封装requestAnimationFrame的实现" class="headerlink" title="封装requestAnimationFrame的实现"></a><strong>封装requestAnimationFrame的实现</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">window.requestAnimFrame = (function () &#123;</span><br><span class="line">    return window.requestAnimationFrame ||</span><br><span class="line">        window.webkitRequestAnimationFrame ||</span><br><span class="line">        window.mozRequestAnimationFrame ||</span><br><span class="line">        function (callback) &#123;</span><br><span class="line">            window.setTimeout(callback, 1000 / 60);</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">window.cancelAnimFrame = (function () &#123;</span><br><span class="line">    return window.cancelAnimationFrame ||</span><br><span class="line">        window.webkitCancelAnimationFrame ||</span><br><span class="line">        window.mozCancelAnimationFrame ||</span><br><span class="line">        function (id) &#123;</span><br><span class="line">            window.clearTimeout(id);</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<h3 id="传func-返回新的函数"><a href="#传func-返回新的函数" class="headerlink" title="传func 返回新的函数"></a><strong>传func 返回新的函数</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var getSingle = function (func) &#123;</span><br><span class="line">    var result;</span><br><span class="line">    return function () &#123;</span><br><span class="line">        if (!result) &#123;</span><br><span class="line">            result = func.apply(this, arguments);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/29/JS_High_Performance/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/10/14/Tools/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
