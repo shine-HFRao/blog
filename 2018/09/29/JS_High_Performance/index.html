@@ -15,18 +15,18 @@
     <meta name="keywords" content="JavaScript," />
   
 
-  <meta name="description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
+  <meta name="description" content="一、基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他们总是位于作用域链的最后一">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈JavaScript性能提升">
 <meta property="og:url" content="http://yoursite.com/2018/09/29/JS_High_Performance/index.html">
 <meta property="og:site_name" content="HFRao">
-<meta property="og:description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
+<meta property="og:description" content="一、基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他们总是位于作用域链的最后一">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-10-09T16:26:29.658Z">
+<meta property="og:updated_time" content="2018-10-18T15:34:13.079Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈JavaScript性能提升">
-<meta name="twitter:description" content="目录查表法递归调用栈限制递归模式 1. 直接递归模式 2. 精巧模式 迭代制表 基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深">
+<meta name="twitter:description" content="一、基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他们总是位于作用域链的最后一">
 
   
 
@@ -181,7 +181,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数据访问提升性能"><span class="toc-text">基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM创建、访问和操作提升性能"><span class="toc-text">基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于DOM节点的访问的性能提升"><span class="toc-text">基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少DOM的重派重绘"><span class="toc-text">减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于动画性能优化"><span class="toc-text">基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hover"><span class="toc-text">:hover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于循环的性能优化"><span class="toc-text">基于循环的性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归和迭代"><span class="toc-text">递归和迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制表"><span class="toc-text">制表</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、基于数据访问提升性能"><span class="toc-text">一、基于数据访问提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、基于DOM创建、访问和操作提升性能"><span class="toc-text">二、基于DOM创建、访问和操作提升性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、基于DOM节点的访问的性能提升"><span class="toc-text">三、基于DOM节点的访问的性能提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、减少DOM的重派重绘"><span class="toc-text">四、减少DOM的重派重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、基于动画性能优化"><span class="toc-text">五、基于动画性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、-hover"><span class="toc-text">六、:hover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、事件委托"><span class="toc-text">七、事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、基于循环的性能优化"><span class="toc-text">八、基于循环的性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九、递归和迭代"><span class="toc-text">九、递归和迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十、制表"><span class="toc-text">十、制表</span></a></li></ol>
   </div>
 
 
@@ -232,11 +232,7 @@
 
   <div class="article-content">
     
-      <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>查表法<br>递归<br>调用栈限制<br>递归模式</p>
-<pre><code>1. 直接递归模式
-2. 精巧模式
-</code></pre><p>迭代<br>制表</p>
-<h3 id="基于数据访问提升性能"><a href="#基于数据访问提升性能" class="headerlink" title="基于数据访问提升性能"></a><strong>基于数据访问提升性能</strong></h3><ol>
+      <h3 id="一、基于数据访问提升性能"><a href="#一、基于数据访问提升性能" class="headerlink" title="一、基于数据访问提升性能"></a><strong>一、基于数据访问提升性能</strong></h3><ol>
 <li><p>在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：</p>
 <ul>
 <li><p>直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间</p>
@@ -254,7 +250,7 @@
 <li><p><strong>一般来说，你可以通过这种方法提高JavaScript代码的性能：将经常使用的对象成员，数组项，和域外变量存入局部变量中。然后，访问局部变量的书读会快于那些原始变量</strong>通过使用这些策略，你可以极大地提高那些需要大量JavaScript代码的网页应用的实际性能</p>
 </li>
 </ol>
-<h3 id="基于DOM创建、访问和操作提升性能"><a href="#基于DOM创建、访问和操作提升性能" class="headerlink" title="基于DOM创建、访问和操作提升性能"></a><strong>基于DOM创建、访问和操作提升性能</strong></h3><ol>
+<h3 id="二、基于DOM创建、访问和操作提升性能"><a href="#二、基于DOM创建、访问和操作提升性能" class="headerlink" title="二、基于DOM创建、访问和操作提升性能"></a><strong>二、基于DOM创建、访问和操作提升性能</strong></h3><ol>
 <li><p>Javascript分为三部分DOM,BOM和ECMAScript，他们都是相互独立的，JavaScript要访问DOM，这两个独立的部分以功能接口连接就会带来性能损耗。一个很形象的的比域就是帮他们两个比作是两个独立的岛屿，其中一个岛屿要到另一岛屿就要通过一座桥，通过这座桥是要交费用的所以每过一次就多一次费用，好比JavaScript对DOM的访问获取，所以要尽量减少对DOM节点的访问获取，努力停留在ECMAScript岛屿上，还有DOM获取后还会操作DOM，那这个费用就更高了（即修改DOM的长宽、颜色等会导致页面的回流和重绘，消耗性能，也应该尽量减少）</p>
 </li>
 <li><p>在innerHTML和document.createElemnt来给文档创建DOM节点中，innerHTML速度会更快些，除了最新的基于webkit的浏览器（Chrome和Safari，反而另外一个更快），还有一种创建新的DOM节点就是通过克隆已有的节点，在大多数浏览器中，克隆节点更有效率，但提高不太多</p>
@@ -269,7 +265,7 @@
 <ol start="4">
 <li>HTML集合实际上在查询文档，当你信息更新时，每次都要重复这种查询操作，例如读取集合元素的数目。这正是低效率的来源</li>
 </ol>
-<h3 id="基于DOM节点的访问的性能提升"><a href="#基于DOM节点的访问的性能提升" class="headerlink" title="基于DOM节点的访问的性能提升"></a><strong>基于DOM节点的访问的性能提升</strong></h3><ol>
+<h3 id="三、基于DOM节点的访问的性能提升"><a href="#三、基于DOM节点的访问的性能提升" class="headerlink" title="三、基于DOM节点的访问的性能提升"></a><strong>三、基于DOM节点的访问的性能提升</strong></h3><ol>
 <li><p>节点访问的时候如果有直接访问元素节点的API就直接用（比如children的访问肯定比childrenNode访问要快，因为children集合项更新少遍历快），不能直接访问元素节点的 <strong>如IE9及以下仅支持node.children</strong> </p>
 </li>
 <li><p>DOM选择器API：querySelectorAll()，括号内的查找跟css选择器查找类似（IE8及以上支持）,还有一个就是querySelector()，这个选择器放回符合元素节点的<br>第一位，<strong>他们不是HTML集合（即信息不是实时的）</strong>，相比于通过getElementsByClassName等的方法来通过迭代操作获取到精确的DOM，querySelectorAll()更快</p>
@@ -285,7 +281,7 @@
 <li><p>页面上的某一个元素的大小信息的改变都会导致一部分需要重排重绘，但是某些改变可导致重排整个页面，例如，当一个咕哝当条的出现</p>
 </li>
 </ol>
-<h3 id="减少DOM的重派重绘"><a href="#减少DOM的重派重绘" class="headerlink" title="减少DOM的重派重绘"></a><strong>减少DOM的重派重绘</strong></h3><ol>
+<h3 id="四、减少DOM的重派重绘"><a href="#四、减少DOM的重派重绘" class="headerlink" title="四、减少DOM的重派重绘"></a><strong>四、减少DOM的重派重绘</strong></h3><ol>
 <li><p>优化style的改变</p>
 <ul>
 <li><p>为减少重排重绘的发生次数，应该将多个DOM和风格的改变合并到一块一次性执行（大多数浏览器都会进行优化只进行一次重排重绘）。</p>
@@ -307,7 +303,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="基于动画性能优化"><a href="#基于动画性能优化" class="headerlink" title="基于动画性能优化"></a><strong>基于动画性能优化</strong></h3><ol>
+<h3 id="五、基于动画性能优化"><a href="#五、基于动画性能优化" class="headerlink" title="五、基于动画性能优化"></a><strong>五、基于动画性能优化</strong></h3><ol>
 <li><p>动画中使用绝对坐标定位页面中的动画元素，使他位于页面布局流之外</p>
 </li>
 <li><p>启动GPU硬件加速</p>
@@ -318,17 +314,17 @@
 </ul>
 </li>
 </ol>
-<h3 id="hover"><a href="#hover" class="headerlink" title=":hover"></a><strong>:hover</strong></h3><ol>
+<h3 id="六、-hover"><a href="#六、-hover" class="headerlink" title="六、:hover"></a><strong>六、:hover</strong></h3><ol>
 <li>避免过多的元素中（如500-1000行5列构成的表）使用：hover时 否则会降低反映速度，cpu使用率会提高到80%-90%</li>
 </ol>
-<h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a><strong>事件委托</strong></h3><ol>
+<h3 id="七、事件委托"><a href="#七、事件委托" class="headerlink" title="七、事件委托"></a><strong>七、事件委托</strong></h3><ol>
 <li>利用了事件流的事件冒泡和事件源对象来实现事件委托</li>
 </ol>
 <p>2.优点：</p>
 <pre><code>- 不需要对每个dom进行绑定事件，只需对父级进行绑定，减少内存消耗，提高性能
 
 - 动态绑定事件，对新添进来的子元素不需要绑定事件
-</code></pre><h3 id="基于循环的性能优化"><a href="#基于循环的性能优化" class="headerlink" title="基于循环的性能优化"></a><strong>基于循环的性能优化</strong></h3><ol>
+</code></pre><h3 id="八、基于循环的性能优化"><a href="#八、基于循环的性能优化" class="headerlink" title="八、基于循环的性能优化"></a><strong>八、基于循环的性能优化</strong></h3><ol>
 <li><p>JavaScript有四种循环： for循环，while，do-while，for-in</p>
 </li>
 <li><p>JavaScript提供的四中循环里，只有一种循环比其他的循环明显要慢：for-in循环，由于每次迭代时都要搜索对象中的属性和对象原型上的属性，同样的循环迭代的操作中，for-in循环要比其它的循环慢7倍之多，除非你对数目不详的对象属性进行操作，否则避免使用for-in循环，其它的三个循环性能都相当</p>
@@ -340,13 +336,13 @@
 <li><p>事实证明大多数情况下switch表达式比if-else更快，担当只有条件数量很大时才明显更快，if-else适合判断两个离散的值或判断几个不同的值域。如果判断多余两个离散值，switch表达式更好</p>
 </li>
 </ol>
-<h3 id="递归和迭代"><a href="#递归和迭代" class="headerlink" title="递归和迭代"></a><strong>递归和迭代</strong></h3><ol>
+<h3 id="九、递归和迭代"><a href="#九、递归和迭代" class="headerlink" title="九、递归和迭代"></a><strong>九、递归和迭代</strong></h3><ol>
 <li><p>任何可以实现递归的算法都可以用迭代实现。迭代算法通常包括几个不同的循环，分别对应算法过程的不同方面，也会导致自己的性能问题。但是，使用优化的循环代替长时间的运行的递归函数可以提高性能，因为运行一个循环比反复调用一个函数的开销要低。</p>
 </li>
 <li><p>将递归算法切换为迭代只是避免栈溢出错误的方法之一</p>
 </li>
 </ol>
-<h3 id="制表"><a href="#制表" class="headerlink" title="制表"></a><strong>制表</strong></h3><ol>
+<h3 id="十、制表"><a href="#十、制表" class="headerlink" title="十、制表"></a><strong>十、制表</strong></h3><ol>
 <li><p>制表，通过缓存先前计算结果为后续计算所重复使用，避免了重复的工作。这使得制表成为递归算法中有用的技术</p>
 </li>
 <li><p>为了是一个函数的制表过程更加容易，你可以定义一个memorize()函数封装基本功能。例如：</p>
