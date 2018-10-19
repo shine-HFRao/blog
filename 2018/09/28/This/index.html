@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="什么是this 对于this，this的作用是提供了一种更优雅的方式来隐式“传递”一个对象引用（即上下文对象），它的特性跟动态作用域有点相似，this 是在运行时进行绑定的,即this在一个函数调用时发生绑定，就是当函数调用时，函数会创建一个AO对象，这个对象中会存放记录函数内的变量，函数传进来的参数，函数是在哪里被调用的等息，this就是其中的一个属性，会在函数执行过程中用到，this的指向取决">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-10-19T12:49:31.245Z">
+<meta property="og:updated_time" content="2018-10-19T12:54:24.320Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="this的全面解析">
 <meta name="twitter:description" content="什么是this 对于this，this的作用是提供了一种更优雅的方式来隐式“传递”一个对象引用（即上下文对象），它的特性跟动态作用域有点相似，this 是在运行时进行绑定的,即this在一个函数调用时发生绑定，就是当函数调用时，函数会创建一个AO对象，这个对象中会存放记录函数内的变量，函数传进来的参数，函数是在哪里被调用的等息，this就是其中的一个属性，会在函数执行过程中用到，this的指向取决">
@@ -259,7 +259,7 @@
 </li>
 <li><p>注意：call、apply和bind的第一个参数如果传的是字符串，数字，布尔类型的值时，这个原始值就会被转换成包装对象</p>
 </li>
-<li><p>还有像bind这种将一个函数的this强绑定要一个对象中，无论何时调用该函数该函数中的this都指向这个对象，这种绑定是一种显式的强制绑定，因此我们称之为硬绑定。与之相反的是软绑定，很好体现软绑定的就是内置函数bind，它的<a href="">实现原理</a>是当函数调用bind之后改变了该函数的this指向，但是当通过new操作符来执行这个通过bind调用过的函数时，它的this指向会改变变成指向该函数的实例对象</p>
+<li><p>还有像bind这种将一个函数的this强绑定要一个对象中，无论何时调用该函数该函数中的this都指向这个对象，这种绑定是一种显式的强制绑定，因此我们称之为硬绑定。与之相反的是软绑定，很好体现软绑定的就是内置函数bind，它的<a href="https://shine-hfrao.github.io/2018/10/14/tools/#bind-%E7%9A%84%E6%BA%90%E7%A0%81" target="_blank" rel="noopener">实现原理</a>是当函数调用bind之后改变了该函数的this指向，但是当通过new操作符来执行这个通过bind调用过的函数时，它的this指向会改变变成指向该函数的实例对象</p>
 </li>
 </ul>
 <p><strong>new绑定</strong>：</p>
