@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="HFRao">
 <meta property="og:description" content="一、基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他们总是位于作用域链的最后一">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2018-10-18T15:34:13.079Z">
+<meta property="og:updated_time" content="2018-11-02T07:08:28.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈JavaScript性能提升">
 <meta name="twitter:description" content="一、基于数据访问提升性能 在JavaScript中，数组的存储位置可以对代码整体性能产生重要的影响。有四种数据访问类型：直接量，变量，数组项，对象成员。他们有不同的性能考虑：  直接量和局部变量访问速度非常快，数组项和对象成员需要更长时间  局部变量比域外变量快，因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深，访问所需的时间就越长。全局变量总是最慢的，因为他们总是位于作用域链的最后一">
@@ -321,10 +321,9 @@
 <li>利用了事件流的事件冒泡和事件源对象来实现事件委托</li>
 </ol>
 <p>2.优点：</p>
-<pre><code>- 不需要对每个dom进行绑定事件，只需对父级进行绑定，减少内存消耗，提高性能
-
-- 动态绑定事件，对新添进来的子元素不需要绑定事件
-</code></pre><h3 id="八、基于循环的性能优化"><a href="#八、基于循环的性能优化" class="headerlink" title="八、基于循环的性能优化"></a><strong>八、基于循环的性能优化</strong></h3><ol>
+<p>① 不需要对每个dom进行绑定事件，只需对父级进行绑定，减少内存消耗，提高性能</p>
+<p>② 动态绑定事件，对新添进来的子元素不需要绑定事件</p>
+<h3 id="八、基于循环的性能优化"><a href="#八、基于循环的性能优化" class="headerlink" title="八、基于循环的性能优化"></a><strong>八、基于循环的性能优化</strong></h3><ol>
 <li><p>JavaScript有四种循环： for循环，while，do-while，for-in</p>
 </li>
 <li><p>JavaScript提供的四中循环里，只有一种循环比其他的循环明显要慢：for-in循环，由于每次迭代时都要搜索对象中的属性和对象原型上的属性，同样的循环迭代的操作中，for-in循环要比其它的循环慢7倍之多，除非你对数目不详的对象属性进行操作，否则避免使用for-in循环，其它的三个循环性能都相当</p>
