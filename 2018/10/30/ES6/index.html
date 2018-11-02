@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>ES6知识点整理 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="声明let和const ES6具有了块级作用域概念，块级作用域：只在它当前的代码段（花括号或括号）之间有效  let和const共同的特点：  不存在变量提升；（变量一定要先声明再使用，在变量声明之前使用就会报错） 通过let和const定义的变量具有块级作用域的概念（暂时性死区），即只在当前作用域有效 不允许重复声明（Let个const声明一个变量以后不能被重复声明var，let和const都不">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6知识点整理">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/ES6/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="声明let和const ES6具有了块级作用域概念，块级作用域：只在它当前的代码段（花括号或括号）之间有效  let和const共同的特点：  不存在变量提升；（变量一定要先声明再使用，在变量声明之前使用就会报错） 通过let和const定义的变量具有块级作用域的概念（暂时性死区），即只在当前作用域有效 不允许重复声明（Let个const声明一个变量以后不能被重复声明var，let和const都不">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/ES6/1.png">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/ES6/2.png">
+<meta property="og:updated_time" content="2018-11-02T06:44:41.853Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6知识点整理">
+<meta name="twitter:description" content="声明let和const ES6具有了块级作用域概念，块级作用域：只在它当前的代码段（花括号或括号）之间有效  let和const共同的特点：  不存在变量提升；（变量一定要先声明再使用，在变量声明之前使用就会报错） 通过let和const定义的变量具有块级作用域的概念（暂时性死区），即只在当前作用域有效 不允许重复声明（Let个const声明一个变量以后不能被重复声明var，let和const都不">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/ES6/1.png">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#声明let和const"><span class="toc-text">声明let和const</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量的解构赋值"><span class="toc-text">变量的解构赋值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串的扩展"><span class="toc-text">字符串的扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数的扩展"><span class="toc-text">函数的扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6中提供的迭代器Iterator"><span class="toc-text">ES6中提供的迭代器Iterator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PROMISE对象"><span class="toc-text">PROMISE对象</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ES6" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ES6知识点整理</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.30</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/10/30/ES6/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="声明let和const"><a href="#声明let和const" class="headerlink" title="声明let和const"></a><strong>声明let和const</strong></h2><ol>
+<li><p>ES6具有了块级作用域概念，块级作用域：只在它当前的代码段（花括号或括号）之间有效</p>
+</li>
+<li><p>let和const共同的特点：</p>
+<ul>
+<li>不存在变量提升；（变量一定要先声明再使用，在变量声明之前使用就会报错）</li>
+<li>通过let和const定义的变量具有块级作用域的概念（暂时性死区），即只在当前作用域有效</li>
+<li>不允许重复声明（Let个const声明一个变量以后不能被重复声明var，let和const都不可以）</li>
+</ul>
+</li>
+<li><p>const声明的变量是一个不可以改变的量，原始值改变不了，引用值的引用不可改变但是引用值本身的内容是可以改变的</p>
+</li>
+</ol>
+<h2 id="变量的解构赋值"><a href="#变量的解构赋值" class="headerlink" title="变量的解构赋值"></a><strong>变量的解构赋值</strong></h2><ol>
+<li><p><strong>数组的结构赋值</strong>（有序）<br> 实质：模式匹配</p>
+<ul>
+<li>let [a, b, c] = [1, 2, 3];</li>
+<li>let [a, [b, [c]]] = [1, [2, [3]]];</li>
+<li>解构失败：let [a, b] = [2] 输出a是2，b是undefined;</li>
+<li>不完全解构：let [a, b] = [1, 2, 3] 输出a是1, b是2;</li>
+<li>这样会报错：let [a] = 1,因为右边的值不具备这样迭代器的接口</li>
+<li>默认值：let [a = 10] = [20]; 先走对应匹配的模式（判断是否绝对等于undefined ）    就是20，如果模式没有就回来找自己的默认值也就是10<ul>
+<li><strong>例如</strong>：let [a = 10] = [null]; 输出a = null; let [a = 10] = [undefined];输出a = 10(a跟对应的值是空或undefined取默认值，即绝对等于undefined)</li>
+</ul>
+</li>
+<li>还有一点就是：惰性取值,比如：let[x = fn()] = [2]; 输出x是等于2，但是fn是不执行的，只有等于fn()的时    候才执行</li>
+<li>个别例子：let[x=y, y=2] = []; 输出想x, y 会报错 ，因为y在定义之前被调用了</li>
+</ul>
+</li>
+<li><p><strong>对象的结构赋值</strong>（无序）</p>
+<ul>
+<li>对象的结构赋值是无序的,以下都可以：<br>  let { foo, add } = { foo: 123, add: 234 };<br>  let { foo, add } = { add: 234, foo: 123 };</li>
+<li>判断是否绝对等于undefined ：<br>  let { bar } = { foo: 123, bar: null } 输出bar = null<br>  let { bar } = { foo: 123 } 输出bar = undefined<br>  let { bar } = { foo: 123, bar: undefined } 输出bar = undefined</li>
+<li>默认值：<br>  let {x=3} = {} 输出x = 3,跟数组的结构赋值是一样的</li>
+<li>典型例子：<br>  let {foo: bar} = {foo :123} 输出bar = 123, foo是报错（未定义）<br>  let {aa, bb} = {aa:123, bb:234} 的实质是 let { aa:aa, bb:bb } = { aa:     123,     bb: 234 } 这种key跟value相同的时候写一个也是一种简写，前面的    那个aa只是代表的一个模式，是根据模式进行的匹配，不具有真正的意义</li>
+</ul>
+</li>
+<li><p><strong>当然对象解构赋值和数组的解构赋值有时会混在一起使用</strong>:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">        p: [</span><br><span class="line">            &quot;hello&quot;,</span><br><span class="line">            &#123; y : 123 &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">let &#123;p:p, p:[s,&#123;y&#125;]&#125; = obj</span><br><span class="line"></span><br><span class="line">console.log(x);         //hello</span><br><span class="line">console.log(y);         //123</span><br><span class="line">console.log(p);         //[&quot;hello&quot;, 123]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>对象和数组的解构赋值还存在包装类，内置对象中，如下</strong>：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let [a, b, c, d] = &apos;love&apos;;</span><br><span class="line">    a   //&quot;l&quot;</span><br><span class="line">    b   //&quot;0&quot;</span><br><span class="line">    c   //&quot;v&quot;</span><br><span class="line">    d   //&quot;e&quot;</span><br><span class="line"></span><br><span class="line">let&#123;length: len&#125; = &apos;123&apos;;</span><br><span class="line">    len //3</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let&#123;pow, ceil, floor&#125; = Math</span><br><span class="line">let&#123;toString&#125; = 123;</span><br><span class="line">let&#123;toString: s&#125; = false;</span><br><span class="line">console.log(toString == Number.prototype.toString);//true</span><br><span class="line">console.log(s == Boolean.prototype.toString);//true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>解构赋值可以应用在函数中，也可以应用在变量之间的转换, import导入</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let arr = [[1, 2], [3, 4]].map(function([a, b])&#123;</span><br><span class="line">        return a + b;</span><br><span class="line">    &#125;)</span><br><span class="line">    arr         //[3, 7]</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let a = 1;</span><br><span class="line">let b = 2;</span><br><span class="line">[a, b] = [b, a];</span><br><span class="line">console.log(a, b);  //2,1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>还有就是在vuex中用的比较多：import {vuex, mapState, mapMutations} from ‘vuex’</li>
+</ul>
+</li>
+</ol>
+<h2 id="字符串的扩展"><a href="#字符串的扩展" class="headerlink" title="字符串的扩展"></a><strong>字符串的扩展</strong></h2><ol>
+<li><p><strong>模版字符串（读反撇号），又叫增强字符串</strong></p>
+<ul>
+<li>可以添加插值语法${}，更好的处理了字符串拼接的问题，更规范，语义化好，但注意插值语法中的变量在字符串之后改变了是不会影响字符串的改变的,{}会将不是字符串的转变成字符串比如一个{}就会转变成[object Object]，即调用toString方法     </li>
+<li>模版字符串可以自由的进行换行等操作，不需要转义字符</li>
+<li>在字符串中添加变量、常量、方法（表达式）</li>
+<li>如果要在模版字符串中用字符串反撇号或者字符串${}要使用\转义字符</li>
+<li><strong>优点</strong>：<br>  (1)更标准的字符串，更好的处理了字符串拼接的问题<br>  (2)语义化更好<br>  (3)防止注入 XSS</li>
+</ul>
+</li>
+<li><p><strong>标签模版，标签模版的实质—–函数调用的特殊形式</strong></p>
+<ul>
+<li><p>会按照模版的进行分开放到一个数组中作为第一个参数，然后将模版的内容依次作为后面的参数,如下面的几个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">alert`12345`;</span><br><span class="line"></span><br><span class="line">function show(name)&#123;</span><br><span class="line">    console.log(arguments[0]);          //[&apos;hello&apos;, &apos;, welcome to&apos;, &apos;&apos;]</span><br><span class="line">    console.log(arguments[1]);          //&apos;xiaozhang&apos;</span><br><span class="line">    console.log(arguments[2]);          //&apos;qingdao&apos;</span><br><span class="line">&#125;</span><br><span class="line">show`xiaoming`;</span><br><span class="line">var name = &apos;xiaozhang&apos;, place = &apos;qingdao&apos;;</span><br><span class="line">show`hello$&#123;name&#125;, welcome to$&#123;place&#125;`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重要应用——过滤HTML字符串<br><img src="/images/blog_images/ES6/1.png" alt="image"><br><img src="/images/blog_images/ES6/2.png" alt="image"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="函数的扩展"><a href="#函数的扩展" class="headerlink" title="函数的扩展"></a><strong>函数的扩展</strong></h2><h2 id="ES6中提供的迭代器Iterator"><a href="#ES6中提供的迭代器Iterator" class="headerlink" title="ES6中提供的迭代器Iterator"></a><strong>ES6中提供的迭代器Iterator</strong></h2><ol>
+<li>迭代器是一个对象，专门为可迭代的对象提供接口，这个方法用来遍历数据（数据的共同特点是有序的）</li>
+<li><p>特点：</p>
+<p> （1）每个迭代器对象都有next方法，每次执行next方法返回一个结果对象{value,done},value代表每次迭代的数据，done代表迭代是否结束Boolean值</p>
+<p> （2）每个迭代器有一个专用指针，迭代开始时指向数据结构的第一个值，每次调用next方法指针向下移动一位</p>
+<p> （3）支持for of循环，每次遍历都是调用迭代器对象的next方法、</p>
+</li>
+<li><p>模拟一个数组的迭代器</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function createIterator(arr = []) &#123;</span><br><span class="line">        let currentIndex = 0;</span><br><span class="line">        return &#123;</span><br><span class="line">            next() &#123;</span><br><span class="line">                if (arr.length - 1 &lt; currentIndex) &#123;</span><br><span class="line">                    return &#123;</span><br><span class="line">                        value: undefined,</span><br><span class="line">                        done: false</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return &#123;</span><br><span class="line">                        value: arr[currentIndex++],</span><br><span class="line">                        done: true</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有默认的Iterator接口的有：Array Map Set String arguments NodeLists entries keys values, entries keys values会返回一个迭代器对象<br> （1）我们来看看数组中迭代接口来手动遍历数组，看看他是怎么工作的：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var myArray = [ 1, 2, 3 ];</span><br><span class="line">var it = myArray[Symbol.iterator]();</span><br><span class="line">it.next();  // &#123; value:1, done:false &#125;</span><br><span class="line">it.next();  // &#123; value:2, done:false &#125;</span><br><span class="line">it.next();  // &#123; value:3, done:false &#125;</span><br><span class="line">it.next();  // &#123; done:true &#125;</span><br></pre></td></tr></table></figure>
+</code></pre><p> (2)虽然对象没有迭代器，但你可以给任何想遍历的对象定义 @@iterator，举例来说：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">var myObject = &#123;</span><br><span class="line">    a: 2,</span><br><span class="line">    b: 3</span><br><span class="line">&#125;;</span><br><span class="line">Object.defineProperty( myObject, Symbol.iterator, &#123;</span><br><span class="line">    enumerable: false,</span><br><span class="line">    writable: false,</span><br><span class="line">    configurable: true,</span><br><span class="line">    value: function() &#123;</span><br><span class="line">        var o = this;</span><br><span class="line">        var idx = 0;</span><br><span class="line">        var ks = Object.keys( o );</span><br><span class="line">        return &#123;</span><br><span class="line">            next: function() &#123;</span><br><span class="line">                return &#123;</span><br><span class="line">                    value: o[ks[idx++]],</span><br><span class="line">                    done: (idx &gt; ks.length)</span><br><span class="line">                &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; );</span><br><span class="line">// 手动遍历 myObject</span><br><span class="line">var it = myObject[Symbol.iterator]();</span><br><span class="line">it.next(); // &#123; value:2, done:false &#125;</span><br><span class="line">it.next(); // &#123; value:3, done:false &#125;</span><br><span class="line">it.next(); // &#123; value:undefined, done:true &#125;</span><br><span class="line">// 用 for..of 遍历 myObject</span><br><span class="line">for (var v of myObject) &#123;</span><br><span class="line">      console.log( v );</span><br><span class="line">&#125;</span><br><span class="line">// 2</span><br><span class="line">// 3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>所有的迭代器都有symbol.iterator属性，必须通过[]形式访问来返回默认的迭代器,数组中的迭代器是默认指向下一个索引，返回的是索引值和values返回的一样<br>Map Set会把邻接链表转换成一个单向链表，指针每次指向一个节点，指针下移。支持双字节的输出，在for of遍历时如果有一个不可拆分的双字节，会将这个双字节输出（比如一个表情是双字节，就能够输出表情）</p>
+</li>
+<li><p><strong>生成器 Generator</strong><br> （1）用于生成迭代器，生成器是一个函数 有* yeild</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function *createItervator()&#123; //生成器不能够通过new操作符来执行</span><br><span class="line">    yield 1; //yield每一步就会暂停一次，如果有return就不可以再next了</span><br><span class="line">    yield 2; //（即就不会执行下面的yield了，next执行后的返回的对象中done变为true）</span><br><span class="line">    yield 3; //yield必须在生成器的函数中,yield是没有返回值的（即undefined）</span><br><span class="line">&#125;</span><br><span class="line">var i = createItervator();</span><br><span class="line">i.next() //括号中可以添加参数作为上一次迭代的返回值</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function *show(arr, string)&#123;</span><br><span class="line">    yield *arr; //这里可以继续迭代</span><br><span class="line">    yield *string; //这里可以继续迭代</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="PROMISE对象"><a href="#PROMISE对象" class="headerlink" title="PROMISE对象"></a><strong>PROMISE对象</strong></h2><ol>
+<li><p><strong>Promise</strong> :<br> (1)promise是一种异步编程的解决方案，所谓的promise简单的说就是一个容器，它里面存着未来会结束的事件。从语法上说，promise是一个对象，从他哪里可以获取异步操作的消息</p>
+<p> (2)Promise对象有两个特点</p>
+<p> ① Promise对象有三种状态pending，resolved，rejected，只有异步操作的结果会决定promise对象的状态，其他的操作都无效，这也是应征了promise单词承诺的意思<br> ② 一旦状态改变，状态就不会再改变了，而且状态只可能由pending变成resolved或pending变成rejected</p>
+<p> (3)有了promise对象，就可以将异步操作以同步的操作流程表达出来，避免了层层嵌套的回调函数（回调地狱v型代码）（将多层次的代码转变成两层）</p>
+<p> (4)Promise也有一些缺点，首先promise一旦建立就会立即执行，中途无法取消，其次，如果不设置回调函数，Promise内部抛出的错误，不会反应到外部。第三，当处于pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。</p>
+</li>
+<li><p><strong>再来说说Promise的API</strong><br> (1)Promise.all([p1, p2, p3])</p>
+<blockquote>
+<p>多个promise对象的集合,如果p1,p2,p3的状态都是resolved状态的话，会返回一个新的promise对象状态是resolved状态，且对应的值是p1，p2，p3对应值组成的数组，只要检查到有一个状态是rejected的话，返回一个状态为rejected的新的对象，对应的值是第一个被检查到状态为rejected对象的对应的值</p>
+</blockquote>
+<p> (2)Promise.race([p1, p2, p3])</p>
+<blockquote>
+<p>谁的状态先变了我就用谁的(谁先返回的就用谁的)，一般用于做测试，测试那个请求更快，返回的也是一个新的对象</p>
+</blockquote>
+<p> (3)Promise.resolve(1) 返回一个状态为resolved的对象<br> (4)Promise.reject(2) 返回一个状态为rejected的对象<br> (5)Promise.prototype.then 可接受成功和失败两个回调函数<br> (6)promise.prototype.catch 接受失败的回调函数</p>
+<blockquote>
+<p>Promise.reject(3).catch(err =&gt; console.log(err));//抓取失败时候的回调函数，会返回一个新的promise对象</p>
+<pre><code>相当于  .then(null, err =&gt; console.log(err))  
+</code></pre><p> 我们平常会看到如下：成功就用then，失败就用catch：<br> Promise.reject(3).then(data =&gt; console.log(data)).catch(err =&gt; console.log(err));</p>
+</blockquote>
+</li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/30/object/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/10/30/ES6/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
