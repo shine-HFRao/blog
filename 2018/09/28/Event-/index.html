@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>事件, 事件处理模型, 事件流, 事件委托 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="事件如何绑定事件(事件是天生自然有的) 行间绑定事件，属于 HTML事件处理程序  1&amp;lt;input type=&amp;quot;button&amp;quot; value=&amp;quot;Click Me&amp;quot; onclick=&amp;quot;showMessage()&amp;quot; /&amp;gt;    ele.onxxx = function (event) {}，属于DOM0 级事件处理程序  兼容性很好">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件, 事件处理模型, 事件流, 事件委托">
+<meta property="og:url" content="http://yoursite.com/2018/09/28/Event-/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="事件如何绑定事件(事件是天生自然有的) 行间绑定事件，属于 HTML事件处理程序  1&amp;lt;input type=&amp;quot;button&amp;quot; value=&amp;quot;Click Me&amp;quot; onclick=&amp;quot;showMessage()&amp;quot; /&amp;gt;    ele.onxxx = function (event) {}，属于DOM0 级事件处理程序  兼容性很好">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/event/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/event/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/event/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/event/4.jpg">
+<meta property="og:updated_time" content="2019-01-05T03:41:15.777Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事件, 事件处理模型, 事件流, 事件委托">
+<meta name="twitter:description" content="事件如何绑定事件(事件是天生自然有的) 行间绑定事件，属于 HTML事件处理程序  1&amp;lt;input type=&amp;quot;button&amp;quot; value=&amp;quot;Click Me&amp;quot; onclick=&amp;quot;showMessage()&amp;quot; /&amp;gt;    ele.onxxx = function (event) {}，属于DOM0 级事件处理程序  兼容性很好">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/event/1.jpg">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何绑定事件-事件是天生自然有的"><span class="toc-text">如何绑定事件(事件是天生自然有的)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解除事件处理程序"><span class="toc-text">解除事件处理程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理模型-事件冒泡、事件捕获"><span class="toc-text">事件处理模型 - 事件冒泡、事件捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取消冒泡和阻止默认事件"><span class="toc-text">取消冒泡和阻止默认事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件流"><span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件委托"><span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件对象"><span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件分类"><span class="toc-text">事件分类</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Event-" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">事件, 事件处理模型, 事件流, 事件委托</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/09/28/Event-/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="如何绑定事件-事件是天生自然有的"><a href="#如何绑定事件-事件是天生自然有的" class="headerlink" title="如何绑定事件(事件是天生自然有的)"></a><strong>如何绑定事件(事件是天生自然有的)</strong></h3><ol>
+<li><p>行间绑定事件，属于 <strong>HTML事件处理程序</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;button&quot; value=&quot;Click Me&quot; onclick=&quot;showMessage()&quot; /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>ele.onxxx = function (event) {}，属于<strong>DOM0 级事件处理程序</strong></p>
+<ul>
+<li><p>兼容性很好，但是一个元素只能绑定一个处理程序</p>
+</li>
+<li><p>基本等同于写在HTML行间上（两种都称为句柄的绑定方式）</p>
+</li>
+<li><p>程序this指向是dom元素本身</p>
+</li>
+</ul>
+</li>
+<li><p>ele.addEventListener(type, fn, false)，属于 <strong>DOM2 级事件处理程序</strong></p>
+<ul>
+<li><p><strong>IE9 以下不兼容</strong>，可以为一个事件绑定多个处理程序，并且按绑定的顺序去执行（谁先绑定谁先执行， 但不能够给同一个函数绑定多次）</p>
+</li>
+<li><p>程序this指向是dom元素本身</p>
+</li>
+</ul>
+</li>
+<li><p>ele.attachEvent(‘on’ + type, fn);    属于<strong>IE 事件处理程序</strong>，支持 IE 事件处理程序的浏览器有 IE 和 Opera。   </p>
+<ul>
+<li><p>IE独有，一个事件同样可以绑定多个处理程序（但是它一个对象的一个事件绑定同一个函数绑定了多次，它都能执行多次）</p>
+</li>
+<li><p>程序this指向window</p>
+</li>
+<li><p>不过，与 DOM方法不同的是，这些事件处理程序不是以添加它们的顺序执行，而是以相反的顺序被触发。单击这个例子中的按钮，首先看到的是”Hello world!”，然后才是”Clicked”。如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var btn = document.getElementById(&quot;myBtn&quot;); </span><br><span class="line">btn.attachEvent(&quot;onclick&quot;, function()&#123; </span><br><span class="line">    alert(&quot;Clicked&quot;); </span><br><span class="line">&#125;); </span><br><span class="line">btn.attachEvent(&quot;onclick&quot;, function()&#123; </span><br><span class="line">    alert(&quot;Hello world!&quot;); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>封装兼容性的 addEvent(elem, type, handle)方法：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function addEvent(elem,type,handle)&#123;</span><br><span class="line">    if(elem.addEventListener)&#123;</span><br><span class="line">        elem.addEventListener(type,handle,false);</span><br><span class="line">    &#125;else if(elem.attachEvent)&#123;</span><br><span class="line">        elem.attachEvent(&apos;on&apos; + type,function()&#123;</span><br><span class="line">            handle.call(elem);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        elem[&apos;on&apos;+ type] = handle;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="解除事件处理程序"><a href="#解除事件处理程序" class="headerlink" title="解除事件处理程序"></a><strong>解除事件处理程序</strong></h3><ol>
+<li><p>ele.onclick = false/‘’/null;</p>
+</li>
+<li><p>ele.removeEventListener(type, fn, false);</p>
+</li>
+<li><p>ele.detachEvent(‘on’ + type, fn);</p>
+</li>
+<li><p>注:解除事件，要用相对应的解除事件处理程序，若绑定匿名函数，则无法解除</p>
+</li>
+<li><p>封装兼容性的 removeEvent(elem, type, handle)方法</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function removeEvent(elem, type, handle) &#123;</span><br><span class="line">    if (elem.removeEventListener) &#123;</span><br><span class="line">        elem.removeEventListener(type, handle, false);</span><br><span class="line">    &#125; else if (elem.detachEvent) &#123;</span><br><span class="line">        elem.detachEvent(&apos;on&apos; + type, function () &#123;</span><br><span class="line">            handle.call(elem);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        elem[&apos;on&apos; + type] = null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="事件处理模型-事件冒泡、事件捕获"><a href="#事件处理模型-事件冒泡、事件捕获" class="headerlink" title="事件处理模型 - 事件冒泡、事件捕获"></a><strong>事件处理模型 - 事件冒泡、事件捕获</strong></h3><ol>
+<li><p>事件冒泡：结构上（非视觉上）嵌套关系的元素，会存在事件冒泡的功能，即同一事件，自子元素冒泡向父元素。（自底向上，<strong>IE8 及更早版本只支持事件冒泡，</strong>）<br> <img src="/images/blog_images/event/1.jpg" alt="image"></p>
+</li>
+<li><p>事件捕获：结构上（非视觉上）嵌套关系的元素，会存在事件捕获的功能，即同一事件，自父元素捕获至子元素（事件源元素）。（自顶向下,<strong>IE9、Safari、Chrome、Opera和 Firefox 目前也都支持这种事件流模型</strong>）<br> <img src="/images/blog_images/event/1.jpg" alt="image"></p>
+</li>
+<li><p>IE没有捕获事件</p>
+</li>
+<li><p>触发顺序，先捕获，后冒泡，focus blur change submit reset select load unload等事件不冒泡</p>
+</li>
+<li><p>当一个对象的一个事件类型绑定两个函数是，一个是冒泡，一个是捕获，执行的顺序是先捕获后冒泡：（执行结果中box在boxBubble下面是因为一个对象的一个事件类型绑定不同的函数，谁先绑定谁先执行）注意：冒泡的开始不属于冒泡是执行，捕获的最终不属于捕获是执行，如下：</p>
+<p> <img src="/images/blog_images/event/3.jpg" alt="image"> <img src="/images/blog_images/event/4.jpg" alt="image"></p>
+</li>
+</ol>
+<h3 id="取消冒泡和阻止默认事件"><a href="#取消冒泡和阻止默认事件" class="headerlink" title="取消冒泡和阻止默认事件"></a><strong>取消冒泡和阻止默认事件</strong></h3><ol>
+<li><p>取消冒泡：</p>
+<ul>
+<li><p>W3C标准 event.stopPropagation();但不支持ie9以下版本,<strong>stopPropagatioin()可以同时取消事件捕获和冒泡。</strong></p>
+</li>
+<li><p>IE独有 event.cancelBubble = true;</p>
+</li>
+<li><p>封装取消冒泡的函数 stopBubble(event)：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function stopBubble(event) &#123;</span><br><span class="line">    if(event.stopPropagation)&#123;</span><br><span class="line">        event.stopPropagation();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        event.cancelBubble = true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>阻止默认事件:</p>
+<ul>
+<li>默认事件 — 表单提交，a标签跳转，右键菜单等</li>
+<li>return false;  以对象属性的方式注册的事件才生效（是句柄的方式来阻止默认事件。只有我们用句柄的方式绑定默认事件用return false才好使）</li>
+<li>event.preventDefault(); W3C标准，IE9以下不兼容</li>
+<li>event.returnValue = false; 兼容IE</li>
+<li><p>封装阻止默认事件的函数 cancelHandler(event)，<strong>return false 是封装不进去的</strong>：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function cancelHandle(event) &#123;</span><br><span class="line">    if(event.preventDefault)&#123;</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        event.returnValue = false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>2.div.onclick = function(e){},这个e参数添加后，系统会帮我们传一个事件对象，对象上面有很多属性，每一个属性都记载了事件发生时的关键性数据和一系列信息，event.stopPropagation();  e.cancelBubble = true:谷歌也能实现了</p>
+</li>
+<li><p>A标签有一个默认事件，就是点击后会回到页面最顶端，取消这个默认事件的简便方法有：void（false/ 0）意思是return false：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;javascript: void(false)&quot;&gt;demo&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a><strong>事件流</strong></h3><ol>
+<li><p>事件流描述的是从页面中接收事件的顺序,DOM2级事件流包括下面几个阶段。</p>
+<ul>
+<li>事件捕获阶段（IE8及以下不支持）</li>
+<li>处于目标阶段</li>
+<li>事件冒泡阶段</li>
+</ul>
+</li>
+</ol>
+<h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a><strong>事件委托</strong></h3><ol>
+<li><p>利用事件冒泡，和事件源对象进行处理</p>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>不需要对每个dom进行绑定事件，只需对父级进行绑定，减少内存消耗，提高性能</li>
+<li>动态绑定事件，对新添进来的子元素不需要绑定事件</li>
+</ul>
+</li>
+<li><p>适合用事件委托的事件：click, mousedown, mouseup, keydown, keyup, keypress</p>
+</li>
+</ol>
+<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a><strong>事件对象</strong></h3><ol>
+<li><p>window.event适合于IE8及以下 || event</p>
+</li>
+<li><p>事件源对象：event.target || event.srcElement(IE8及以下)</p>
+</li>
+<li><p><strong>只有在事件处理程序执行期间，event 对象才会存在；一旦事件处理程序执行完成，event 对象就会被销毁。</strong></p>
+</li>
+</ol>
+<h3 id="事件分类"><a href="#事件分类" class="headerlink" title="事件分类"></a><strong>事件分类</strong></h3><ol>
+<li><p>鼠标事件：click、mousedown、mousemove、mouseup、contextmenu、mouseover、mouseout、 mouseenter mouseleave</p>
+</li>
+<li><p>表单事件：submit、reset、change、focus、blur、input、</p>
+</li>
+<li><p>window事件：load、DOMContentLoaded、unload、beforeLoad、scroll、resize</p>
+</li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/25/precompile-/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/29/JS_High_Performance/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/09/28/Event-/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

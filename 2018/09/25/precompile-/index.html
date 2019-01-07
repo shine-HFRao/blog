@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>预编译, 递归, 作用域和作用域链 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="预编译, 递归Js运行机制 语法分析 2. 预编译 3. 解析执行  预编译前奏1.暗示全局变量（imply global）：即任何变量，如果变量未经声明就赋值，此变量就为全局对象所有  一切声明的全局变量，全是window的属性（window就是全局的域）  预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作） 创建AO对象（Activity  Object （执行期上下文）">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预编译, 递归, 作用域和作用域链">
+<meta property="og:url" content="http://yoursite.com/2018/09/25/precompile-/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="预编译, 递归Js运行机制 语法分析 2. 预编译 3. 解析执行  预编译前奏1.暗示全局变量（imply global）：即任何变量，如果变量未经声明就赋值，此变量就为全局对象所有  一切声明的全局变量，全是window的属性（window就是全局的域）  预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作） 创建AO对象（Activity  Object （执行期上下文）">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2018-10-10T07:04:38.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="预编译, 递归, 作用域和作用域链">
+<meta name="twitter:description" content="预编译, 递归Js运行机制 语法分析 2. 预编译 3. 解析执行  预编译前奏1.暗示全局变量（imply global）：即任何变量，如果变量未经声明就赋值，此变量就为全局对象所有  一切声明的全局变量，全是window的属性（window就是全局的域）  预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作） 创建AO对象（Activity  Object （执行期上下文）">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#预编译-递归"><span class="toc-text">预编译, 递归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Js运行机制"><span class="toc-text">Js运行机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预编译前奏"><span class="toc-text">预编译前奏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作）"><span class="toc-text">预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归"><span class="toc-text">递归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域和作用域链"><span class="toc-text">作用域和作用域链</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-precompile-" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">预编译, 递归, 作用域和作用域链</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/09/25/precompile-/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="预编译-递归"><a href="#预编译-递归" class="headerlink" title="预编译, 递归"></a>预编译, 递归</h2><h3 id="Js运行机制"><a href="#Js运行机制" class="headerlink" title="Js运行机制"></a><strong>Js运行机制</strong></h3><ol>
+<li>语法分析 2. 预编译 3. 解析执行</li>
+</ol>
+<h3 id="预编译前奏"><a href="#预编译前奏" class="headerlink" title="预编译前奏"></a><strong>预编译前奏</strong></h3><p>1.暗示全局变量（imply global）：即任何变量，如果变量未经声明就赋值，此变量就为全局对象所有</p>
+<ol start="2">
+<li>一切声明的全局变量，全是window的属性（window就是全局的域）</li>
+</ol>
+<h3 id="预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作）"><a href="#预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作）" class="headerlink" title="预编译四部曲（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作）"></a><strong>预编译四部曲</strong>（预编译发生在函数执行的前一刻，每个作用于都会进行提升操作）</h3><ol>
+<li><p>创建AO对象（Activity  Object （执行期上下文）），全局的话是生成一个GO对象（Global Object ,   GO === window）</p>
+</li>
+<li><p>找形参和变量声明，将变量和形参名作为AO属性名，值为undefined</p>
+</li>
+<li><p>将实参值和形参统一</p>
+</li>
+<li><p>在函数体里面找函数声明，值赋予函数体</p>
+</li>
+</ol>
+<p>同时也要记住，函数表达式是不会被提升的，还有具名的函数表达式,它的名称标识符是存在函数作用域中的，外接式访问不到的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo(); // TypeError</span><br><span class="line">bar(); // ReferenceError</span><br><span class="line">var foo = function bar() &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个代码片段经过提升后，实际上会被理解为以下形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var foo;</span><br><span class="line">foo(); // TypeError</span><br><span class="line">bar(); // ReferenceError</span><br><span class="line">foo = function() &#123;</span><br><span class="line">    var bar = ...self...</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：现在的语法是不允许在if和for的{}中定义变量或者函数的（以前好使），但是定义了不会报错，变量可以访问但是值是undefined。预编译的时候也不会看if（）里面的东西<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">console.log(test); //undefined</span><br><span class="line">console.log(foo); //报错referenceError</span><br><span class="line">if(function foo()&#123;&#125;)&#123;</span><br><span class="line">    function test()&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a><strong>递归</strong></h3><ol>
+<li><p>递归要符合两点：1.找规律（递归的过程），2.递归必须要有出口(递归的中止条件)</p>
+</li>
+<li><p>递归的一点好处就是能是代码变得更加简洁，除此之外没有任何好处，递归特别慢,而且函数递归调用过多超过调用栈的大小，会导致栈溢出</p>
+</li>
+<li><p>递归应用：</p>
+<ul>
+<li><p>递归求n的阶乘</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function mul(n)&#123;</span><br><span class="line">    if(n == 1 || n == 0)&#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line">    return n * mul(n-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>斐波那契数列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function fb(n)&#123;</span><br><span class="line">    if(n == 1 || n == 2)&#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line">    return fb(n - 1) + fb(n - 2); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>说到这就说下斐波那契的非递归实现方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function fb(n)&#123;</span><br><span class="line">    var n1 = 1,</span><br><span class="line">        n2 = 1,</span><br><span class="line">        n = 1;</span><br><span class="line">    for(var i = 3; i &lt;= n; i++)&#123;</span><br><span class="line">        n = n1 + n2;</span><br><span class="line">        n1 = n2;</span><br><span class="line">        n2 = n;</span><br><span class="line">    &#125;</span><br><span class="line">    return n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="作用域和作用域链"><a href="#作用域和作用域链" class="headerlink" title="作用域和作用域链"></a><strong>作用域和作用域链</strong></h3><ol>
+<li><p>[[scope]]:每个javascript函数都是一个对象，对象中有些属性我们可以访问，但有些不可以，这些属性仅供javascript引擎存取，[[scope]]就是其中一个。[[scope]]指的就是我们所说的作用域,其中存储了执行期上下文的集合</p>
+</li>
+<li><p>作用域链：[[scope]]中所存储的执行期上下文对象的集合，这个集合呈链式链接，我们把这种链式链接叫做作用域链</p>
+</li>
+<li><p>执行期上下文:当函数执行时，会创建一个称为执行期上下文的内部对象。一个执行期上下文定义了一个函数执行时的环境，函数每次执行时对应的执行上下文都是独一无二的，所以多次调用一个函数会导致创建多个执行上下文，当函数执行完毕，执行上下文被销毁</p>
+</li>
+<li><p>查找变量：从作用域链的顶端依次向下查找</p>
+</li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/20/HTML_Important-/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/28/Event-/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/09/25/precompile-/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

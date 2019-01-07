@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>对象的全面解析 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="javascript的主要类型 在 JavaScript 中一共有六种主要类型 简单基本类型（原始值）： string number boolean null undefined symbol（es6新增）   对象类型（引用值）： object      对象类型 构造对象的两种形式：通过字面量（文字形式）和构造函数（构造形式），构造数组的除了字面量和构造函数外还有一个就是通过es6的Array">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对象的全面解析">
+<meta property="og:url" content="http://yoursite.com/2018/10/20/object /index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="javascript的主要类型 在 JavaScript 中一共有六种主要类型 简单基本类型（原始值）： string number boolean null undefined symbol（es6新增）   对象类型（引用值）： object      对象类型 构造对象的两种形式：通过字面量（文字形式）和构造函数（构造形式），构造数组的除了字面量和构造函数外还有一个就是通过es6的Array">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2018-11-02T07:58:36.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对象的全面解析">
+<meta name="twitter:description" content="javascript的主要类型 在 JavaScript 中一共有六种主要类型 简单基本类型（原始值）： string number boolean null undefined symbol（es6新增）   对象类型（引用值）： object      对象类型 构造对象的两种形式：通过字面量（文字形式）和构造函数（构造形式），构造数组的除了字面量和构造函数外还有一个就是通过es6的Array">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript的主要类型"><span class="toc-text">javascript的主要类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象类型"><span class="toc-text">对象类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包装类对象"><span class="toc-text">包装类对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的访问"><span class="toc-text">对象的访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的属性和方法"><span class="toc-text">对象的属性和方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象属性的特性（属性描述符）"><span class="toc-text">对象属性的特性（属性描述符）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何设置对象不可变"><span class="toc-text">如何设置对象不可变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象中的-set-get"><span class="toc-text">对象中的[[set]][[get]]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断属性是否存在对象中"><span class="toc-text">判断属性是否存在对象中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的枚举遍历"><span class="toc-text">对象的枚举遍历</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-object " class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">对象的全面解析</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/10/20/object /#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="javascript的主要类型"><a href="#javascript的主要类型" class="headerlink" title="javascript的主要类型"></a><strong>javascript的主要类型</strong></h2><ol>
+<li>在 JavaScript 中一共有六种主要类型<ul>
+<li>简单基本类型（原始值）：<ul>
+<li>string</li>
+<li>number</li>
+<li>boolean</li>
+<li>null</li>
+<li>undefined</li>
+<li>symbol（es6新增）</li>
+</ul>
+</li>
+<li>对象类型（引用值）：<ul>
+<li>object</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="对象类型"><a href="#对象类型" class="headerlink" title="对象类型"></a><strong>对象类型</strong></h2><ol>
+<li><p>构造对象的两种形式：通过字面量（文字形式）和构造函数（构造形式），构造数组的除了字面量和构造函数外还有一个就是通过es6的Array.of()来构造数组，参数依次是数组的值。</p>
+</li>
+<li><p>null在typeof null 时会返回字符串 “object”，这是一个bug，历史遗留问题，其实null是原始值（简单基本类型）</p>
+</li>
+<li><p>实际上，JavaScript 中有许多特殊的对象子类型，我们可以称之为 <strong>复杂基本类型</strong>。<strong>函数</strong> 就是对象的一个子类型，它本质上跟普通对象一样只是可以调用，称为可调用对象，另外 <strong>数组</strong> 也是对象的一种类型</p>
+</li>
+<li><p>JavaScript 中还有一些对象子类型，通常被称为内置函数：</p>
+<ul>
+<li>String</li>
+<li>Number</li>
+<li>Boolean</li>
+<li>Object</li>
+<li>Function</li>
+<li>Array</li>
+<li>Date</li>
+<li>RegExp</li>
+<li>Error</li>
+</ul>
+</li>
+</ol>
+<h2 id="包装类对象"><a href="#包装类对象" class="headerlink" title="包装类对象"></a><strong>包装类对象</strong></h2><ol>
+<li>在必要的情况下引擎会把字符串和数字的字面量转换成响应的Number和String对象。null 和 undefined 没有对应的构造形式，它们只有文字形式。相反，Date 只有构造，没有文字形式。Error 对象很少在代码中显式创建，一般是在抛出异常时被自动创建。也可以使用 new Error(..) 这种构造形式来创建，不过一般来说用不着。</li>
+</ol>
+<h2 id="对象的访问"><a href="#对象的访问" class="headerlink" title="对象的访问"></a><strong>对象的访问</strong></h2><ol>
+<li><p>对象访问有两种形式一种是. 操作符另一种是 [] 操作符，.a 语法通常被称为“属性访问”，[“a”] 语法通常被称为“键访问”,这两种语法的主要区别在于 . 操作符要求属性名满足标识符的命名规范，而 [“..”] 语法可以接受任意 UTF-8/Unicode 字符串作为属性名。</p>
+</li>
+<li><p>[]操作符的好处就是：ES6 增加了可计算属性名，可以在文字形式中使用 [] 包裹一个表达式来当作属性名，比如字符串的拼接</p>
+</li>
+<li><p>在对象中，属性名永远都是字符串，如果不是字符串那么它将被被转换成字符串</p>
+</li>
+</ol>
+<h2 id="对象的属性和方法"><a href="#对象的属性和方法" class="headerlink" title="对象的属性和方法"></a><strong>对象的属性和方法</strong></h2><ol>
+<li><p>一般人会把对一个对象属性的访问称为“属性访问”，如果这个属性是一个函数就会被称为方法访问，所有就会很容易认为这个函数是属于这个对象的，其实在函数调用时与其他函数有区别的就是函数执行时内部的this指向的区别，这个this确实是由函数的调用位置来决定的，但是这种用法从本质上来说并没有把一个函数变成一个“方法”，因为this是在运行时进行动态绑定的，所以函数永远不会“属于”一个对象，属性访问返回的函数和其他的函数没有任何区别（除了可能发生的隐式绑定this）</p>
+</li>
+<li><p>即使你在对象的文字形式中声明一个函数表达式，这个函数也不会“属于”这个对象——它们只是对于相同函数对象的多个引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var myObject = &#123;</span><br><span class="line">    foo: function() &#123;</span><br><span class="line">        console.log( &quot;foo&quot; );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">var someFoo = myObject.foo;</span><br><span class="line">someFoo; // function foo()&#123;..&#125;</span><br><span class="line">myObject.foo; // function foo()&#123;..&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="对象属性的特性（属性描述符）"><a href="#对象属性的特性（属性描述符）" class="headerlink" title="对象属性的特性（属性描述符）"></a><strong>对象属性的特性（属性描述符）</strong></h2><ol>
+<li><p>从 ES5 开始，所有的属性都具备了属性描述符,如下：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var myObject = &#123;&#125;;</span><br><span class="line">Object.defineProperty( myObject, &quot;a&quot;, &#123;</span><br><span class="line">    value: 2,</span><br><span class="line">    writable: true,             </span><br><span class="line">    configurable: true,</span><br><span class="line">    enumerable: true</span><br><span class="line">&#125; );</span><br><span class="line">myObject.a; // 2</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>writable 决定是否可以修改属性的值</strong>, 设置为false后属性值不可修改，如果修改的话在非严格模式下不会报错也不会产生效果，在严格模式下会报错</li>
+<li><strong>Configurable只要属性是可配置的</strong>，就可以使用 defineProperty(..) 方法来修改属性描述符，不管是不是处于严格模式，尝试修改一个不可配置的属性描述符都会出错。<strong>要注意有一个小小的例外</strong>：即便属性是 configurable:false，我们还是可以把 writable 的状态由 true 改为 false，但是无法由 false 改为 true。除了无法修改，configurable:false 还会禁止删除这个属性,严格模式下会报错</li>
+<li><strong>Enumerable</strong>设置属性是否可枚举，比如说for in循环</li>
+</ul>
+</li>
+</ol>
+<h2 id="如何设置对象不可变"><a href="#如何设置对象不可变" class="headerlink" title="如何设置对象不可变"></a><strong>如何设置对象不可变</strong></h2><ol>
+<li><p>结合 writable:false 和 configurable:false 就可以创建一个真正的常量属性（不可修改、重定义或者删除）</p>
+</li>
+<li><p>如果你想禁止一个对象添加新属性并且保留已有属性，可以使用Object.preventExtensions(对象)：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var myObject = &#123;</span><br><span class="line">    a:2</span><br><span class="line">&#125;;</span><br><span class="line">Object.preventExtensions( myObject );</span><br><span class="line">myObject.b = 3;</span><br><span class="line">myObject.b; // undefined</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在非严格模式下，创建属性 b 会静默失败。在严格模式下，将会抛出 TypeError 错误。</li>
+</ul>
+</li>
+<li><p>Object.seal(..) 会创建一个“密封”的对象，这个方法实际上会在一个现有对象上调用Object.preventExtensions(..) 并把所有现有属性标记为 configurable:false</p>
+</li>
+<li><p>Object.freeze(..) 会创建一个冻结对象，这个方法实际上会在一个现有对象上调用Object.seal(..) 并把所有“数据访问”属性标记为 writable:false，这样就无法修改它们的值。</p>
+</li>
+</ol>
+<h2 id="对象中的-set-get"><a href="#对象中的-set-get" class="headerlink" title="对象中的[[set]][[get]]"></a><strong>对象中的[[set]][[get]]</strong></h2><ol>
+<li><p>在 ES5 中可以使用 getter 和 setter 部分改写默认操作，但是只能应用在单个属性上，无法应用在整个对象上。getter 是一个隐藏函数，会在获取属性值时调用。setter 也是一个隐藏函数，会在设置属性值时调用。</p>
+</li>
+<li><p>当你给一个属性定义 getter、setter 或者两者都有时，这个属性会被定义为“访问描述符”（和“数据描述符”相对）。对于访问描述符来说，JavaScript 会忽略它们的 value 和writable 特性，取而代之的是关心 set 和 get（还有 configurable 和 enumerable）特性</p>
+</li>
+<li><p>思考如下代码：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var myObject = &#123;</span><br><span class="line">// 给 a 定义一个 getter</span><br><span class="line">    get a() &#123;</span><br><span class="line">        return 2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">    Object.defineProperty(</span><br><span class="line">        myObject, // 目标对象</span><br><span class="line">        &quot;b&quot;, // 属性名</span><br><span class="line">        118 ｜ 第 3 章</span><br><span class="line">        &#123;   // 描述符</span><br><span class="line">            // 给 b 设置一个 getter</span><br><span class="line">            get: function()&#123; return this.a * 2 &#125;,</span><br><span class="line">            // 确保 b 会出现在对象的属性列表中</span><br><span class="line">            enumerable: true</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">myObject.a; // 2</span><br><span class="line">myObject.b; // 4</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不管是对象文字语法中的 get a() { .. }，还是 defineProperty(..) 中的显式定义，二者都会在对象中创建一个不包含值的属性，对于这个属性的访问会自动调用一个隐藏函数，它的返回值会被当作属性访问的返回值</li>
+</ul>
+</li>
+</ol>
+<h2 id="判断属性是否存在对象中"><a href="#判断属性是否存在对象中" class="headerlink" title="判断属性是否存在对象中"></a><strong>判断属性是否存在对象中</strong></h2><ol>
+<li><p>in操作符</p>
+</li>
+<li><p>对象.hasOwnProperty(属性) </p>
+</li>
+<li><p>对象.propertyIsEnumerable(属性) 会检查给定的属性名是否直接存在于对象中（而不是在原型链上）并且满足 enumerable:true</p>
+</li>
+<li><p>Object.keys(对象) 会返回一个数组，包含所有可枚举属性，只会查找对象直接包含的属性</p>
+</li>
+<li><p>Object.getOwnPropertyNames(对象)会返回一个数组，包含所有属性，无论它们是否可枚举，只会查找对象直接包含的属性</p>
+</li>
+</ol>
+<h2 id="对象的枚举遍历"><a href="#对象的枚举遍历" class="headerlink" title="对象的枚举遍历"></a><strong>对象的枚举遍历</strong></h2><ol>
+<li><p>for in最适用于对象,遍历数组一般采用的就是for循环，但是遍历数组是按照索引有顺序的进行遍历的，但是对于对象来说顺序是不确定的，在不同的javascript引擎中可能不一样</p>
+</li>
+<li><p>在ES6中引入了一个新的for of循环，他会向被访问的对象请求一个迭代对象，然后调用迭代对象中的next方法来遍历所有返回值,但是对象没有迭代器接口，但我们可以自己定义(<a href="">详细的迭代器解析</a>)，或则通过ES6中的新方法Object.keys(),Object.values(),Object.entries()</p>
+</li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/14/Tools/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/10/30/ES6/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/10/20/object /';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

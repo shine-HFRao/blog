@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>节点的类型、访问和获取，不同节点的属性和方法（归纳） | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="DOM中节点的类型 JavaScript 中的所有节点类型都继承自 Node 类型（构造函数），因此所有节点类型都共享着相同的基本属性和方法，除了 IE 之外，在其他所有浏览器中都可以访问到这个类型。  dom结构树如下（Document下面还有XMLDocument，Element 下面也有XMLElement，DOM树代表的就是继承关系）：   节点类型有（只列举了常用的）：  元素节点 （节">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="节点的类型、访问和获取，不同节点的属性和方法（归纳）">
+<meta property="og:url" content="http://yoursite.com/2018/09/30/node_js-/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="DOM中节点的类型 JavaScript 中的所有节点类型都继承自 Node 类型（构造函数），因此所有节点类型都共享着相同的基本属性和方法，除了 IE 之外，在其他所有浏览器中都可以访问到这个类型。  dom结构树如下（Document下面还有XMLDocument，Element 下面也有XMLElement，DOM树代表的就是继承关系）：   节点类型有（只列举了常用的）：  元素节点 （节">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/7.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/6.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/9.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/10.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/11.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/12.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/8.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/13.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/14.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/15.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/16.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/js_basic/17.jpg">
+<meta property="og:updated_time" content="2018-09-22T11:57:22.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="节点的类型、访问和获取，不同节点的属性和方法（归纳）">
+<meta name="twitter:description" content="DOM中节点的类型 JavaScript 中的所有节点类型都继承自 Node 类型（构造函数），因此所有节点类型都共享着相同的基本属性和方法，除了 IE 之外，在其他所有浏览器中都可以访问到这个类型。  dom结构树如下（Document下面还有XMLDocument，Element 下面也有XMLElement，DOM树代表的就是继承关系）：   节点类型有（只列举了常用的）：  元素节点 （节">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/js_basic/7.jpg">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM中节点的类型"><span class="toc-text">DOM中节点的类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Document类型"><span class="toc-text">Document类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#节点的属性"><span class="toc-text">节点的属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#节点的关系和访问"><span class="toc-text">节点的关系和访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元素节点的关系和访问"><span class="toc-text">元素节点的关系和访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元素节点的获取-通过document的方法"><span class="toc-text">元素节点的获取(通过document的方法)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元素节点的获取-通过querySelector-的方法"><span class="toc-text">元素节点的获取(通过querySelector()的方法)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#html元素的属性和方法"><span class="toc-text">html元素的属性和方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取元素的特性"><span class="toc-text">获取元素的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#脚本化css"><span class="toc-text">脚本化css</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取元素的偏移量等"><span class="toc-text">获取元素的偏移量等</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-node_js-" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">节点的类型、访问和获取，不同节点的属性和方法（归纳）</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.30</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/09/30/node_js-/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="DOM中节点的类型"><a href="#DOM中节点的类型" class="headerlink" title="DOM中节点的类型"></a><strong>DOM中节点的类型</strong></h2><ol>
+<li><p>JavaScript 中的所有节点类型都继承自 Node 类型（构造函数），因此所有节点类型都共享着相同的基本属性和方法，除了 IE 之外，在其他所有浏览器中都可以访问到这个类型。</p>
+<ul>
+<li>dom结构树如下（Document下面还有XMLDocument，Element 下面也有XMLElement，DOM树代表的就是继承关系）：<br><img src="/images/blog_images/js_basic/7.jpg" alt="image"></li>
+</ul>
+</li>
+<li><p>节点类型有（只列举了常用的）：</p>
+<ul>
+<li>元素节点 （节点对应的nodeType值是：1）</li>
+<li>属性节点  2</li>
+<li>文本节点  3</li>
+<li>注释节点  8</li>
+<li>document节点  9</li>
+<li>ducumentFragment节点  11</li>
+</ul>
+</li>
+<li><p>各类节点如图:</p>
+<p> <img src="/images/blog_images/js_basic/1.jpg" alt="image"><br> <img src="/images/blog_images/js_basic/2.jpg" alt="image"></p>
+</li>
+</ol>
+<h2 id="Document类型"><a href="#Document类型" class="headerlink" title="Document类型"></a>Document类型</h2><ol>
+<li><p>JavaScript 通过 Document 类型表示文档。在浏览器中，document 对象是 HTMLDocument（继承自 Document 类型）的一个实例，而且，document 对象是 window 对象的一个属性，Document可以理解成一个构造函数，但不能new</p>
+</li>
+<li><p>有两个内置的访问其子节点的快捷方式：</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var html = document.documentElement; //取得对&lt;html&gt;的引用</span><br><span class="line">alert(html === document.childNodes[0]); //true </span><br><span class="line">alert(html === document.firstChild); //true</span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var body = document.body; //取得对&lt;body\&gt;的引用</span><br><span class="line">var head = document.body; //取得对&lt;head\&gt;的引用</span><br></pre></td></tr></table></figure>
+<p><strong>所有浏览器都支持 document.documentElement 和 document.body 属性</strong></p>
+</li>
+</ul>
+</li>
+<li><p>作为 HTMLDocument 的一个实例，document 对象还有一些标准的 Document 对象所没有的属性。这些属性提供了 document 对象所表现的网页的一些信息。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//取得文档标题</span><br><span class="line">var originalTitle = document.title; </span><br><span class="line"></span><br><span class="line">//设置文档标题</span><br><span class="line">document.title = &quot;New page title&quot;;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//取得完整的 URL</span><br><span class="line">var url = document.URL; </span><br><span class="line"></span><br><span class="line">//取得域名</span><br><span class="line">var domain = document.domain; </span><br><span class="line"></span><br><span class="line">//取得来源页面的 URL</span><br><span class="line">var referrer = document.referrer;</span><br></pre></td></tr></table></figure>
+<p> <strong>在这 3 个属性中，只有 domain 是可以设置的</strong></p>
+</li>
+</ol>
+<h2 id="节点的属性"><a href="#节点的属性" class="headerlink" title="节点的属性"></a><strong>节点的属性</strong></h2><ol>
+<li><p>nodeType：返回数字，用来区分节点类型，只读</p>
+</li>
+<li><p>nodeName: 主要是用于元素节点，返回元素节点的标签名，已大写形式表示，只读</p>
+</li>
+<li><p>nodeValue: 主要用于文本节点和注释节点，访问其文本内容，值可读写</p>
+</li>
+<li><p>attribute：属性节点的属性集合</p>
+</li>
+<li><p>关于属性节点：关于属性节点，属性名改不了，属性值改得了，如图：</p>
+<p> <img src="/images/blog_images/js_basic/3.jpg" alt="image"><br> <img src="/images/blog_images/js_basic/4.jpg" alt="image"><br> <img src="/images/blog_images/js_basic/5.jpg" alt="image"><br> <img src="/images/blog_images/js_basic/6.jpg" alt="image"></p>
+<p> <strong>尽管属性节点也是节点，但特性却不被认为是 DOM 文档树的一部分。开发人员最常使用的是 getAttribute()、setAttribute()和 remveAttribute()方法，很少直接引用特性节点。</strong></p>
+</li>
+</ol>
+<h2 id="节点的关系和访问"><a href="#节点的关系和访问" class="headerlink" title="节点的关系和访问"></a><strong>节点的关系和访问</strong></h2><ol>
+<li><p>childNodes</p>
+<ul>
+<li>每个节点都有一个 childNodes 属性，其中保存着一个 NodeList 对象（类数组）</li>
+<li>在 NodeList 中的节点——可以通过方括号，也可以使用 item()方法</li>
+</ul>
+</li>
+<li><p>parentNode </p>
+</li>
+<li><p>previousSibling</p>
+</li>
+<li><p>nextSibling </p>
+</li>
+<li><p>firstChild </p>
+</li>
+<li><p>lastChild</p>
+</li>
+<li><p>hasChildNodes()</p>
+</li>
+<li><p>ownerDocument: 该属性指向表示整个文档的文档节点</p>
+</li>
+<li><p>appendChild(): 用于向 childNodes 列表的末尾添加一个节点,返回新增的节点</p>
+</li>
+<li><p>insertBefore():这个方法接受两个参数：要插入的节点和作为参照的节点,插入节点后，被插入的节点会变成参照节点的前一个同胞节点（previousSibling），同时被方法返回</p>
+</li>
+<li><p>replaceChild():接受的两个参数是：要插入的节点和要替换的节点。要替换的节点将由这个方法返回并从文档树中被移除，同时由要插入的节点占据其位置</p>
+</li>
+<li><p>removeChild():这个方法接受一个参数，即要移除的节点。被移除的节点将成为方法的返回值，</p>
+</li>
+<li><p>cloneNode():接受一个布尔值参数，表示是否执行深复制。在参数为 true的情况下，执行深复制，也就是复制节点及其整个子节点树；在参数为 false 的情况下，执行浅复制，即只复制节点本身</p>
+<ul>
+<li><strong>cloneNode()方法不会复制添加到 DOM 节点中的 JavaScript 属性，例如事件处理程序等。这个方法只复制特性、（在明确指定的情况下也复制）子节点，其他一切都不会复制。IE 在此存在一个 bug，即它会复制事件处理程序，所以我们建议在复制之前最好先移除事件处理程序</strong></li>
+</ul>
+</li>
+<li><p>normalize():这个方法唯一的作用就是处理文档树中的文本节点</p>
+</li>
+</ol>
+<p><img src="/images/blog_images/js_basic/9.jpg" alt="image"><br><strong>PARENTNODE.appendChild()是剪切操作，parent.removeChild()是剪切出来，返回出来，child.remove()是真正的销毁,parent.replaceChild(new,origin)也是剪切出来</strong></p>
+<p><img src="/images/blog_images/js_basic/10.jpg" alt="image"></p>
+<ol start="15">
+<li><p>还有outerHtml/outerText</p>
+<blockquote>
+<p>支持 innerText/outerText 属性的浏览器包括 IE4+、Safari 3+、Opera 8+和 Chrome。Firefox 虽然不支持innerText，但支持作用类似的 textContent 属性。textContent 是 DOM Level 3 规定的一个属性，其他支持 textContent 属性的浏览器还有 IE9+、Safari 3+、Opera 10+和 Chrome。为了确保跨浏览器兼容，有必要编写一个类似于下面的函数来检测可以使用哪个属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">兼容函数</span><br><span class="line">function getInnerText(element)&#123; </span><br><span class="line">return (typeof element.textContent == &quot;string&quot;) ? element.textContent : element.innerText; </span><br><span class="line">&#125; </span><br><span class="line">function setInnerText(element, text)&#123; </span><br><span class="line">if (typeof element.textContent == &quot;string&quot;)&#123; </span><br><span class="line">    element.textContent = text; </span><br><span class="line">&#125; else &#123; </span><br><span class="line">    element.innerText = text; </span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>InnerHTML,innerText都是覆盖原有的内容，看下面的例子：<br><img src="/images/blog_images/js_basic/11.jpg" alt="image"><br><img src="/images/blog_images/js_basic/12.jpg" alt="image"></p>
+</li>
+</ol>
+<blockquote>
+<p>NodeList 对象的独特之处在于，它实际上是基于 DOM 结构动态执行查询的结果，因此 DOM 结构的变化能够自动反映在 NodeList 对象中，NodeList 是有生命、有呼吸的对象，而不是在我们第一次访问它们的某个瞬间拍摄下来的一张快照</p>
+</blockquote>
+<h2 id="元素节点的关系和访问"><a href="#元素节点的关系和访问" class="headerlink" title="元素节点的关系和访问"></a><strong>元素节点的关系和访问</strong></h2><ol>
+<li><p>Element Traversal API 为 DOM 元素添加了以下 5 个属性。</p>
+<ul>
+<li>childElementCount：返回子元素（不包括文本节点和注释）的个数。</li>
+<li>firstElementChild：指向第一个子元素；firstChild 的元素版。</li>
+<li>lastElementChild：指向最后一个子元素；lastChild 的元素版。</li>
+<li>previousElementSibling：指向前一个同辈元素；previousSibling 的元素版</li>
+<li><p>nextElementSibling：指向后一个同辈元素；nextSibling 的元素版。</p>
+<p><strong>（以上支持 Element Traversal 规范的浏览器有 IE 9+、Firefox 3.5+、Safari 4+、Chrome 和 Opera 10+。）</strong></p>
+</li>
+</ul>
+</li>
+<li><p>兼容性很好的一个元素子节点的访问</p>
+<ul>
+<li>children: 只返回当前元素的元素子节点</li>
+</ul>
+</li>
+</ol>
+<h2 id="元素节点的获取-通过document的方法"><a href="#元素节点的获取-通过document的方法" class="headerlink" title="元素节点的获取(通过document的方法)"></a><strong>元素节点的获取(通过document的方法)</strong></h2><ol>
+<li><p>getElementsByTagName()</p>
+<ul>
+<li><p>这个方法会返回一个 HTMLCollection 对象，作为一个“动态”集合，该对象与 NodeList 非常类似</p>
+</li>
+<li><p>HTMLCollection 对象还有一个方法，叫做 namedItem()，使用这个方法可以通过元素的 name特性取得集合中的项</p>
+</li>
+<li><p>在提供按索引访问项的基础上，HTMLCollection 还支持按名称访问项，这就为我们取得实际想要的元素提供了便利。而且，对命名的项也可以使用方括号语法来访问</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var myImage = images[&quot;myImage&quot;];</span><br></pre></td></tr></table></figure>
+<p><strong>对 HTMLCollection 而言，我们可以向方括号中传入数值或字符串形式的索引值。在后台，对数值索引就会调用 item()，而对字符串索引就会调用 namedItem()。</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li><p>getElementsById()</p>
+<ul>
+<li><p>这里的 ID 必须与页面中元素的 id特性（attribute）严格匹配，包括大小写(<strong>IE8 及较低版本不区分 ID 的大小写，因此”myDiv”和”mydiv”会被当作相同的元素 ID</strong>)</p>
+</li>
+<li><p>如果页面中多个元素的 ID 值相同，getElementById()只返回文档中第一次出现的元素</p>
+<blockquote>
+<p>IE7 及较低版本还为此方法添加了一个有意思的“怪癖”：name 特性与给定 ID 匹配的表单元素（input、textarea、button及 select）也会被该方法返回。如果有哪个表单元素的 name 特性等于指定的 ID，而且该元素在文档中位于带有给定 ID 的元素前面，那么 IE 就会返回那个表单元素</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>getElementsByName()</p>
+<ul>
+<li>与 getElementsByTagName()类似，getElementsByName()方法也会返回一个 HTMLCollectioin。但是，对于这里的单选按钮来说，namedItem()方法则只会取得第一项（因为每一项的 name 特性都相同）</li>
+</ul>
+</li>
+<li><p>getElementsByClassName()</p>
+<ul>
+<li><p>HTML5 添加的 getElementsByClassName()方法是最受人欢迎的一个方法，可以通过 document对象及所有 HTML 元素调用该方法</p>
+</li>
+<li><p><strong>支持 getElementsByClassName()方法的浏览器有 IE 9+、Firefox 3+、Safari 3.1+、Chrome 和 Opera 9.5+</strong></p>
+<p><img src="/images/blog_images/js_basic/8.jpg" alt="image"></p>
+</li>
+</ul>
+</li>
+<li><p>除了属性和方法，document 对象还有一些特殊的集合</p>
+<ul>
+<li>document.anchors，包含文档中所有带 name 特性的&lt;a>元素；</li>
+<li>document.applets，包含文档中所有的&lt;applet>元素，因为不再推荐使用&lt;applet>元素，<br>所以这个集合已经不建议使用了；</li>
+<li>document.forms，包含文档中所有的&lt;form>元素，与 document.getElementsByTagName(“form”)<br>得到的结果相同；</li>
+<li>document.images，包含文档中所有的&lt;img>元素，与 document.getElementsByTagName (“img”)得到的结果相同；</li>
+<li><p>document.links，包含文档中所有带 href 特性的&lt;a>元素。</p>
+<p><strong>这个特殊集合始终都可以通过 HTMLDocument 对象访问到，而且，与 HTMLCollection 对象类似，集合中的项也会随着当前文档内容的更新而更新</strong></p>
+</li>
+</ul>
+</li>
+<li><p>其他常见的方法：document.write()、document.writeln()、document.open()和 document.close()</p>
+<ul>
+<li><p>document.write()在页面被呈现的过程中直接向其中输出了内容。如果在文档加载结束后再调用 document.write(),比如在document.onload触发后</p>
+</li>
+<li><p>在document.write()中动态地包含外部资源，要将字符串中的”&lt;/script>“标签用转义字符转义，不然但字符串”&lt;/script>“将被解释为与外部的&lt;script>标签匹配，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt; </span><br><span class="line">    &lt;head&gt; </span><br><span class="line">        &lt;title&gt;document.write() Example 3&lt;/title&gt; </span><br><span class="line">    &lt;/head&gt; </span><br><span class="line">    &lt;body&gt; </span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt; </span><br><span class="line">        document.write(&quot;&lt;script type=\&quot;text/javascript\&quot; src=\&quot;file.js\&quot;&gt;&quot; + </span><br><span class="line">        &quot;&lt;\/script&gt;&quot;); </span><br><span class="line">    &lt;/script&gt; </span><br><span class="line">    &lt;/body&gt; </span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="元素节点的获取-通过querySelector-的方法"><a href="#元素节点的获取-通过querySelector-的方法" class="headerlink" title="元素节点的获取(通过querySelector()的方法)"></a><strong>元素节点的获取(通过querySelector()的方法)</strong></h2><ol>
+<li>Selectors API（<a href="http://www.w3.org/TR/selectors-api/）是由" target="_blank" rel="noopener">www.w3.org/TR/selectors-api/）是由</a> W3C 发起制定的一个标准（两个方法：querySelector()和 querySelectorAll()属于Selectors API Level 1）</li>
+</ol>
+<p>2.支持querySelector()可以通过 Document 及 Element 类型的实例调用它们</p>
+<p>3.目前已完全支持 Selectors API Level 1的浏览器有 IE 8+、Firefox 3.5+、Safari 3.1+、Chrome 和 Opera 10+</p>
+<p>4.querySelector()方法接收一个 CSS 选择符，返回与该模式匹配的第一个元素，如果没有找到匹配的元素，返回 null，如果传入了不被支持的选择符，querySelector()会抛出错误。</p>
+<p>5.querySelectorAll()方法接收的参数是一个 CSS 选择符，但返回的是所有匹配的元素而不仅仅是一个元素。这个方法返回的是一个 NodeList 的实例，其底层实现则类似于一组元素的快照，而非不断对文档进行搜索的动态查询，能够调用 querySelectorAll()方法的类型包括 Document、DocumentFragment 和 Element</p>
+<p>6.其实还有一个matchesSelector()方法，用来查看调用元素与该选择符是否匹配，匹配返回 true；否则返回 false。兼容性不好很少用</p>
+<h2 id="html元素的属性和方法"><a href="#html元素的属性和方法" class="headerlink" title="html元素的属性和方法"></a><strong>html元素的属性和方法</strong></h2><ol>
+<li><h3 id="获取元素的特性"><a href="#获取元素的特性" class="headerlink" title="获取元素的特性"></a><strong>获取元素的特性</strong></h3><ul>
+<li><p>所有 HTML 元素都由 HTMLElement 类型表示，HTMLElement 类型直接继承自Element 并添加了一些属性，添加的这些属性分别对应于每个 HTML<br>元素中都存在的下列标准特性：</p>
+<ul>
+<li><p>id，元素在文档中的唯一标识符。</p>
+</li>
+<li><p>title，有关元素的附加说明信息，一般通过工具提示条显示出来。</p>
+</li>
+<li><p>lang，元素内容的语言代码，很少使用。</p>
+</li>
+<li><p>dir，语言的方向，值为”ltr”（left-to-right，从左至右）或”rtl”（right-to-left，从右至左），<br>也很少使用。</p>
+</li>
+<li><p>className，与元素的class 特性对应，即为元素指定的CSS类。没有将这个属性命名为class，<br>是因为 class 是 ECMAScript 的保留字</p>
+<p><strong>上述这些属性都可以用来取得或修改相应的特性值。</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>除了上面的获取和修改dom特性的方法，操作特性的DOM 方法主要有三个，分别是 getAttribute()、setAttribute()和 removeAttribute()，主要可以获取自定义的属性，不过，特性的名称是不区分大小写的，即”ID”和”id”代表的都是同一个特性。另外也要注意，根据 HTML5 规范，自定义特性应该加上 data-前缀以便验证</p>
+</li>
+<li><h3 id="脚本化css"><a href="#脚本化css" class="headerlink" title="脚本化css"></a>脚本化css</h3><ul>
+<li><p><strong>dom.style</strong>:获取元素行间样式，返回的是一个对象</p>
+<ul>
+<li>可读写行间样式，没有兼容性问题，碰到float保留字，在前面加css（cssFloat）</li>
+<li>复合属性必须拆解，组合单词编程小驼峰式   </li>
+<li>写入的值必须是字符串格式</li>
+<li><p>dom.style.prop展示的行间的样式，返回的是字符串</p>
+</li>
+<li><p>“DOM2级样式”规范还为 style 对象定义了一些属性和方法</p>
+<blockquote>
+<p>cssText：如前所述，通过它能够访问到 style 特性中的 CSS 代码。<br>length：应用给元素的 CSS 属性的数量。<br>parentRule：表示 CSS 信息的 CSSRule 对象。。<br>getPropertyCSSValue(propertyName)：返回包含给定属性值的 CSSValue 对象。<br>getPropertyPriority(propertyName)：如果给定的属性使用了!important 设置，则返回<br>  “important”；否则，返回空字符串。<br>getPropertyValue(propertyName)：返回给定属性的字符串值。<br>item(index)：返回给定位置的 CSS 属性的名称。<br>removeProperty(propertyName)：从样式中删除给定属性。<br>setProperty(propertyName,value,priority)：将给定属性设置为相应的值，并加上优先    权标志（”important”或者一个空字符串）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>查询计算样式</strong>： DOM2 级样式”增强了 document.defaultView，提供了window.getComputedStyle(ele, null)方法</p>
+<ul>
+<li>计算样式只读</li>
+<li>返回样式的值都是绝对值，没有相对单位，比如如果有em会被转换成px<br>  <img src="/images/blog_images/js_basic/13.jpg" alt="image"><br>  <img src="/images/blog_images/js_basic/14.jpg" alt="image"></li>
+<li>IE8及以下不兼容</li>
+<li>获取的是这个当前元素所展示一切css的显示值 （就是你看到css的最终属性，包括默认值）</li>
+<li>Window.getComputedStyle(ele,null)括号里面的null可以获取伪元素的样式表<br>  <img src="/images/blog_images/js_basic/15.jpg" alt="image"></li>
+</ul>
+</li>
+<li><p><strong>IE浏览器特有的查询计算样式</strong>：ele.currentStyle</p>
+<ul>
+<li>计算样式只读</li>
+<li>返回的计算样式不是经过转换的绝对值</li>
+</ul>
+</li>
+<li><p><strong>针对计算样式封装兼容性</strong><br>  <img src="/images/blog_images/js_basic/16.jpg" alt="image"></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="4">
+<li><p>dom.onclick:设置行间点击事件</p>
+</li>
+<li><p>HTML5 新增了一种操作类名的方式，可以让操作更简单也更安全，那就是为所有元素添加classList 属性。这个 classList 属性是新集合类型 DOMTokenList 的实例。与其他 DOM 集合类似，DOMTokenList 有一个表示自己包含多少元素的 length 属性，而要取得每个元素可以使用 item()方法，也可以使用方括号语法。此外，这个新类型还定义如下方法。</p>
+<ul>
+<li>add(value)：将给定的字符串值添加到列表中。如果值已经存在，就不添加了。</li>
+<li>contains(value)：表示列表中是否存在给定的值，如果存在则返回 true，否则返回 false。</li>
+<li>remove(value)：从列表中删除给定的字符串。</li>
+<li>toggle(value)：如果列表中已经存在给定的值，删除它；如果列表中没有给定的值，添加它。这样，前面那么多行代码用下面这一行代码就可以代替了</li>
+</ul>
+</li>
+<li><h3 id="获取元素的偏移量等"><a href="#获取元素的偏移量等" class="headerlink" title="获取元素的偏移量等"></a>获取元素的偏移量等</h3><ul>
+<li><p>偏移量</p>
+<ul>
+<li><p>offsetHeight：元素在垂直方向上占用的空间大小，以像素计。包括元素的高度、（可见的）水平滚动条的高度、上边框高度和下边框高度。</p>
+</li>
+<li><p>offsetWidth：元素在水平方向上占用的空间大小，以像素计。包括元素的宽度、（可见的）直滚动条的宽度、左边框宽度和右边框宽度。</p>
+</li>
+<li><p>offsetLeft：<strong>元素的左外边框</strong> 至包含元素的 <strong>左内边框之间的像素距离</strong>。对于无定位的父级，但会相对于文档的坐标，对于有定位的父级，返回相对于最近有定位父级的坐标</p>
+</li>
+<li><p>offsetTop：元素的上外边框至包含元素的上内边框之间的像素，同上</p>
+<p><strong>所有这些偏移量属性都是只读的，而且每次访问它们都需要重新计算。因此，应该尽量避免重复访问这些属性；如果需要重复使用其中某些属性的值，可以将它们保存在局部变量中，以提高</strong></p>
+</li>
+</ul>
+</li>
+<li><p>客户区大小    </p>
+<ul>
+<li><p>clientHeight：表示的是可视区域的高度，不包含border和滚动条，其他同理 </p>
+</li>
+<li><p>针对浏览器视口大小的获取可以使用clientHeight，innerHeight（只有window中有，IE8及以下不兼容），封装函数如下：<br><img src="/images/blog_images/js_basic/17.jpg" alt="image"></p>
+<blockquote>
+<p>这个函数首先检查 document.compatMode 属性，以确定浏览器是否运行在混杂模式</p>
+</blockquote>
+<p><strong>与偏移量相似，客户区大小也是只读的，也是每次访问都要重新计算的</strong></p>
+</li>
+</ul>
+</li>
+<li><p>滚动大小</p>
+<ul>
+<li><p>存在浏览器窗口的滚动条，还有则需要通过 CSS 的overflow 属性进行设置才能滚动元素</p>
+</li>
+<li><p>scrollHeight：在没有滚动条的情况下，元素内容的总高度。</p>
+</li>
+<li>scrollWidth：在没有滚动条的情况下，元素内容的总宽度。</li>
+<li>scrollLeft：被隐藏在内容区域左侧的像素数。通过设置这个属性可以改变元素的滚动位置。</li>
+<li><p>scrollTop：被隐藏在内容区域上方的像素数。通过设置这个属性可以改变元素的滚动位置。</p>
+</li>
+<li><p>针对于浏览器窗口的滚动，还有一个可以获取滚动距离的是window.pageXoffset(IE8及以下不兼容)</p>
+</li>
+</ul>
+</li>
+<li><p>元素大小</p>
+<ul>
+<li>IE、Firefox 3+、Safari 4+、Opera 9.5及 Chrome为每个元素都提供了一个 getBoundingClientRect()方法。这个方法返回会一个矩形对象，包含 4 个属性：left、top、right 和 bottom，这些属性给出了元素在页面中相对于视口的位置，还有width和height（老版本IE没有实现），包含了padding和border，<strong>返回的结果不是实时的</strong><br>12</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/29/JS_High_Performance/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/10/03/tongyuan/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/09/30/node_js-/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

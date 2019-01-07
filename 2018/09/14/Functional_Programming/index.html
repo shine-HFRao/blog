@@ -15,19 +15,19 @@
     <meta name="keywords" content="函数式编程," />
   
 
-  <meta name="description" content="函数式编程纯函数 纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数是健壮的，改变执行次序不会对系统造成影响，因此纯函数的操作可以并行执行   函数记忆函数 针对的是需要用到之前运算结果的，比如：  1234567891011121314var cache = &amp;#123;&amp;#1">
+  <meta name="description" content="函数式编程 我认为函数式编程可以理解为，以函数作为主要载体的编程方式，用函数去拆解、抽象一般的表达式与命令式相比，这样做的好处在哪？主要有以下几点：  语义更加清晰 可复用性更高 可维护性更好 作用域局限，副作用少纯函数     纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数">
 <meta name="keywords" content="函数式编程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="函数式编程">
 <meta property="og:url" content="http://yoursite.com/2018/09/14/Functional_Programming/index.html">
 <meta property="og:site_name" content="HFRao">
-<meta property="og:description" content="函数式编程纯函数 纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数是健壮的，改变执行次序不会对系统造成影响，因此纯函数的操作可以并行执行   函数记忆函数 针对的是需要用到之前运算结果的，比如：  1234567891011121314var cache = &amp;#123;&amp;#1">
+<meta property="og:description" content="函数式编程 我认为函数式编程可以理解为，以函数作为主要载体的编程方式，用函数去拆解、抽象一般的表达式与命令式相比，这样做的好处在哪？主要有以下几点：  语义更加清晰 可复用性更高 可维护性更好 作用域局限，副作用少纯函数     纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数">
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/blog_images/Ajax_Curry.png">
-<meta property="og:updated_time" content="2018-09-17T09:43:34.130Z">
+<meta property="og:updated_time" content="2018-12-19T07:08:07.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="函数式编程">
-<meta name="twitter:description" content="函数式编程纯函数 纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数是健壮的，改变执行次序不会对系统造成影响，因此纯函数的操作可以并行执行   函数记忆函数 针对的是需要用到之前运算结果的，比如：  1234567891011121314var cache = &amp;#123;&amp;#1">
+<meta name="twitter:description" content="函数式编程 我认为函数式编程可以理解为，以函数作为主要载体的编程方式，用函数去拆解、抽象一般的表达式与命令式相比，这样做的好处在哪？主要有以下几点：  语义更加清晰 可复用性更高 可维护性更好 作用域局限，副作用少纯函数     纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）  纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入和输出  纯函数">
 <meta name="twitter:image" content="http://yoursite.com/images/blog_images/Ajax_Curry.png">
 
   
@@ -183,7 +183,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#函数式编程"><span class="toc-text">函数式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#纯函数"><span class="toc-text">纯函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数记忆函数"><span class="toc-text">函数记忆函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#柯里化"><span class="toc-text">柯里化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性函数"><span class="toc-text">惰性函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数组合应用"><span class="toc-text">函数组合应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js必会数据处理之扁平化"><span class="toc-text">Js必会数据处理之扁平化</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#函数式编程"><span class="toc-text">函数式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#纯函数"><span class="toc-text">纯函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数记忆函数"><span class="toc-text">函数记忆函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#柯里化"><span class="toc-text">柯里化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性函数"><span class="toc-text">惰性函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数组合应用"><span class="toc-text">函数组合应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js必会数据处理之扁平化"><span class="toc-text">Js必会数据处理之扁平化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高阶函数"><span class="toc-text">高阶函数</span></a></li></ol></li></ol>
   </div>
 
 
@@ -234,7 +234,17 @@
 
   <div class="article-content">
     
-      <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><h3 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a><strong>纯函数</strong></h3><ol>
+      <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><ul>
+<li><p>我认为函数式编程可以理解为，以函数作为主要载体的编程方式，用函数去拆解、抽象一般的表达式与命令式相比，这样做的好处在哪？主要有以下几点：</p>
+<ul>
+<li>语义更加清晰</li>
+<li>可复用性更高</li>
+<li>可维护性更好</li>
+<li>作用域局限，副作用少<h3 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a><strong>纯函数</strong></h3></li>
+</ul>
+</li>
+</ul>
+<ol>
 <li><p>纯函数是指不依赖，修改其作用域之外变量的函数（不会对外面的变量和函数产生影响的）</p>
 </li>
 <li><p>纯函数非常容易进行单元测试，因为不再需要考虑上下文环境，只需要考虑输入<br>和输出</p>
@@ -305,9 +315,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.flatter = function ()&#123;</span><br><span class="line">    var resArr = [];</span><br><span class="line">    this.forEach(function (item)&#123;</span><br><span class="line">        Object.prototype.toString.call(item) == &apos;[object Array]&apos; ? resArr = resArr.concat(this.flatter()) : resArr.push(item)</span><br><span class="line">    &#125;) </span><br><span class="line">    return resArr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>方法2：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.flatter = function ()&#123;</span><br><span class="line">    return this.reduce(function (prev, item)&#123;</span><br><span class="line">        return Object.prototype.toString.call(item) == &apos;[object Array]&apos; ? prev.concat(item.flatter()) : prev.push(item);</span><br><span class="line">    &#125;, [])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.flatter = function ()&#123;</span><br><span class="line">    return this.reduce(function (prev, item)&#123;</span><br><span class="line">        return Object.prototype.toString.call(item) == &apos;[object Array]&apos; ? prev.concat(item.flatter()) : prev.push(item);</span><br><span class="line">    &#125;, [])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
+</ol>
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a><strong>高阶函数</strong></h3><ol>
+<li>接受或者返回一个函数的函数称为高阶函数</li>
 </ol>
 
     
@@ -323,7 +337,7 @@
     <a class="show pull-left" href="/2018/09/13/JavaScript_Authoritative_Guide2_3/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/09/15/HTML_Important/">
+    <a class="show pull-right" href="/2018/09/17/Browser_Cache/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

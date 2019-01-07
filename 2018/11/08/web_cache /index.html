@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>web缓存 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络," />
+  
+
+  <meta name="description" content="web缓存 从网络性能优化方面，利用缓存机制是一种很常用的优化网页性能的方法，根据自己网页的情况，制作出一个适合的缓存机制能够极大的提高页面的加载资源的速度，从而使网页能够更快的在用户面前展示  web缓存分类：  HTTP缓存 先但从上面图中的http缓存开始看，http缓存分为强缓存和协商缓存，来详细的介绍介绍  强缓存  (http1.0)Pragma： (1) 上面的图片没有涉及到的一点就">
+<meta name="keywords" content="网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web缓存">
+<meta property="og:url" content="http://yoursite.com/2018/11/08/web_cache /index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="web缓存 从网络性能优化方面，利用缓存机制是一种很常用的优化网页性能的方法，根据自己网页的情况，制作出一个适合的缓存机制能够极大的提高页面的加载资源的速度，从而使网页能够更快的在用户面前展示  web缓存分类：  HTTP缓存 先但从上面图中的http缓存开始看，http缓存分为强缓存和协商缓存，来详细的介绍介绍  强缓存  (http1.0)Pragma： (1) 上面的图片没有涉及到的一点就">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/web_cache/web_cache1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/web_cache/web_cache2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/web_cache/web_cache3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/web_cache/web_cache4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/web_cache/web_cache4.jpg">
+<meta property="og:updated_time" content="2018-12-25T12:16:08.241Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web缓存">
+<meta name="twitter:description" content="web缓存 从网络性能优化方面，利用缓存机制是一种很常用的优化网页性能的方法，根据自己网页的情况，制作出一个适合的缓存机制能够极大的提高页面的加载资源的速度，从而使网页能够更快的在用户面前展示  web缓存分类：  HTTP缓存 先但从上面图中的http缓存开始看，http缓存分为强缓存和协商缓存，来详细的介绍介绍  强缓存  (http1.0)Pragma： (1) 上面的图片没有涉及到的一点就">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/web_cache/web_cache1.jpg">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#web缓存"><span class="toc-text">web缓存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP缓存"><span class="toc-text">HTTP缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据缓存"><span class="toc-text">数据缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-web_cache " class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">web缓存</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.11.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/网络/">网络</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/11/08/web_cache /#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="web缓存"><a href="#web缓存" class="headerlink" title="web缓存"></a><strong>web缓存</strong></h3><ol>
+<li><p>从网络性能优化方面，利用缓存机制是一种很常用的优化网页性能的方法，根据自己网页的情况，制作出一个适合的缓存机制能够极大的提高页面的加载资源的速度，从而使网页能够更快的在用户面前展示</p>
+</li>
+<li><p>web缓存分类：<br> <img src="/images/blog_images/web_cache/web_cache1.jpg" alt="image"></p>
+<h2 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h2><ul>
+<li><p>先但从上面图中的http缓存开始看，http缓存分为强缓存和协商缓存，来详细的介绍介绍<br>  <strong>强缓存</strong></p>
+<ul>
+<li><strong>(http1.0)Pragma</strong>：<blockquote>
+<p>(1) 上面的图片没有涉及到的一点就是Pragma这个http1.0 时代的产物（还有expires），虽然现在这个两个字段已经过时，但部分网站还是会携带他们，因为他们可以向下兼容，例如<a href="https://ke.qq.com/" target="_blank" rel="noopener">腾讯课堂</a><br>(2) 当该字段值为no-cache的时候，不会对资源进行缓存，记住一点：<strong>Pragma的优先级是高于Cache-Control</strong></p>
+</blockquote>
+</li>
+<li><p><strong>(http1.0)Expires</strong></p>
+<blockquote>
+<p>(1) 对于http而言用来开启缓存的就是使用expires，服务器给设置的expires如：Expires: Fri, 11 Jun 2021 11:33:01 GMT，这个时间是服务器的时间，但是当浏览器访问该服务器的时候，如果客户端上的时间跟服务器上的时间不一致（特别是用户修改了自己电脑的系统时间），那缓存时间可能就没啥意义了<br>(2) 记住一点，如果Pragma头部和Expires头部同时存在，则起作用的会是Pragma，有兴趣的同学可以自己试一下</p>
+</blockquote>
+</li>
+<li><p><strong>(http1.1)Cache-Control</strong></p>
+<blockquote>
+<p>(1) 针对上述的“Expires时间是相对服务器而言，无法保证和客户端时间统一”的问题, Cache-Control中的Max-Age使用的是客户端本地时间的计算，因此不会有这个问题<br>(2) Cache-Control的字段的主要值有：no-store、no-cache、max-age、public、private。Cache-Control也是一个通用首部字段，这意味着它能分别在请求报文和响应报文中使用。在RFC中规范了 Cache-Control 的格式为：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;Cache-Control&quot; &quot;:&quot; cache-directive</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>(3) 作为请求首部时，cache-directive 的可选值有：<br>  <img src="/images/blog_images/web_cache/web_cache2.jpg" alt="image"><br>(4) 作为响应首部时，cache-directive 的可选值有：<br>  <img src="/images/blog_images/web_cache/web_cache3.jpg" alt="image"><br>(5) Cache-Control 允许自由组合可选值，例如：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age=3600, must-revalidate</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>它意味着该资源是从原服务器上取得的，且其缓存（新鲜度）的有效时间为一小时，在后续一小时内，用户重新访问该资源则无须发送请求。 当然这种组合的方式也会有些限制，比如 no-cache 就不能和 max-age、min-fresh、max-stale 一起搭配使用<br>(3) <strong>优先级从高到低分别是 Pragma -&gt; Cache-Control -&gt; Expires</strong> </p>
+</blockquote>
+<p><strong>协商缓存</strong></p>
+</li>
+<li><p><strong>(http1.0)Last-Modified和If-Modified-Since</strong></p>
+<blockquote>
+<p>(1) 服务器通过将资源最后更改的时间以“Last-Modified: GMT”的形式加在实体首部上（Last-Modified: Fri, 22 Jul 2016 01:47:00 GMT），客户端和服务端请求响应的过程看如下图就很清楚了<br>  <img src="/images/blog_images/web_cache/web_cache4.jpg" alt="image"><br>  至于传递标记起来的最终修改时间的请求报文首部字段一共有两个<br>  ① If-Modified-Since: Last-Modified-value（大部分用这个字段）<br>  该请求首部告诉服务器如果客户端传来的最后修改时间与服务器上的一致，则直接回送304 和响应报头即可。<br>  当前各浏览器均是使用的该请求首部来向服务器传递保存的 Last-Modified 值。<br>  ② If-Unmodified-Since: Last-Modified-value<br>  该值告诉服务器，若Last-Modified没有匹配上（资源在服务端的最后更新时间改变了），则应当返回412(Precondition Failed) 状态码给客户端。 Last-Modified 存在一定问题，如果在服务器上，一个资源被修改了，但其实际内容根本没发生改变，会因为Last-Modified时间匹配不上而返回了整个实体给客户端（即使客户端缓存里有个一模一样的资源），还有一个缺陷就是只能精确到1s，1秒之内的资源的变化他察觉不到。</p>
+</blockquote>
+<blockquote>
+</blockquote>
+</li>
+<li><p><strong>(http1.1)If-None-Match和IETag</strong></p>
+<blockquote>
+<p>(1) 为了解决上述Last-Modified可能存在的不准确的问题（还有1s之内多次修改的情况），Http1.1还推出了 ETag 实体首部字段。 服务器会通过某种算法，给资源计算得出一个唯一标志符（比如md5标志）就像指纹一样，在把资源响应给客户端的时候，会在实体首部加上“ETag: 唯一标识符”一起返回给客户端(Etag: “5d8c72a5edda8d6a:3239”)，当客户端再访问该服务器的时候就会将该唯一标识符以If-None-Match：”5d8c72a5edda8d6a:3239”（大部分用这个字段）来发送给服务器，如果相同返回304，不相同则获取新的资源<br>(2) 当然还有少数运用 If-Match: ETag-value字段，告诉服务器如果没有匹配到ETag，或者收到了“*”值而当前并没有该资源实体，则应当返回412(Precondition Failed) 状态码给客户端。否则服务器直接忽略该字段。需要注意的是，如果资源是走分布式服务器（比如CDN）存储的情况，需要这些服务器上计算ETag唯一值的算法保持一致，才不会导致明明同一个文件，在服务器A和服务器B上生成的ETag却不一样。</p>
+</blockquote>
+</li>
+<li><p>缓存头部优劣势对比图：<br>  <img src="/images/blog_images/web_cache/web_cache4.jpg" alt="image"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>针对于缓存的刷新行为</p>
+<ul>
+<li>我们可以把刷新/访问界面的手段分成三类：<ul>
+<li>在URI输入栏中输入然后回车/通过书签访问</li>
+<li>F5/点击工具栏中的刷新按钮/右键菜单重新加载</li>
+<li>Ctl+F5</li>
+</ul>
+</li>
+<li><p>在浏览器中，有时候你会发现通过不同的手段访问/刷新界面页面的呈现速度是不一样的，比如我们第一次访问网站时，在响应头重设置一下的响应头：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age=31104000</span><br><span class="line">Expires: Thu, 20 Jul 2017 02:18:41 GMT</span><br><span class="line">Last-Modified: Fri, 15 Jul 2016 04:11:51 GMT</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>在URI输入栏中输入然后回车</strong>: 我们可以看到返回响应码是 200 OK (from cache)，浏览器发现该资源已经缓存了而且没有过期（通过Expires头部或者Cache-Control头部），没有跟服务器确认，而是直接使用了浏览器缓存的内容</p>
+</li>
+<li><p><strong>F5/点击工具栏中的刷新按钮/右键菜单重新加载</strong>: F5的作用和直接在URI输入栏中输入然后回车是不一样的，F5会让浏览器无论如何都发一个HTTP Request给Server，即使先前的响应中有Expires头部所以，当我在当前网页中按F5的时候，浏览器会发送一个HTTP Request给Server，但是包含这样的Headers:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age=0</span><br><span class="line">If-Modified-Since: Fri, 15 Jul 2016 04:11:51 GMT</span><br></pre></td></tr></table></figure>
+<p>其中Cache-Control是Chrome强制加上的，而If-Modified-Since是因为获取该资源的时候包含了Last-Modified头部，浏览器会使用If-Modified-Since头部信息重新发送该时间以确认资源是否需要重新发送</p>
+</li>
+<li><p><strong>Ctl+F5</strong>:Ctrl+F5要的是彻底的从Server拿一份新的资源过来，所以不光要发送HTTP request给Server，而且这个请求里面连If-Modified-Since/If-None-Match都没有，这样就逼着Server不能返回304，而是把整个资源原原本本地返回一份.实际上，为了保证拿到的是从Server上最新的，Ctrl+F5不只是去掉了If-Modified-Since/If-None-Match，还需要添加一些HTTP Headers。按照HTTP/1.1协议，Cache不光只是存在Browser终端，从Browser到Server之间的中间节点(比如Proxy)也可能扮演Cache的作用，为了防止获得的只是这些中间节点的Cache，需要告诉他们，别用自己的Cache敷衍我，往Upstream的节点要一个最新的copy吧。在Chrome 51 中会包含两个头部信息， 作用就是让中间的Cache对这个请求失效，这样返回的绝对是新鲜的资源。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-cache</span><br><span class="line">Pragma: no-cache</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>缓存实践<br> 综上对各种HTTP缓存控制头部的对比以及用户可能出现的浏览器刷新行为的讨论，当我们在一个项目上做http缓存的应用时，我们实际上还是会把上述提及的大多数首部字段均使用上。</p>
+<h2 id="数据缓存"><a href="#数据缓存" class="headerlink" title="数据缓存"></a>数据缓存</h2></li>
+<li>针对数据缓存可以看我的这篇文章<a href="https://shine-hfrao.github.io/2018/09/17/Browser_Cache/" target="_blank" rel="noopener">数据缓存sessionStorage, localStorage, cookie</a></li>
+</ol>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a><strong>参考资料</strong></h3><ol>
+<li><a href="https://github.com/amandakelake/blog/issues/43" target="_blank" rel="noopener">https://github.com/amandakelake/blog/issues/43</a></li>
+<li><a href="http://imweb.io/topic/5795dcb6fb312541492eda8c" target="_blank" rel="noopener">http://imweb.io/topic/5795dcb6fb312541492eda8c</a></li>
+<li><a href="http://www.dailichun.com/2018/03/12/whenyouenteraurl.html" target="_blank" rel="noopener">http://www.dailichun.com/2018/03/12/whenyouenteraurl.html</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#_2" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#_2</a></li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/30/ES6/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/11/15/critical_rander /">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/11/08/web_cache /';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

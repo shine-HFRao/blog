@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>理清[[scope]]、运行期上下文和函数作用域链、闭包 | HFRao</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="在谈作用域之前，我们先来谈谈 词法作用域 和 动态作用域，而我们接触的javascript是属于词法作用域。简单地说，词法作用域就是定义在词法阶段的作用域。换句话说，词法作用域是由你在写代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时会保持作用域不变（大部分情况下是这样的），也就会出现作用域嵌套，当然像eval、width他是会改变词法作用域的（称为欺骗词法作用域，欺骗词法作用域">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理清[[scope]]、运行期上下文和函数作用域链、闭包">
+<meta property="og:url" content="http://yoursite.com/2018/10/06/[[scope]]-/index.html">
+<meta property="og:site_name" content="HFRao">
+<meta property="og:description" content="在谈作用域之前，我们先来谈谈 词法作用域 和 动态作用域，而我们接触的javascript是属于词法作用域。简单地说，词法作用域就是定义在词法阶段的作用域。换句话说，词法作用域是由你在写代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时会保持作用域不变（大部分情况下是这样的），也就会出现作用域嵌套，当然像eval、width他是会改变词法作用域的（称为欺骗词法作用域，欺骗词法作用域">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/scope1.png">
+<meta property="og:image" content="http://yoursite.com/images/blog_images/scope2.png">
+<meta property="og:updated_time" content="2019-01-02T16:35:20.270Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理清[[scope]]、运行期上下文和函数作用域链、闭包">
+<meta name="twitter:description" content="在谈作用域之前，我们先来谈谈 词法作用域 和 动态作用域，而我们接触的javascript是属于词法作用域。简单地说，词法作用域就是定义在词法阶段的作用域。换句话说，词法作用域是由你在写代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时会保持作用域不变（大部分情况下是这样的），也就会出现作用域嵌套，当然像eval、width他是会改变词法作用域的（称为欺骗词法作用域，欺骗词法作用域">
+<meta name="twitter:image" content="http://yoursite.com/images/blog_images/scope1.png">
+
+  
+
+  
+    <link rel="icon" href="/book.svg">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#scope-是啥，它与作用域链之间的关系"><span class="toc-text">[[scope]]是啥，它与作用域链之间的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再来讲下运行期上下文"><span class="toc-text">再来讲下运行期上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改变作用域链"><span class="toc-text">改变作用域链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包"><span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#词法作用域和动态作用域"><span class="toc-text">词法作用域和动态作用域</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-[[scope]]-" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">理清[[scope]]、运行期上下文和函数作用域链、闭包</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>HFRao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2018/10/06/[[scope]]-/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>在谈作用域之前，我们先来谈谈 <strong>词法作用域</strong> 和 <strong>动态作用域</strong>，而我们接触的javascript是属于词法作用域。简单地说，词法作用域就是定义在词法阶段的作用域。换句话说，词法作用域是由你在写代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时会保持作用域不变（大部分情况下是这样的），也就会出现作用域嵌套，当然像eval、width他是会改变词法作用域的（<strong>称为欺骗词法作用域，欺骗词法作用域会导致性能下降</strong>）</p>
+<p>再来说一说 <strong>编译</strong> ，我们知道语言分为编译语言还有一个是解析语言，尽管通常将 JavaScript 归类为“动态”或“解释执行”语言，但事实上它是一门编译语言。但是它的编译的步骤比传统的编译语言在某些方面要稍微复杂一些，例如，在语法分析和代码生成阶段有特定的步骤来对运行性能进行优化，包括对冗余元素进行优化等。javascript的编译过程不是发生在构造之前，对于 JavaScript 来说，大部分情况下编译发生在代码执行前的几微秒（甚至更短！）的时间内。编译的过程中会有一个提升的过程，你可以在<a href="">预编译</a>这篇文章中找到答案。</p>
+<p>当然我们也要了解 <strong>编译器编译的过程</strong>，他会经历三个步骤：</p>
+<p><strong>1. 分词/词法分析</strong>（Tokenizing/Lexing）</p>
+<blockquote>
+<p>这个过程会将由字符组成的字符串分解成（对编程语言来说）有意义的代码块，这些代码块被称为词法单元（token）。例如，考虑程序 var a = 2;。这段程序通常会被分解成为下面这些词法单元：var、a、=、2 、;。空格是否会被当作词法单元，取决于空格在这门语言中是否具有意义。</p>
+</blockquote>
+<p><strong>2. 解析/语法分析</strong>（Parsing）</p>
+<blockquote>
+<p>这个过程是将词法单元流（数组）转换成一个由元素逐级嵌套所组成的代表了程序语法结构的树。这个树被称为“抽象语法树”（Abstract Syntax Tree，AST）。</p>
+</blockquote>
+<p><strong>3. 代码生成</strong></p>
+<blockquote>
+<p>将 AST 转换为可执行代码的过程称被称为代码生成。</p>
+</blockquote>
+<h3 id="scope-是啥，它与作用域链之间的关系"><a href="#scope-是啥，它与作用域链之间的关系" class="headerlink" title="[[scope]]是啥，它与作用域链之间的关系"></a><strong>[[scope]]是啥，它与作用域链之间的关系</strong></h3><p>我们都知道每个JavaScript函数都是一个对象，更确切的说它是一个函数的实例，他会像对象那样存在自身的属性（可以被程序访问），还存在一系列只被JS引擎使用的内部属性，其中一个内部属性就是[[scope]]，[[scope]]属性中包含了一个函数被创建时作用域对象的集合，此集合就称作是作用域链，这些作用域对象就是代表在创建此函数的环境中能够访问的数据</p>
+<p>add函数的内置属性[[scope]]图：<br>    <img src="/images/blog_images/scope1.png" alt="image"></p>
+<h3 id="再来讲下运行期上下文"><a href="#再来讲下运行期上下文" class="headerlink" title="再来讲下运行期上下文"></a><strong>再来讲下运行期上下文</strong></h3><p>函数被执行时，函数会创建一个内部对象，称作“运行期上下文”。这个运行期上下文定义了一个函数运行时的环境，而且运行期上下文有自己独立的作用域链，这个作用域链在此对象创建时就会被初始化，此时函数内部属性[[scope]]中的作用域链中的对象会按顺序被复制到运行期上下文的作用域链中，此时还会创建一新对象（即此函数的作用域）AO放到运行期上下文作用域链的前端，这个新对象被称为“激活对象”，它存放着此函数的局部变量和this接口等。</p>
+<p>运行期上下文在函数执行完就被销毁，所以函数每次执行的运行期上下文是独一无二的</p>
+<p>add函数执行时的作用域链<br>    <img src="/images/blog_images/scope2.png" alt="image"></p>
+<p>函数在运行时所遇到的变量（即标识符）都会按照运行期上下文的作用域链前端进行查找，变量所处的越深，它的读写书读就越慢，从而影响性能，所以为了能够减少性能损耗，最好将所需的变量编程局部变量（<strong>局部变量访问的总是最快的</strong>），有些也可以通过优化JS引擎来解决</p>
+<p>说到在作用域链上访问变量，我们又可以联想到在对象中 <strong>原型链</strong> 上访问对象属性和方法，与访问变量一样，在对象中访问的属性和方法所在原型链越深搜索速度越慢，性能损耗越多，也可通过缓存属性或方法来提升性能（基于不会改变的值），但是 <strong>记住搜索实例成员的过程比访问直接量或局部变量负担更重</strong>。还有一个需要注意的就是 <strong>嵌套对象</strong>（如window.location.href.toString()，它的情况也与前两个很类似，在处理嵌套对象成员时要特别注意，否则它会对运行速度产生难以置信的影响</p>
+<p>下面的代码就是将全局的变量document变成局部变量来提高性能，虽然一次不能够有较大性能的提升，但是访问多次的话性能改进将显的很出色<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    var doc = document,</span><br><span class="line">        bd = doc.body,</span><br><span class="line">        links = doc.getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">        i = 0,</span><br><span class="line">        len = links.length;</span><br><span class="line">    while (i &lt; len) &#123;</span><br><span class="line">        update(links[i++]);</span><br><span class="line">    &#125;</span><br><span class="line">    doc.getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">        start();</span><br><span class="line">    &#125;;</span><br><span class="line">    bd.className = &quot;active&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="改变作用域链"><a href="#改变作用域链" class="headerlink" title="改变作用域链"></a><strong>改变作用域链</strong></h3><p>一般来说，一个运行期上下文的作用域链不会被改变，但是有两种表达式可以改变其作用域链，第一个是width：width属性会为所有的对象属性添加一个操作变量，当代码在width运算符中执行，函数运行期上下文的作用域链就会被临时改变，一个新的对象（作用域）会被创建，这个对象包含with括号中执行对象的所有属性，他会被放到运行期上下文中的前端，意味着现在函数的作用域对象将被放置于作用域的第二位，是的访问局部变量的速度变慢了，正是这个原因，最好不要用width表达式，如下只要将document对象变成局部变量就可以获得性能提升<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function initUI() &#123;</span><br><span class="line">    with (document) &#123; //avoid!</span><br><span class="line">        var bd = body,</span><br><span class="line">            links = getElementsByTagName_r(&quot;a&quot;),</span><br><span class="line">            i = 0,</span><br><span class="line">            len = links.length;</span><br><span class="line">        while (i &lt; len) &#123;</span><br><span class="line">            update(links[i++]);</span><br><span class="line">        &#125;</span><br><span class="line">        getElementById(&quot;go-btn&quot;).onclick = function () &#123;</span><br><span class="line">            start();</span><br><span class="line">        &#125;;</span><br><span class="line">        bd.className = &quot;active&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为一个表达书就是try-catch表达式的catch语句，当进入catch块中，会将异常的对象放入到运行期上下文作用域链的最前端，将存有局部变量的对象放入到作用域链的第二个位置（ 但是只要catch执行完作用域链就会回到原来的样子 ），如果非要用catch可以将catch中的对象给外部的函数来处理，如下：<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    methodThatMightCauseAnError();</span><br><span class="line">&#125; catch (ex) &#123;</span><br><span class="line">    handleError(ex); //delegate to handler method</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a><strong>闭包</strong></h3><ol>
+<li><p>闭包可以理解成“定义在一个函数内部的函数“。即当函数可以记住并访问所在的词法作用域时，就产生了闭包。在本质上，闭包是将函数内部和函数外部连接起来的桥梁，通过将函数内部定义的函数赋值给外部变量或用return返回出来。</p>
+<ul>
+<li><p>闭包其实就是创造出了一些函数私有的 ”持久化变量“， 是的函数外部的变量可以访问到函数内容的变量。</p>
+</li>
+<li><p>闭包产生的私有化变量可以用来作缓存，外部函数根本访问不到他就不会受到污染了。</p>
+</li>
+</ul>
+</li>
+<li><p>闭包无处不在：</p>
+<ul>
+<li><p>在定时器、事件监听器、Ajax 请求、跨窗口通信、Web Workers 或者任何其他的异步（或者同步）任务中，只要使用了回调函数，实际上就是在使用闭包！</p>
+</li>
+<li><p>还有个非常典型的例子就是立即执行函数（IIFE模式），看下面的代码，尽管 IIFE 本身并不是观察闭包的恰当例子，但它的确创建了闭包，并且也是最常用来创建可以被封闭起来的闭包的工具。因此 IIFE 的确同闭包息息相关，即使本身并不会真的使用闭包。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a = 2;</span><br><span class="line">(function IIFE() &#123;</span><br><span class="line">    console.log( a );</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>利用了闭包的强大的威力：<strong>模块</strong></p>
+<ul>
+<li><p>考虑以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function CoolModule() &#123;</span><br><span class="line">    var something = &quot;cool&quot;;</span><br><span class="line">    var another = [1, 2, 3];</span><br><span class="line">    function doSomething() &#123;</span><br><span class="line">        console.log( something );</span><br><span class="line">    &#125;</span><br><span class="line">    function doAnother() &#123;</span><br><span class="line">        console.log( another.join( &quot; ! &quot; ) );</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;</span><br><span class="line">        doSomething: doSomething,</span><br><span class="line">        doAnother: doAnother</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">var foo = CoolModule();</span><br><span class="line">foo.doSomething(); // cool</span><br><span class="line">foo.doAnother(); // 1 ! 2 ! 3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上这个模式在 JavaScript 中被称为模块。最常见的实现模块模式的方法通常被称为模块暴露，这里展示的是其变体。</p>
+</li>
+<li><p>从模块中返回一个实际的对象并不是必须的，也可以直接返回一个内部函数。jQuery 就是一个很好的例子。jQuery 和 $ 标识符就是 jQuery 模块的公共 API，但它们本身都是函数（由于函数也是对象，它们本身也可以拥有属性）。</p>
+</li>
+<li><p>如果要更简单的描述，模块模式需要具备两个必要条件。</p>
+<ul>
+<li><p>必须有外部的封闭函数，该函数必须至少被调用一次（每次调用都会创建一个新的模块实例）。</p>
+</li>
+<li><p>封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="词法作用域和动态作用域"><a href="#词法作用域和动态作用域" class="headerlink" title="词法作用域和动态作用域"></a><strong>词法作用域和动态作用域</strong></h3><ol>
+<li><p>JavaScript 中的作用域就是词法作用域（事实上大部分语言都是基于词法作用域的）。词法作用域最重要的特征是它的定义过程发生在代码的书写阶段（假设你没有使用eval() 或 with）</p>
+</li>
+<li><p>而动态作用域并不关心函数和作用域是如何声明以及在何处声明的，只关心它们从何处调用。换句话说，作用域链是基于调用栈的，而不是代码中的作用域嵌套。</p>
+</li>
+<li><p>事实上 JavaScript 并不具有动态作用域。它只有词法作用域，简单明了。但是 this 机制某种程度上很像动态作用域</p>
+</li>
+<li><p>主要区别：词法作用域是在写代码或者说定义时确定的，而动态作用域是在运行时确定的。（this 也是！）词法作用域关注函数在何处声明，而动态作用域关注函数从何处调用。</p>
+</li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/03/tongyuan/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/10/11/This/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/10/06/[[scope]]-/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
